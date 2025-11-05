@@ -8,7 +8,7 @@ router.register(r'bookings', BookingViewSet, basename='booking')
 
 urlpatterns = [
     path('index/', index),  # ou '' se quiser que seja só o domínio principal
-    path('', include(router.urls)),  # agora router sem conflito
+    path('api/', include(router.urls)),
     path('disponibilidade/<int:service_id>/', DisponibilidadeView.as_view(), name='disponibilidade'),
     path('professionals/', ProfessionalListAPIView.as_view(), name='professional-list'),
     path('criar_reserva/', criar_reserva, name='criar_reserva'),
