@@ -128,6 +128,7 @@
 </div>
 
 <script>
+  const API_BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:8000";
 const paramsCheck = new URLSearchParams(window.location.search);
 
 const profParamCheck = paramsCheck.get("prof");
@@ -209,7 +210,7 @@ function confirmarDados() {
   botao.disabled = true;
 
   // 👉 1. Primeiro: guardar a reserva no banco de dados
-  fetch('http://localhost:8000/api/criar_reserva/', {
+  fetch(`${API_BASE_URL}/api/criar_reserva/`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -237,7 +238,7 @@ function confirmarDados() {
 
     // 👉 2. Se a reserva foi guardada, enviar o e-mail de confirmação
     console.log("Enviando confirmação por e-mail...");
-    return fetch('http://localhost:8000/api/enviar_confirmacao/', {
+    return fetch(`${API_BASE_URL}/api/enviar_confirmacao/`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

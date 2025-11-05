@@ -22,20 +22,21 @@
     <div id="services-container"></div>
 
     <script>
+      const API_BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:8000";
   // Função para pegar parâmetros da URL
-  function getQueryParams(param) {
+function getQueryParams(param) {
     const params = new URLSearchParams(window.location.search);
     const value = params.get(param);
     return value ? JSON.parse(decodeURIComponent(value)) : null;
-  }
+}
 
-  // Obter serviços e profissional
-  const services = getQueryParams('data') || [];
-  const professional = getQueryParams('prof') || {};
+// Obter serviços e profissional
+const services = getQueryParams('data') || [];
+const professional = getQueryParams('prof') || {};
 
-  const container = document.getElementById('services-container');
+const container = document.getElementById('services-container');
 
-  services.forEach(service => {
+services.forEach(service => {
     const box = document.createElement('div');
     box.className = 'servicos-box';
 
@@ -60,16 +61,23 @@
 
     // Adicionar evento de clique
     arrow.addEventListener('click', () => {
-  const profData = professional ? encodeURIComponent(JSON.stringify(professional)) : '';
-  const prof_id = professional.id || ''; // 🔥 pega o ID do profissional (garante que vem no JSON)
-  console.log("Profissional atual:", professional);
-  const url = `calendario.html?service_id=${service.id}&title=${encodeURIComponent(service.title)}&price=${service.price}&duration=${service.duration_minutes}&prof=${profData}&prof_id=${prof_id}`;
-  window.location.href = url;
-});
+        const profData = professional ? encodeURIComponent(JSON.stringify(professional)) : '';
+        const prof_id = professional.id || ''; // garante que sempre exista
+        console.log("Profissional atual:", professional);
+
+        const url = `calendario.html?service_id=${service.id}` +
+                    `&title=${encodeURIComponent(service.title)}` +
+                    `&price=${service.price}` +
+                    `&duration=${service.duration_minutes}` +
+                    `&prof=${profData}` +
+                    `&prof_id=${prof_id}`;
+
+        window.location.href = url;
+    });
 
     box.appendChild(arrow);
     container.appendChild(box);
-  });
+});
 </script>
   </div>
 </body>

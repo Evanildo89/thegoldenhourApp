@@ -62,8 +62,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-CORS_ALLOW_ALL_ORIGINS = True
-
 ROOT_URLCONF = 'backend.urls'
 
 TEMPLATES = [
@@ -170,7 +168,8 @@ ADMIN_EMAIL = 'evanildovrodrigues@gmail.com'
 
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
+    "http://localhost:3000",  # desenvolvimento
+    "https://thegoldenhour-frontend.onrender.com",  # produção
 ]
 
 if DEBUG:

@@ -60,116 +60,121 @@
   </div>
 
   <script>
-  // Footer
-  const toggleFooter = document.getElementById('toggle-footer');
-  const footerExpanded = document.getElementById('footer-expanded');
-  const footerTitulo = document.getElementById('footer-titulo');
-  const footerItemTitulo = document.getElementById('footer-item-titulo');
-  const footerItemPreco = document.getElementById('footer-item-preco');
-  const footerItemDuracao = document.getElementById('footer-item-duracao');
-  const footerTotal = document.getElementById('footer-total');
-  const footerValor = document.getElementById('footer-valor');
+const API_BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:8000";
 
-  let footerData = {}; // guardamos os dados da URL
+// --- Elementos do footer ---
+const toggleFooter = document.getElementById('toggle-footer');
+const footerExpanded = document.getElementById('footer-expanded');
+const footerTitulo = document.getElementById('footer-titulo');
+const footerItemTitulo = document.getElementById('footer-item-titulo');
+const footerItemPreco = document.getElementById('footer-item-preco');
+const footerItemDuracao = document.getElementById('footer-item-duracao');
+const footerTotal = document.getElementById('footer-total');
+const footerValor = document.getElementById('footer-valor');
 
-  // ✅ Função para pegar os parâmetros da URL, incluindo service_id
-  function getQueryParams() {
+let footerData = {};
+
+// --- Função para obter parâmetros da URL ---
+function getQueryParams() {
     const params = new URLSearchParams(window.location.search);
     return {
-      id: params.get('service_id'), // ✅ agora pegamos o service_id
-      title: params.get('title'),
-      price: params.get('price'),
-      duration: params.get('duration')
+        id: params.get('service_id'),
+        title: params.get('title'),
+        price: params.get('price'),
+        duration: params.get('duration')
     };
-  }
+}
 
-  toggleFooter.addEventListener('click', () => {
+// --- Toggle do footer ---
+toggleFooter?.addEventListener('click', () => {
     if (footerExpanded.style.display === 'block') {
-      footerExpanded.style.display = 'none';
-      toggleFooter.style.transform = 'rotate(0deg)';
-      if (footerData.title && footerData.duration) {
-        footerTitulo.textContent = `${footerData.title} · ${footerData.duration} min`;
-      }
+        footerExpanded.style.display = 'none';
+        toggleFooter.style.transform = 'rotate(0deg)';
+        if (footerData.title && footerData.duration) {
+            footerTitulo.textContent = `${footerData.title} · ${footerData.duration} min`;
+        }
     } else {
-      footerExpanded.style.display = 'block';
-      toggleFooter.style.transform = 'rotate(180deg)';
-      footerTitulo.textContent = footerData.title;
+        footerExpanded.style.display = 'block';
+        toggleFooter.style.transform = 'rotate(180deg)';
+        footerTitulo.textContent = footerData.title || '';
     }
-  });
+});
 
-  document.addEventListener('DOMContentLoaded', () => {
-    footerData = getQueryParams(); // ✅ agora footerData.id existe
+// --- Inicialização ---
+document.addEventListener('DOMContentLoaded', () => {
+    footerData = getQueryParams();
+
     if (footerData.title) {
-      footerTitulo.textContent = `${footerData.title} · ${footerData.duration} min`;
-      footerItemTitulo.textContent = footerData.title;
-      footerItemPreco.textContent = `€${footerData.price}`;
-      footerItemDuracao.textContent = `${footerData.duration} min`;
-      footerTotal.textContent = `€${footerData.price}`;
-      footerValor.textContent = `Valor: ${footerData.price}€`;
+        footerTitulo.textContent = `${footerData.title} · ${footerData.duration || '30'} min`;
+        footerItemTitulo.textContent = footerData.title;
+        footerItemPreco.textContent = `€${footerData.price}`;
+        footerItemDuracao.textContent = `${footerData.duration} min`;
+        footerTotal.textContent = `€${footerData.price}`;
+        footerValor.textContent = `Valor: ${footerData.price}€`;
     }
 
-    // Buscar profissionais
+    // --- Buscar profissionais ---
     const teamSection = document.getElementById("team-section");
+    if (!teamSection) return;
 
-    fetch("http://localhost:8000/api/professionals/")
-      .then(res => {
-        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
-        return res.json();
-      })
-      .then(professionals => {
-        professionals.forEach(prof => {
-          const box = document.createElement("div");
-          box.classList.add("team-box");
+    fetch(`${API_BASE_URL}/api/professionals/`)
+        .then(res => {
+            if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+            return res.json();
+        })
+        .then(professionals => {
+            professionals.forEach(prof => {
+                const box = document.createElement("div");
+                box.classList.add("team-box");
 
-          const imgContainer = document.createElement("div");
-          imgContainer.classList.add("team-image-container");
-          const img = document.createElement("img");
-          img.src = prof.photo || './images/default.png';
-          img.alt = prof.name;
-          imgContainer.appendChild(img);
+                const imgContainer = document.createElement("div");
+                imgContainer.classList.add("team-image-container");
+                const img = document.createElement("img");
+                img.src = prof.photo || './images/default.png';
+                img.alt = prof.name || '';
+                imgContainer.appendChild(img);
 
-          const info = document.createElement("div");
-          info.classList.add("team-info");
-          const name = document.createElement("h3");
-          name.classList.add("team-name");
-          name.textContent = prof.name;
-          const bio = document.createElement("p");
-          bio.classList.add("team-role");
-          bio.textContent = prof.bio;
-          info.appendChild(name);
-          info.appendChild(bio);
+                const info = document.createElement("div");
+                info.classList.add("team-info");
+                const name = document.createElement("h3");
+                name.classList.add("team-name");
+                name.textContent = prof.name;
+                const bio = document.createElement("p");
+                bio.classList.add("team-role");
+                bio.textContent = prof.bio || '';
+                info.appendChild(name);
+                info.appendChild(bio);
 
-          const arrow = document.createElement("div");
-          arrow.classList.add("servicos-arrow");
-          arrow.textContent = ">";
-          arrow.addEventListener("click", () => {
-            const profData = {
-              id: prof.id,
-              name: prof.name,
-              bio: prof.bio,
-              photo: prof.photo
-            };
-            // ✅ Passa o service_id corretamente
-            const queryParams = new URLSearchParams({
-              service_id: footerData.id,
-              prof_id: prof.id,
-              title: footerData.title,
-              price: footerData.price,
-              duration: footerData.duration,
-              prof: JSON.stringify(profData),
-            }).toString();
-            window.location.href = `calendario.html?${queryParams}`;
-          });
+                const arrow = document.createElement("div");
+                arrow.classList.add("servicos-arrow");
+                arrow.textContent = ">";
+                arrow.addEventListener("click", () => {
+                    const profData = {
+                        id: prof.id,
+                        name: prof.name,
+                        bio: prof.bio,
+                        photo: prof.photo
+                    };
+                    const queryParams = new URLSearchParams({
+                        service_id: footerData.id,
+                        prof_id: prof.id,
+                        title: footerData.title,
+                        price: footerData.price,
+                        duration: footerData.duration,
+                        prof: encodeURIComponent(JSON.stringify(profData))
+                    }).toString();
+                    window.location.href = `calendario.html?${queryParams}`;
+                });
 
-          box.appendChild(imgContainer);
-          box.appendChild(info);
-          box.appendChild(arrow);
+                box.appendChild(imgContainer);
+                box.appendChild(info);
+                box.appendChild(arrow);
 
-          teamSection.appendChild(box);
-        });
-      })
-      .catch(err => console.error("Erro ao buscar profissionais:", err));
-  });
+                teamSection.appendChild(box);
+            });
+        })
+        .catch(err => console.error("Erro ao buscar profissionais:", err));
+});
 </script>
 </body>
 </html>

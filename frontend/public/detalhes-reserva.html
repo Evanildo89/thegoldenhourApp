@@ -113,6 +113,7 @@
   </div>
 
 <script>
+    const API_BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:8000";
 const overlay = document.getElementById("overlay");
 const cancelarBtn = document.querySelector(".reserva-botoes .botao.cancelar");
 const closeBtn = document.getElementById("closeBtn");
@@ -141,7 +142,7 @@ async function carregarReservaAtual() {
     }
 
     try {
-        const resp = await fetch(`http://localhost:8000/api/booking_detail/?nome=${nome}&email=${email}`);
+        const resp = await fetch(`${API_BASE_URL}/api/booking_detail/?nome=${nome}&email=${email}`);
         console.log("🌐 Resposta da API:", resp);
 
         if (!resp.ok) throw new Error(`Reserva não encontrada, status ${resp.status}`);
@@ -254,7 +255,7 @@ yesBtn.addEventListener("click", async () => {
     const valor = document.getElementById("reserva-valor").textContent.replace("€","");
 
     try {
-        await fetch("http://localhost:8000/api/enviar_cancelamento_email/", {
+        await fetch(`${API_BASE_URL}/api/enviar_cancelamento_email/`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ nome, email, servico, data, hora, profissional: prof, total: valor }),
@@ -346,7 +347,7 @@ inputData.addEventListener("change", async () => {
 
     let profId = null;
     try {
-        const respProf = await fetch("http://localhost:8000/api/professionals/");
+        const respProf = await fetch(`${API_BASE_URL}/api/professionals/`);
         const profissionais = await respProf.json();
         const profObj = profissionais.find(p => p.name === profNome);
         if (profObj) profId = profObj.id;
@@ -356,7 +357,7 @@ inputData.addEventListener("change", async () => {
     if (!profId) return alert("Não foi possível identificar o profissional.");
 
     try {
-        const resp = await fetch(`http://localhost:8000/api/disponibilidade/1?prof_id=${profId}&data=${dataSelecionada}`);
+        const resp = await fetch(`${API_BASE_URL}/api/disponibilidade/1?prof_id=${profId}&data=${dataSelecionada}`);
         const data = await resp.json();
         selectHora.innerHTML = "";
         const ocupados = data.ocupados[dataSelecionada] || [];
@@ -394,7 +395,7 @@ confirmarReagendar.addEventListener("click", async () => {
     const duracao = document.getElementById("reserva-duracao").textContent;
 
     try {
-        const response = await fetch("http://localhost:8000/api/enviar_reagendamento_email/", {
+        const response = await fetch(`${API_BASE_URL}/api/enviar_reagendamento_email/`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ nome, email, servico, morada, data: novaData, hora: novaHora, profissional: { name: prof, bio: '' }, total: valor, duracao }),
