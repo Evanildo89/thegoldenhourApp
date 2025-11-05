@@ -34,3 +34,13 @@ class Booking(models.Model):
 
     def __str__(self):
         return f"{self.name} - {self.service.title} com {self.professional.name} em {self.date} {self.time}"
+
+class Review(models.Model):
+    name = models.CharField(max_length=200)
+    email = models.EmailField()
+    rating = models.PositiveSmallIntegerField()
+    comment = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.name} - {self.rating} estrelas"

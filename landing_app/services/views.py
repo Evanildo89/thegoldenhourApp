@@ -1,6 +1,6 @@
-from rest_framework import viewsets, generics
+from rest_framework import viewsets, generics, status
 from rest_framework.decorators import api_view
-from .models import Service, Booking, Professional
+from .models import Service, Booking, Professional, Review
 from .serializers import ServiceSerializer, BookingSerializer, DisponibilidadeSerializer, ProfessionalSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -10,6 +10,7 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
 from django.core.mail import EmailMultiAlternatives
+from django.shortcuts import render
 from urllib.parse import quote
 from django.conf import settings
 logger = logging.getLogger(__name__)
@@ -753,3 +754,35 @@ def booking_detail(request):
         logger.warning("❌ Nome ou email não fornecido na requisição")
     return JsonResponse({}, status=404)
 
+@api_view(['POST'])
+def submit_review(request):
+    data = request.data
+    name = data.get('name')
+    email = data.get('email')
+    rating = data.get('rating')
+    comment = data.get('comment')
+
+    if not all([name, email, rating, comment]):
+        return Response({"error": "Todos os campos são obrigatórios."}, status=status.HTTP_400_BAD_REQUEST)
+
+    # Salvar no banco
+    review = Review.objects.create(
+        name=name,
+        email=email,
+        rating=rating,
+        comment=comment
+    )
+
+    # Enviar email para a empresa
+    send_mail(
+        subject=f"Nova Avaliação de {name}",
+        message=f"Nome: {name}\nEmail: {email}\nRating: {rating}\nComentário: {comment}",
+        from_email=settings.DEFAULT_FROM_EMAIL,
+        recipient_list=[settings.ADMIN_EMAIL],  # Coloque aqui o email da empresa
+        fail_silently=False,
+    )
+
+    return Response({"message": "Avaliação enviada com sucesso!"}, status=status.HTTP_201_CREATED)
+
+def index(request):
+    return render(request, 'index.html')
