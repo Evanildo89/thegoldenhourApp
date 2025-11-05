@@ -1,6 +1,18 @@
 
 from pathlib import Path
+import dj_database_url
 import os
+
+import os
+
+# Segredos e config do ambiente
+SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-temporaria')
+DEBUG = os.getenv('DEBUG', 'False') == 'True'
+
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+ADMIN_EMAIL = os.getenv('ADMIN_EMAIL', EMAIL_HOST_USER)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -74,12 +86,28 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+if DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': dj_database_url.config(
+            default=os.getenv('DATABASE_URL'),
+            conn_max_age=600,
+        )
+    }
+
+MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
+
+# Emails
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+ADMIN_EMAIL = os.getenv('ADMIN_EMAIL', EMAIL_HOST_USER)
 
 
 # Password validation
@@ -116,7 +144,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    BASE_DIR / "frontend_build",
+]
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
@@ -132,6 +164,8 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'evanildovrodrigues@gmail.com'
 EMAIL_HOST_PASSWORD = 'qrqy ulov hvcq dnhk'
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+ADMIN_EMAIL = 'evanildovrodrigues@gmail.com'
 
 
 CORS_ALLOWED_ORIGINS = [
