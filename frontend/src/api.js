@@ -1,4 +1,4 @@
-const API_BASE_URL = process.env.REACT_APP_API_URL || "https://thegoldenhour-backend.onrender.com";
+const API_BASE_URL = "https://thegoldenhourapp.onrender.com";
 
 export const getServices = async () => {
   const res = await fetch(`${API_BASE_URL}/api/services/`);
