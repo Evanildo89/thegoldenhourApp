@@ -33,6 +33,7 @@ ALLOWED_HOSTS = [
     "localhost",
     "thegoldenlight.com",
     "www.thegoldenlight.com"
+    "thegoldenhourapp.onrender.com",
 ]
 
 
