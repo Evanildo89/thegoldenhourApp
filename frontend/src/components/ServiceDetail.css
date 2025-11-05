@@ -1,0 +1,39 @@
+.service-detail-container {
+  background-color: #f2f2f2; /* fundo cinza claro */
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.service-detail-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.back-circle {
+  width: 40px;
+  height: 40px;
+  background-color: white;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.back-circle:hover {
+  transform: scale(1.05);
+}
+
+.back-arrow {
+  color: #333;
+  font-size: 18px;
+}
+
+.service-detail-content {
+  margin-top: 25px;
+  font-size: 16px;
+  color: #444;
+}

@@ -1,0 +1,1003 @@
+:root{
+--accent-gray: #f0f0f0;
+}
+
+
+body, html, #root {
+height: 100%;
+margin: 0;
+font-family: Arial, sans-serif;
+padding: 0;
+  overflow-x: auto;    /* horizontal: só aparece se necessário */
+  overflow-y: auto;
+}
+
+
+.app-container{
+flex-direction: column;
+display: flex;
+min-height: 100vh;
+overflow-y: auto;
+padding-top: 160px;
+}
+
+
+.main-content{
+flex: 1;
+padding: 24px;
+}
+
+
+.top-strip {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: var(--accent-gray);
+  padding: 24px 16px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  font-weight: normal;
+  z-index: 1100; /* acima de tudo */
+}
+
+.top-strip a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: inherit;
+  margin-right: 40px;
+}
+
+/* Ajuste do conteúdo para não ficar escondido atrás da faixa */
+.main-content {
+  flex: 1;
+  padding: 200px 24px 24px 24px; /* ajusta padding-top para a faixa + barra */
+}
+
+
+/* Responsividade: esconder a faixa em telas muito pequenas e mostrar botão móvel */
+@media(max-width:420px){
+.right-strip{ display: none; }
+.mobile-phone-floating{
+position: fixed;
+right: 16px;
+bottom: 16px;
+background: #d9d9d9;
+padding: 12px 14px;
+border-radius: 30px;
+z-index: 1100;
+font-weight: 700;
+}
+}
+
+/* Barra de navegação abaixo da faixa cinzenta */
+.nav-bar {
+  position: fixed;
+  top: 65px; /* altura da .top-strip (ajuste se necessário) */
+  left: 0;
+  width: 100%;
+  background: #ffffff; /* faixa branca */
+  padding: 24px 16px;
+  display: flex;
+  justify-content: flex-start;
+  z-index: 1000; /* garante que fique acima do resto */
+}
+
+.nav-bar ul {
+  list-style: none;
+  display: flex;
+  gap: 40px; /* espaçamento entre os itens */
+  margin: 0;
+  padding: 0;
+}
+
+.nav-bar li a {
+  text-decoration: none;
+  color: #111;
+  font-weight: normal;
+  font-size: 16px;
+  position: relative;
+  padding-bottom: 8px;
+  transition: color 0.3s ease; /* animação suave */
+}
+
+/* underline do item ativo */
+.nav-bar li a.active::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 2px;         /* linha fina */
+  background-color: #111;
+  border-radius: 2px;
+}
+
+/* efeito hover (computador) e tap (smartphone) */
+.nav-bar li a:hover,
+.nav-bar li a:active {
+  color: #d9b99b;  /* 👈 bege claro */
+}
+
+.logo-text-container {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin: 40px 16px 0 16px; /* espaço superior para scroll */
+}
+
+/* Círculo do logo */
+.logo-container {
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.logo-container img {
+  width: 100%;      /* logo maior dentro do círculo */
+  height: auto;
+}
+
+/* Texto ao lado do logo */
+.logo-text {
+  font-size: 26px;
+  font-weight: 600;
+  color: #111;
+}
+
+.hours-container {
+  width: 340px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  font-family: Arial, sans-serif;
+  padding: 16px;
+  margin: 40px 16px; /* espaço superior e lateral */
+}
+
+/* Linha de hoje */
+.today-hours {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;        /* aumenta espaçamento */
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 16px;           /* texto maior */
+}
+
+/* Ícone do relógio */
+.today-hours svg {
+  margin-right: 10px;
+}
+
+/* Seta que gira */
+.today-hours .arrow {
+  transition: transform 0.3s ease;
+}
+
+.today-hours .arrow.open {
+  transform: rotate(180deg);
+}
+
+/* Lista completa */
+.full-hours {
+  list-style: none;
+  margin: 0;
+  padding: 16px 20px 16px 20px; /* mais espaço interno */
+}
+
+.full-hours li {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;            /* mais espaçamento entre dias */
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.full-hours li:last-child {
+  border-bottom: none;
+}
+
+.day {
+  font-weight: 500;
+}
+
+.status {
+  font-weight: 400;
+  color: #555;
+}
+
+.policy-box {
+  width: calc(100% - 70px); /* ocupa toda a largura menos 40px (20px de cada lado) */
+  margin: 24px auto;
+  padding: 20px;
+  background: #f5f5f5;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.policy-box h2 {
+  margin-bottom: 12px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+}
+
+.policy-box p {
+  font-size: 16px;
+  line-height: 1.5;
+  color: #555;
+}
+
+.policy-warning {
+  margin-top: 12px;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #333;
+  padding: 12px;
+  border-radius: 8px;
+}
+
+.policy-button {
+  display: flex;
+  justify-content: flex-end; /* joga o botão para a direita */
+  margin-top: 12px;
+}
+
+.policy-button button {
+  background: #333;     /* cor do fundo */
+  color: #fff;          /* cor do texto */
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.3s;
+}
+
+.policy-button button:hover {
+  background: #555;     /* cor ao passar o mouse */
+}
+
+.services-title {
+  font-weight: bold;
+  text-align: left;
+  margin: 24px 16px 12px 32px;  /* topo, direita, baixo, esquerda */
+  font-size: 22px;
+  color: #111;
+}
+
+.services-subtitle {
+  font-size: 16px;        /* menor que o título */
+  color: #777;            /* cinza */
+  margin: 4px 16px 16px 32px; /* topo, direita, baixo, esquerda */
+  line-height: 1.5;
+}
+
+.service-section {
+  position: relative;        /* necessário para posicionar a seta */
+  margin: 24px 32px;
+  padding: 16px;
+  background: #f5f5f5;
+  border-radius: 12px;
+}
+
+.service-title {
+  font-weight: bold;
+  font-size: 18px;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.service-description {
+  font-size: 14px;
+  color: #555;
+  line-height: 1.6;
+  padding-left: 20px;
+}
+
+.service-description li {
+  margin-bottom: 6px;
+}
+
+
+
+.service-arrow:hover {
+  color: #000;
+}
+
+.team-section {
+  padding: 0px 20px;
+}
+
+/* Título e subtítulo da seção */
+.team-title {
+  font-size: 22px;
+  font-weight: bold;
+  color: #111;
+  margin-bottom: 4px;   /* diminui o espaço abaixo do título */
+  text-align: left;
+}
+
+.team-subtitle {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 12px;  /* diminui o espaço abaixo do subtítulo */
+  text-align: left;
+}
+
+/* Container das boxes */
+.team-container {
+  display: flex;
+  flex-direction: column;
+  gap: 30px; /* espaço entre boxes */
+  position: relative;
+}
+
+/* Cada box da equipe */
+.team-box {
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+  max-width: 1350px;  /* limite de largura */
+  margin: 0 auto; /* centraliza horizontalmente */
+  background-color: #fff;   /* fundo branco */
+  border: 1px solid #000;   /* borda preta */
+  border-radius: 16px;
+  padding: 20px 30px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+  flex-direction: row;
+  gap: 24px;
+}
+
+/* Foto do profissional */
+.team-image-container {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  margin: 0;
+}
+
+.team-image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* garante que a imagem preencha o círculo */
+}
+
+/* Informações à direita da foto */
+.team-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* centraliza verticalmente o texto */
+}
+
+.team-name {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 6px;
+  color: #111;
+}
+
+.team-role {
+  font-size: 14px;
+  color: #555;
+  margin: 0;
+}
+
+/* Seta para serviços */
+.service-arrow {
+  position: absolute;      /* dentro do container */
+  right: 15px;             /* distância da borda direita */
+  top: 50%;                /* centraliza verticalmente */
+  transform: translateY(-50%); /* ajuste exato do centro */
+  font-size: 30px;
+  color: #333;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.service-arrow-equipe {
+  position: absolute;      /* dentro do container */
+  right: 40px;             /* distância da borda direita */
+  top: 50%;                /* centraliza verticalmente */
+  transform: translateY(-50%); /* ajuste exato do centro */
+  font-size: 30px;
+  color: #333;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.service-arrow-equipe:hover {
+  color: #000;
+}
+
+.service-arrow:hover {
+  color: #000;
+}
+
+/* Responsivo: fotos acima do texto em telas pequenas */
+@media (max-width: 768px) {
+  .team-box {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .team-image-container {
+    margin-right: 0;
+    margin-bottom: 16px;
+  }
+
+  .team-info {
+    justify-content: center;
+  }
+}
+
+.team-separator {
+  width: 95%;                 /* ocupa 90% da largura da página */
+  height: 1px;                /* altura fina */
+  background-color: #ccc;     /* cinza claro */
+  border: none;               /* remove borda padrão do hr */
+  margin: 24px auto;          /* centraliza horizontalmente e adiciona espaçamento vertical */
+}
+
+.contact-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 40px 0 20px 40px;
+}
+
+.contact-text {
+  font-weight: bold;
+  font-size: 20px;
+  color: #000;
+}
+
+.contact-phone {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 20px;
+}
+
+.phone-icon {
+  color: #000;
+}
+
+.phone-number {
+  color: #000; /* cor do texto */
+  text-decoration: none; /* remove underline */
+  font-size: 16px;
+}
+
+.phone-number:hover {
+  text-decoration: underline; /* opcional, efeito hover */
+}
+
+.instagram-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+  text-decoration: none;
+  color: #000; /* texto e ícone em preto */
+  font-size: 16px;
+  word-break: break-all; /* para quebrar o link longo em telas pequenas */
+}
+
+.instagram-link:hover {
+  text-decoration: underline;
+}
+
+.instagram-icon {
+  font-size: 24px;
+}
+
+.bom-saber-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* mantém alinhamento à esquerda */
+  gap: 8px;
+  margin-top: 30px; /* separação do bloco de contato */
+}
+
+.bom-saber-title {
+  font-weight: bold;
+  font-size: 20px;
+  color: #000;
+  margin-left: 40px;
+}
+
+.bom-saber-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: #000;
+  font-size: 16px;
+  margin-left: 40px; /* recuo para a direita */
+  margin-top: 10px;
+}
+
+.bom-saber-link:hover {
+  text-decoration: underline;
+}
+
+.calendar-icon {
+  font-size: 24px;
+}
+
+.policy-box-overlay {
+  position: fixed;        /* fixa na tela */
+  inset: 0;               /* cobre toda a tela */
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;    /* centraliza verticalmente */
+  z-index: 900;           /* menor que avaliação */
+}
+
+.policy-box {
+  background: #f5f5f5;
+  border-radius: 12px;
+  padding: 25px;
+  width: 100%;        /* aumenta para quase toda a largura da tela */
+  max-width: 1400px; /* opcional: limita em telas muito grandes */
+  box-shadow: 0 3px 20px rgba(0,0,0,0.25);
+  animation: slideUpPolicy 0.3s ease forwards;
+}
+
+/* Animação da política (subindo do fundo) */
+@keyframes slideUpPolicy {
+  from { transform: translateY(50px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.Avalicao-title {
+  font-weight: bold;
+  font-size: 20px;
+  color: #000;
+  margin-left: 40px;
+}
+
+.avaliacao-text {
+  font-size: 16px;
+  color: #555;
+  margin-top: 15px; /* espaço entre o título e o texto */
+  line-height: 1.5;
+  margin-left: 40px;
+}
+
+.avaliacao-button-container {
+  display: flex;
+  justify-content: flex-start; /* garante alinhamento à esquerda */
+  margin-top: 5px; /* distância do texto acima */
+  margin-left: 40px;
+}
+
+.avaliacao-button {
+  background-color: #ffffff !important; /* força fundo branco */
+  color: #111;
+  border: 1px solid #111;
+  padding: 10px 20px;
+  border-radius: 12px !important; /* bordas arredondadas */
+  cursor: pointer;
+  font-size: 16px;
+  text-align: center; /* mantém texto centralizado no botão */
+  transition: background 0.3s, color 0.3s;
+}
+
+.avaliacao-button:hover {
+  background-color: #111;
+  color: #d9b99b;
+}
+
+.avaliacao-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  animation: fadeIn 0.3s ease;
+  z-index: 1000
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Box deslizante */
+.avaliacao-box {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 95vw;
+  max-width: 1400px;
+  background: #fff;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  box-shadow: 0 -3px 20px rgba(0,0,0,0.25);
+  padding: 25px;
+  z-index: 1001; /* acima do overlay de avaliação */
+  display: flex;
+  flex-direction: column;
+  animation: slideUp 0.4s ease forwards;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translate(-50%, 100%);
+  }
+  to {
+    transform: translate(-50%, 0);
+  }
+}
+
+/* Header (título + botão X) */
+.avaliacao-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+}
+
+/* Conteúdo da avaliação */
+.avaliacao-conteudo {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.avaliacao-textarea {
+  width: 99%;
+  height: 150px;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  resize: none;
+  font-size: 15px;
+}
+
+.avaliacao-error {
+  color: red;
+  font-size: 12px;
+  margin-top: 3px;
+}
+
+.avaliacao-enviar {
+  background-color: #111;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 18px;
+  cursor: pointer;
+  font-size: 15px;
+  transition: background 0.3s;
+}
+
+.avaliacao-enviar:hover {
+  background-color: #333;
+}
+
+.avaliacao-rating {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.avaliacao-label {
+  font-size: 15px;
+  color: #111;
+  font-weight: 500;
+}
+
+.obrigatorio {
+  color: red;
+}
+
+.stars {
+  display: flex;
+  gap: 6px;
+}
+
+.star {
+  font-size: 26px;
+  color: #ccc;
+  cursor: pointer;
+  transition: color 0.2s, transform 0.2s;
+}
+
+.star:hover {
+  transform: scale(1.2);
+}
+
+.star.filled {
+  color: #f5b50a; /* amarelo-dourado */
+}
+
+.avaliacao-field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.avaliacao-input {
+  width: 99%;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+}
+
+.avaliacao-separator {
+  width: 95%;              /* ocupa 90% da largura */
+  margin: 80px auto 20px auto;
+  border: none;            /* remove a borda padrão */
+  height: 1px;             /* linha fina */
+  background-color: #ccc;  /* cinza */
+}
+
+.reservar-button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 25px;
+  position: -webkit-sticky; /* Suporte Safari */
+  position: sticky;
+  top: 20px; /* distância do topo quando “grudar” */
+  z-index: 10;
+}
+
+/* Botão com visual moderno */
+.reservar-button {
+  background-color: #333; /* cinzento escuro */
+  color: #fff; /* texto branco */
+  border: none;
+  padding: 12px 45px; /* um pouco mais largo */
+  border-radius: 30px; /* bordas bem arredondadas */
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+/* Efeito hover */
+.reservar-button:hover {
+  background-color: #555; /* cinzento mais claro ao passar o rato */
+}
+
+/* Responsivo (mobile) */
+@media (max-width: 600px) {
+  .reservar-button {
+    padding: 10px 35px;
+    font-size: 15px;
+  }
+}
+
+/* Tablets (até 1024px) */
+@media (max-width: 1024px) {
+  .logo-container {
+    width: 160px;
+    height: 160px;
+  }
+
+  .logo-text {
+    font-size: 22px;
+  }
+
+  .hours-container {
+    width: 100%;
+    max-width: 500px;
+  }
+
+  .policy-box {
+    max-width: 90%;
+  }
+
+  .team-box {
+    padding: 16px 20px;
+  }
+
+  .service-section {
+    margin: 16px;
+  }
+}
+
+/* Smartphones grandes (até 768px) */
+@media (max-width: 768px) {
+  /* Navegação */
+  .nav-bar ul {
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+  }
+
+  .nav-bar li a {
+    font-size: 14px;
+  }
+
+  /* Logo + Texto */
+  .logo-text-container {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 10px;
+    margin-top: 100px;
+  }
+
+  .logo-container {
+    width: 140px;
+    height: 140px;
+  }
+
+  .logo-text {
+    font-size: 20px;
+  }
+
+  /* Horários */
+  .hours-container {
+    width: 100%;
+    margin: 20px auto;
+  }
+
+  /* Equipa */
+  .team-section {
+    padding: 0 10px;
+  }
+
+  .team-box {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 16px;
+  }
+
+  .team-image-container {
+    width: 160px;
+    height: 160px;
+  }
+
+  .team-info {
+    align-items: center;
+  }
+
+  .team-name {
+    font-size: 16px;
+  }
+
+  .team-role {
+    font-size: 13px;
+  }
+
+  .service-arrow-equipe {
+    right: 15px;
+    top: auto;
+    bottom: 10px;
+    transform: none;
+  }
+
+  /* Serviços */
+  .services-title {
+    font-size: 20px;
+    margin-left: 20px;
+  }
+
+  .services-subtitle {
+    font-size: 14px;
+    margin-left: 20px;
+  }
+
+  .service-section {
+    padding: 12px;
+    margin: 12px;
+  }
+
+  /* Botão Reservar */
+  .reservar-button {
+    width: 90%;
+    padding: 12px;
+    font-size: 15px;
+  }
+
+  /* Contato */
+  .contact-container {
+    padding: 20px;
+    align-items: center;
+  }
+
+  .contact-text,
+  .bom-saber-title,
+  .Avalicao-title {
+    font-size: 18px;
+    text-align: center;
+    margin: 0;
+  }
+
+  .contact-phone,
+  .instagram-link,
+  .bom-saber-link {
+    justify-content: center;
+  }
+
+  .avaliacao-text,
+  .policy-box p {
+    text-align: center;
+  }
+}
+
+/* Smartphones pequenos (até 480px) */
+@media (max-width: 480px) {
+  .top-strip {
+    padding: 14px;
+    justify-content: center;
+  }
+
+  .nav-bar {
+    top: 55px;
+    padding: 10px;
+  }
+
+  .nav-bar ul {
+    gap: 10px;
+  }
+
+  .team-title {
+    font-size: 20px;
+  }
+
+  .team-subtitle {
+    font-size: 14px;
+  }
+
+  .team-box {
+    border-radius: 12px;
+  }
+
+  .team-image-container {
+    width: 130px;
+    height: 130px;
+  }
+
+  .service-section {
+    border-radius: 10px;
+  }
+
+  .policy-box {
+    padding: 16px;
+    width: 95%;
+  }
+
+  .avaliacao-box {
+    width: 100%;
+    border-radius: 16px 16px 0 0;
+    padding: 20px;
+  }
+
+  .avaliacao-textarea {
+    height: 120px;
+  }
+}
+
+
+
+
+

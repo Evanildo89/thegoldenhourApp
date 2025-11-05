@@ -1,0 +1,356 @@
+body {
+  background-color: #f0f0f0;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Container da box para permitir posicionamento relativo */
+.reserva-box-container {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+/* Box de detalhes */
+.reserva-box {
+  background-color: #fff;
+  margin: 60px 10px 20px 10px;
+  padding: 150px 20px 30px 20px; /* aumentei padding-top para empurrar conteúdo para baixo */
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  width: calc(100% - 20px);
+  max-width: 1400px;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+/* Logo flutuando à frente da box */
+.logo-top {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+
+.logo-circle-servicos {
+  width: 180px;      /* tamanho maior do círculo */
+  height: 180px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.logo-circle-servicos img {
+  width: 120%;       /* mantém proporção interna para preencher bem o círculo */
+  height: 120%;
+  object-fit: cover;
+}
+
+.mensagem-confirmacao {
+  font-size: 26px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+
+#profissional-section {
+  margin-top: 0; /* remove o espaço extra */
+  text-align: center;
+}
+
+.profissional-nome {
+  font-size: 18px;
+  color: #444;
+  font-weight: 500;
+  margin-top: 2px; /* reduzido para colar ao título */
+}
+
+.profissional-nome span {
+  font-weight: 700;
+  color: #000;
+}
+
+.reserva-datetime {
+  text-align: left;       /* alinhamento à esquerda */
+  font-size: 16px;
+  margin-top: 50px;       /* aumenta espaço em cima para afastar do título/nome */
+  margin-bottom: 20px;    /* espaço embaixo */
+  padding-left: 10px;     /* ligeiro recuo do lado esquerdo */
+  color: #777;            /* cor padrão do label */
+}
+
+.datetime-label {
+  font-size: 14px;
+  color: #777;       /* cinza */
+  margin-bottom: 4px;
+}
+
+.datetime-value {
+  font-size: 16px;
+  color: #000;       /* preto */
+  font-weight: bold;
+}
+
+.reserva-servico {
+  text-align: left;       /* alinhamento à esquerda */
+  font-size: 16px;
+  margin-top: 30px;       /* aumenta espaço em cima para afastar do título/nome */
+  margin-bottom: 20px;    /* espaço embaixo */
+  padding-left: 10px;     /* ligeiro recuo do lado esquerdo */
+  color: #777;     /* alinhado à esquerda */
+}
+
+.prefixo {
+  display: block; /* força quebra de linha */
+  color: #999;    /* cinza */
+  margin-bottom: 4px; /* espaço entre linhas, opcional */
+}
+
+.nome-servico {
+  display: block;  /* cada serviço em nova linha */
+  color: #000;
+  font-weight: bold;
+}
+
+.reserva-detalhes {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 6px;
+  font-size: 14px;
+  color: #999;
+}
+
+.detalhes-info {
+  display: flex;
+  gap: 6px; /* espaço entre duração e profissional */
+}
+
+.preco-servico {
+  font-weight: bold;
+  color: #000; /* preto */
+}
+
+.reserva-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 70px;
+  font-size: 20px;
+  font-weight: normal;
+  color: #000;
+}
+
+.total-texto {
+  color: #000; /* texto cinza à esquerda */
+}
+
+.total-valor {
+  font-weight: normal;
+  color: #000; /* valor preto à direita */
+}
+
+.reserva-confirmacao-email {
+  text-align: center;       /* centraliza o texto */
+  color: #777;              /* cinza */
+  font-size: 15px;          /* tamanho de fonte menor */
+  margin-top: 20px;         /* espaçamento em relação à box */
+  font-style: italic;       /* opcional, para dar destaque sutil */
+}
+
+.outra-marcacao-container {
+  text-align: center;
+  margin-top: 25px;
+}
+
+.btn-outra-marcacao {
+  background-color: #fff;
+  color: #000;
+  border: 2px solid #000;
+  padding: 10px 25px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-outra-marcacao:hover {
+  background-color: #000;
+  color: #fff;
+}
+
+/* Tablets até 1024px */
+@media (max-width: 1024px) {
+  .reserva-box {
+    padding: 120px 30px 40px 30px;
+    max-width: 90%;
+  }
+
+  .logo-circle-servicos {
+    width: 140px;
+    height: 140px;
+  }
+
+  .mensagem-confirmacao {
+    font-size: 22px;
+  }
+
+  .profissional-nome {
+    font-size: 16px;
+  }
+
+  .reserva-datetime,
+  .reserva-servico {
+    font-size: 15px;
+  }
+
+  .reserva-total {
+    font-size: 18px;
+    margin-top: 50px;
+  }
+
+  .btn-outra-marcacao {
+    font-size: 15px;
+    padding: 8px 22px;
+  }
+}
+
+/* Smartphones até 768px */
+@media (max-width: 768px) {
+  body {
+    padding: 0;
+  }
+
+  .reserva-box {
+    padding: 100px 20px 30px 20px;
+    margin: 40px 10px;
+    max-width: 95%;
+  }
+
+  .logo-circle-servicos {
+    width: 120px;
+    height: 120px;
+  }
+
+  .logo-circle-servicos img {
+    width: 115%;
+    height: 115%;
+  }
+
+  .mensagem-confirmacao {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+
+  .profissional-nome {
+    font-size: 15px;
+  }
+
+  .reserva-datetime,
+  .reserva-servico {
+    font-size: 14px;
+    margin-top: 25px;
+    padding-left: 5px;
+  }
+
+  .datetime-value,
+  .nome-servico {
+    font-size: 15px;
+  }
+
+  .reserva-detalhes {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .reserva-total {
+    flex-direction: column;
+    align-items: center;
+    font-size: 17px;
+    margin-top: 40px;
+  }
+
+  .total-valor {
+    font-size: 18px;
+  }
+
+  .reserva-confirmacao-email {
+    font-size: 14px;
+    margin-top: 15px;
+    padding: 0 10px;
+  }
+
+  .outra-marcacao-container {
+    margin-top: 20px;
+  }
+
+  .btn-outra-marcacao {
+    font-size: 14px;
+    padding: 8px 20px;
+  }
+}
+
+/* Smartphones pequenos até 480px */
+@media (max-width: 480px) {
+  .logo-circle-servicos {
+    width: 90px;
+    height: 90px;
+  }
+
+  .mensagem-confirmacao {
+    font-size: 18px;
+  }
+
+  .profissional-nome {
+    font-size: 14px;
+  }
+
+  .reserva-datetime,
+  .reserva-servico {
+    font-size: 13px;
+  }
+
+  .datetime-label,
+  .prefixo {
+    font-size: 12px;
+  }
+
+  .datetime-value,
+  .nome-servico {
+    font-size: 14px;
+  }
+
+  .reserva-detalhes {
+    font-size: 12px;
+  }
+
+  .reserva-total {
+    font-size: 16px;
+    margin-top: 30px;
+  }
+
+  .reserva-confirmacao-email {
+    font-size: 13px;
+  }
+
+  .btn-outra-marcacao {
+    width: 100%;
+    max-width: 300px;
+    font-size: 13px;
+    padding: 8px;
+  }
+}
+

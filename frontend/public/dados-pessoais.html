@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dados Pessoais</title>
+  <link rel="stylesheet" href="./servicos.css">
+</head>
+<body>
+  <div class="servicos-page">
+    <!-- Topo com botão voltar, logo e nome da empresa -->
+    <div class="servicos-topo">
+      <a href="javascript:history.back()" class="back-button">&lt;</a>
+      <div class="logo-circle-servicos">
+        <img src="./images/3.png" alt="Logo" />
+      </div>
+      <div class="empresa-name-servicos">The Golden Light Photography</div>
+    </div>
+
+    <!-- Formulário de dados pessoais -->
+    <div class="form-container">
+  <h2>Preencha os seus dados</h2>
+
+  <!-- Nome Completo (obrigatório) -->
+  <div class="form-group">
+    <label for="nome">Nome Completo <span style="color:red;">*</span></label>
+    <input type="text" id="nome" placeholder="Ex: Maria Silva">
+  </div>
+
+  <!-- Número de Telemóvel (obrigatório) -->
+  <div class="form-group">
+    <label for="telefone">Número de Telemóvel <span style="color:red;">*</span></label>
+    <div class="telefone-inputs">
+      <input type="text" class="prefixo" value="+351" readonly>
+      <input type="text" id="telefone" placeholder="912345678">
+    </div>
+  </div>
+
+  <!-- Email (obrigatório) -->
+  <div class="form-group">
+    <label for="email">Email <span style="color:red;">*</span></label>
+    <input type="email" id="email" placeholder="exemplo@email.com">
+  </div>
+
+  <!-- Morada (opcional) -->
+  <div class="form-group">
+    <label for="morada">Morada</label>
+    <input type="text" id="morada" placeholder="Rua Exemplo, nº 123">
+  </div>
+
+  <!-- Cidade (opcional) -->
+  <div class="form-group">
+    <label for="cidade">Cidade</label>
+    <input type="text" id="cidade" placeholder="Lisboa">
+  </div>
+
+  <!-- Código Postal (opcional) -->
+  <div class="form-group">
+    <label for="codigo-postal">Código Postal</label>
+    <input type="text" id="codigo-postal" placeholder="1000-001">
+  </div>
+
+  <!-- Comentário (opcional) -->
+  <div class="form-group">
+    <label for="comentario">Comentário</label>
+    <textarea id="comentario" placeholder="Ex: Alguma observação sobre a sessão" rows="4" style="padding:10px; border-radius:8px; border:2px solid #ccc; font-size:14px;"></textarea>
+  </div>
+
+  <div class="form-group lembrete-box" style="margin-top:10px;">
+  <label for="lembrete-email">
+    <input type="checkbox" id="lembrete-email">
+    Receber um lembrete por e-mail para esta reserva
+  </label>
+</div>
+
+  <div class="policy-box-dados">
+  <h2>Política de reservas:</h2>
+  <p class="policy-warning-dados" id="policy-text">
+    <strong>AVISO!!!</strong><br>
+    Após o agendamento, caso queira cancelar, faça-o com antecedência.<span id="more-text" style="display:none;">
+    <br>Em caso de <strong>Não COMPARECÊNCIA</strong> será cobrado metade do <strong>VALOR DO SERVIÇO!</strong><br>
+    Obrigado.
+    </span>
+  </p>
+  <a href="javascript:void(0)" id="toggle-policy" style="text-decoration: underline; color: #000;">Mais</a>
+
+    <h3 class="cancel-title">Política de cancelamento:</h3>
+  <p class="cancel-text">
+    Você pode cancelar ou reagendar até 4 horas antes do horário da sessão marcada.
+  </p>
+</div>
+
+      <div class="pacote-footer">
+  <div class="footer-top">
+    <span id="footer-valor">Valor: 0€</span>
+    <a href="javascript:void(0)" class="footer-seta" id="toggle-footer">↓</a>
+    <div class="footer-confirmar">
+      <button onclick="confirmarDados()">Confirmar</button>
+    </div>
+  </div>
+
+  <div id="footer-titulo" class="footer-bottom-grey"></div>
+
+  <div class="footer-expanded" id="footer-expanded">
+    <hr class="footer-separator">
+
+    <div class="footer-item">
+      <div class="item-top">
+        <span id="footer-item-nome"></span>
+        <span id="footer-item-preco"></span>
+      </div>
+      <div class="item-bottom">
+        <span id="footer-item-duracao"></span>
+      </div>
+    </div>
+
+    <hr class="footer-separator">
+
+    <div class="footer-item total">
+      <span>Total a pagar</span>
+      <span id="footer-total"></span>
+    </div>
+
+  </div>
+</div>
+
+
+</div>
+
+<script>
+const paramsCheck = new URLSearchParams(window.location.search);
+
+const profParamCheck = paramsCheck.get("prof");
+const dataCheck = paramsCheck.get("data");
+const horaCheck = paramsCheck.get("hora");
+const pacoteCheck = paramsCheck.get("pacote");
+const valorCheck = paramsCheck.get("valor");
+console.log("Pacote recebido:", pacoteCheck);
+
+console.log("Profissional (Base64 recebido):", profParamCheck);
+console.log("Data recebida:", dataCheck);
+console.log("Hora recebida:", horaCheck);
+
+// Decodificar o profissional
+let professionalCheck = {};
+if (profParamCheck) {
+  try {
+    professionalCheck = JSON.parse(atob(profParamCheck));
+    console.log("Dados do profissional decodificados:", professionalCheck);
+  } catch (e) {
+    console.error("Erro ao decodificar profissional:", e);
+  }
+}
+
+const toggleBtn = document.getElementById('toggle-policy');
+const moreText = document.getElementById('more-text');
+
+toggleBtn.addEventListener('click', () => {
+  if (moreText.style.display === 'none') {
+    moreText.style.display = 'inline';
+    toggleBtn.textContent = 'Menos';
+  } else {
+    moreText.style.display = 'none';
+    toggleBtn.textContent = 'Mais';
+  }
+});
+
+function confirmarDados() {
+  const nome = document.getElementById('nome').value.trim();
+  const telefone = document.getElementById('telefone').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const morada = document.getElementById('morada').value.trim();
+  const cidade = document.getElementById('cidade').value.trim();
+  const codigoPostal = document.getElementById('codigo-postal').value.trim();
+  const comentario = document.getElementById('comentario').value.trim();
+  const lembrete = document.getElementById('lembrete-email').checked;
+
+  console.log("Campos do formulário:", { nome, telefone, email, morada, cidade, codigoPostal, comentario, lembrete });
+
+  // Validação dos campos obrigatórios
+  if (!nome || !telefone || !email) {
+    alert("Por favor, preencha os campos obrigatórios: Nome, Telefone e Email.");
+    return;
+  }
+
+  // Guardar dados no localStorage
+  localStorage.setItem('nome', nome);
+  localStorage.setItem('telefone', telefone);
+  localStorage.setItem('email', email);
+  localStorage.setItem('morada', morada);
+  localStorage.setItem('cidade', cidade);
+  localStorage.setItem('codigoPostal', codigoPostal);
+  localStorage.setItem('comentario', comentario);
+  localStorage.setItem('lembrete', lembrete);
+
+  const params = new URLSearchParams(window.location.search);
+  const profParam = params.get("prof");
+  const data = params.get("data");
+  const hora = params.get("hora");
+  const servico = params.get("pacote") || "Pacote Desconhecido";
+  const total = params.get("valor") || "0";
+  const duracao = params.get("duracao") || "--";
+
+  console.log("Parâmetros de URL:", { profParam, data, hora, servico, total, duracao });
+
+  // Mostrar efeito de loading no botão
+  const botao = document.querySelector('.footer-confirmar button');
+  botao.classList.add('loading');
+  botao.disabled = true;
+
+  // 👉 1. Primeiro: guardar a reserva no banco de dados
+  fetch('http://localhost:8000/api/criar_reserva/', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      nome,
+      telefone,
+      email,
+      morada,
+      cidade,
+      codigoPostal,
+      comentario,
+      servico,
+      data,
+      hora,
+      total,
+      profissional: profParam
+    })
+  })
+  .then(res => res.json())
+  .then(result => {
+    console.log("Resposta da criação de reserva:", result);
+
+    if (!result.success) {
+      throw new Error("Erro ao guardar reserva: " + result.message);
+    }
+
+    // 👉 2. Se a reserva foi guardada, enviar o e-mail de confirmação
+    console.log("Enviando confirmação por e-mail...");
+    return fetch('http://localhost:8000/api/enviar_confirmacao/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        nome,
+        email,
+        morada,
+        servico,
+        data,
+        hora,
+        profissional: profParam,
+        total,
+        duracao,
+        lembrete
+      })
+    });
+  })
+  .then(res => res.json())
+  .then(data => {
+    console.log("Resposta do envio de e-mail:", data);
+
+    if (data.success) {
+      console.log("Reserva confirmada e e-mail enviado com sucesso!");
+
+      // Redirecionar para a página de confirmação
+      const urlParams = new URLSearchParams();
+      urlParams.set('pacote', servico);
+      urlParams.set('valor', total);
+      urlParams.set('data', dataCheck);
+      urlParams.set('hora', horaCheck);
+      urlParams.set('prof', profParamCheck);
+      urlParams.set('duracao', duracao);
+
+      window.location.href = `/Reservaconfirmada.html?${urlParams.toString()}`;
+    } else {
+      alert("Reserva guardada, mas o e-mail falhou.");
+      botao.classList.remove('loading');
+      botao.disabled = false;
+    }
+  })
+  .catch(err => {
+    console.error('Erro no processo de reserva:', err);
+    alert("Ocorreu um erro ao confirmar a reserva. Tente novamente.");
+    botao.classList.remove('loading');
+    botao.disabled = false;
+  })
+  .finally(() => {
+    botao.textContent = "Confirmar";
+  });
+
+  // Mensagem de lembrete sem bloquear
+  if (lembrete) {
+    console.log(`Um lembrete será enviado para o e-mail: ${email}`);
+  }
+}
+
+// Código existente para o footer
+const params = new URLSearchParams(window.location.search);
+const pacote = params.get("pacote") || "Pacote Desconhecido";
+const valor = params.get("valor") || "0";
+const duracao = params.get("duracao") || "30 min";
+
+document.getElementById("footer-valor").textContent = `Valor: ${valor}€`;
+document.getElementById("footer-titulo").textContent = pacote;
+document.getElementById("footer-item-nome").textContent = pacote;
+document.getElementById("footer-item-preco").textContent = `€${valor}`;
+document.getElementById("footer-total").textContent = `€${valor}`;
+document.getElementById("footer-item-duracao").textContent = duracao;
+
+const toggleFooter = document.getElementById('toggle-footer');
+const footerExpanded = document.getElementById('footer-expanded');
+
+toggleFooter.addEventListener('click', () => {
+  if (footerExpanded.style.display === 'block') {
+    footerExpanded.style.display = 'none';
+    toggleFooter.style.transform = 'rotate(0deg)';
+  } else {
+    footerExpanded.style.display = 'block';
+    toggleFooter.style.transform = 'rotate(180deg)';
+  }
+});
+</script>
+  </div>
+</body>
+</html>

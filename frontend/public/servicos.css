@@ -1,0 +1,784 @@
+body {
+  margin: 0;          /* remove margens padrão do navegador */
+  padding: 0;
+  overflow-x: auto;   /* barra horizontal aparece só se o conteúdo exceder a largura */
+  overflow-y: auto;   /* barra vertical aparece quando necessário */
+}
+
+@media (max-width: 768px) {
+  .calendar-container {
+    width: 90%;
+    max-width: 400px;
+    padding: 15px;
+  }
+}
+
+/* Previne que elementos largos forcem scroll horizontal */
+.servicos-page,
+.servicos-section,
+.servicos-box,
+.logo-circle img,
+.servicos-image-container  {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.servicos-page {
+  background-color: #eee;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding-bottom: 100px; /* adiciona espaço para o footer */
+}
+
+.calendario-page {
+      background-color: #eee;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-bottom: 50px;
+    }
+
+/* Topo da página */
+.servicos-topo {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  background-color: #eee;
+  top: 0;
+  z-index: 100;
+  gap: 15px;
+}
+
+/* Botão de voltar */
+.back-button {
+  font-size: 24px;
+  text-decoration: none;
+  color: #333;
+}
+
+.logo-circle-servicos {
+  width: 140px;      /* tamanho do círculo */
+  height: 140px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.logo-circle-servicos img {
+  width: 120%;       /* preenche o círculo corretamente */
+  height: 120%;
+  object-fit: cover;
+}
+
+
+/* Nome da empresa */
+.empresa-name-servicos {
+  font-weight: bold;
+  font-size: 18px;
+  color: #333;
+}
+
+/* Seção da equipe */
+.servicos-section {
+  padding: 30px; /* mais espaço ao redor */
+}
+
+.servicos-box {
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  padding: 25px; /* aumenta o padding interno */
+  margin-bottom: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* leve sombra para destaque */
+}
+
+.servicos-image-container {
+  width: 100px;  /* aumenta o tamanho da foto */
+  height: 100px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 20px;
+}
+
+.servicos-image-container  img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.servicos-info .servicos-name {
+  margin: 0;
+  font-weight: bold;
+  font-size: 20px; /* aumenta o tamanho do nome */
+  color: #333;
+}
+
+.servicos-info .servicos-role {
+  margin: 5px 0 0;
+  font-size: 16px; /* aumenta o tamanho da função */
+  color: #666;
+}
+
+.services-subtitle-top {
+  font-size: 18px;
+  color: #888;
+  margin: 20px 20px 10px 20px; /* separação do topo e da box */
+}
+
+/* Box do serviço */
+.servicos-box {
+  display: flex;
+  justify-content: space-between; /* conteúdo à esquerda, seta à direita */
+  align-items: flex-start;        /* alinha a seta com o centro vertical do conteúdo */
+  background-color: #fff;
+  padding: 20px;
+  margin: 0 20px 20px 20px;      /* margem inferior para separar da próxima box */
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.servicos-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.services-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin: 0 0 10px 0;
+  color: #333;
+}
+
+.servicos-description ul {
+  margin: 0;
+  padding-left: 20px;
+  font-size: 14px;
+  color: #333;
+}
+
+.servicos-arrow {
+  font-size: 30px;
+  color: #333;
+  cursor: pointer;
+  align-self: center; /* centraliza verticalmente em relação à box */
+  transition: transform 0.3s ease;
+}
+
+.servicos-arrow:hover {
+  transform: scale(1.2);
+}
+
+.calendar-container {
+  margin-top: 40px;
+  margin-left: 40px; /* desloca para a esquerda */
+  background-color: white;
+  border-radius: 15px;
+  padding: 18px;
+  width: 65%;
+  max-width: 450px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+}
+    .calendar-title {
+      text-align: center;
+      font-size: 22px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .calendar-header {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    .calendar-month {
+      font-size: 18px;
+      font-weight: 500;
+      color: #444;
+      min-width: 140px;
+      text-align: center;
+    }
+
+    /* Layout do calendário */
+    .calendar {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 10px;
+      text-align: center;
+    }
+
+    .day-name {
+      font-weight: bold;
+      color: #555;
+    }
+
+    .day {
+      background-color: #f6f6f6;
+      padding: 15px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .day:hover {
+      background-color: #ddd;
+    }
+
+    .selected {
+      background-color: #000;
+      color: #fff;
+      border: 2px solid #000;
+    }
+
+    /* Texto da data selecionada */
+    .selected-date {
+      text-align: center;
+      font-size: 16px;
+      margin-top: 20px;
+      color: #333;
+      font-weight: 500;
+    }
+
+    /* Caixa de horários */
+    .horarios-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      margin-top: 25px;
+    }
+
+    .horario-box {
+      background-color: #fff;
+      border: 2px solid #000;
+      border-radius: 10px;
+      padding: 10px;
+      text-align: center;
+      font-weight: bold;
+      color: #000;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .horario-box:hover {
+      background-color: #ddd;
+    }
+
+    .horario-selecionado {
+      background-color: #000;
+      color: #fff;
+    }
+
+.pacote-footer {
+  background-color: #fff;
+  padding: 15px 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-weight: bold;
+  font-size: 18px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+  z-index: 9999;
+  transition: height 0.3s ease; /* animação suave */
+}
+
+.footer-top {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  cursor: pointer;
+}
+
+.footer-seta {
+  font-size: 24px;
+  color: #333;
+  text-decoration: none;
+  margin-left: 8px;
+  transition: transform 0.3s ease;
+}
+
+.footer-bottom-grey {
+  font-size: 14px;
+  color: #888;
+  margin-top: 5px;
+  font-weight: normal;
+}
+
+.footer-expanded {
+  width: 100%;
+  display: none; /* escondida inicialmente */
+  margin-top: 10px;
+  box-sizing: border-box;
+  padding: 0         /* aumenta o padding horizontal, move conteúdo para dentro */
+}
+
+.footer-expanded .footer-item {
+  width: 100%;
+  margin: 20px 0; /* 15px acima e abaixo de cada item */
+  box-sizing: border-box;
+}
+
+.footer-expanded .item-top {
+  display: flex;
+  justify-content: flex-start; /* alinha conteúdo à esquerda */
+  gap: 10px;                   /* espaço entre descrição e preço */
+  flex-wrap: wrap;              /* quebra linha se necessário */
+  width: 100%;
+  margin-top: 25px;
+}
+
+.footer-expanded .item-top span:first-child,
+.footer-expanded .item-top span:last-child {
+  flex: none;        /* cada span ocupa apenas o necessário */
+  text-align: left;  /* alinhamento à esquerda */
+  font-size: 14px;           /* pode manter o mesmo tamanho */
+  color: #333;               /* cinzento para combinar */
+  font-weight: normal;
+}
+
+.footer-expanded .item-bottom {
+  font-size: 14px;
+  color: #333;
+  margin-top: 2px;
+}
+
+.footer-expanded .total {
+  font-weight: bold;
+}
+
+.footer-separator {
+  border: 0;
+  border-top: 1px solid #ccc;
+  margin: 8px 0;
+  width: 95%; /* reduz um pouco a largura para criar margem nas laterais */
+}
+
+.form-container {
+  background-color: white;
+  margin: 20px 40px;  /* topo e baixo 20px, laterais 40px no desktop */
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  max-width: 1200px;  /* no desktop, pode preencher bastante a tela */
+  width: calc(100% - 80px); /* largura total menos as margens laterais */
+  box-sizing: border-box;
+}
+
+.form-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+}
+
+.form-group {
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #333;
+}
+
+.form-group input,
+.form-group textarea {
+  padding: 10px;
+  border-radius: 8px;
+  border: 2px solid #ccc;
+  font-size: 14px;
+  width: 100%; /* ocupa 100% do container */
+  box-sizing: border-box;
+}
+
+.telefone-inputs {
+  display: flex;
+  gap: 10px;
+}
+
+.telefone-inputs .prefixo {
+  width: 60px;
+  text-align: center;
+  background-color: #f0f0f0;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+}
+
+/* Mobile e telas pequenas */
+@media (max-width: 768px) {
+  .form-container {
+    margin: 20px 10px; /* margens pequenas nas laterais */
+    width: calc(100% - 20px); /* preenche quase toda a tela */
+  }
+
+  .telefone-inputs {
+    flex-direction: column; /* prefixo e número empilhados */
+  }
+
+  .telefone-inputs .prefixo {
+    width: 100%;
+  }
+}
+
+.policy-box-dados {
+  width: calc(100% - 40px);
+  margin: 24px 0;
+  padding: 20px;
+  background: #f5f5f5;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  position: relative;
+}
+
+.policy-box-dados h2 {
+  margin-bottom: 12px;
+  text-align: left;
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+}
+
+.policy-box-dados p {
+  font-size: 16px;
+  line-height: 1.5;
+  color: #555;
+}
+
+.policy-warning-dados {
+  margin-top: 12px;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #333;
+  padding: 12px;
+  border-radius: 8px;
+  background: #f5f5f5;
+  position: relative;
+}
+
+.policy-toggle {
+  display: inline-block;
+  margin-top: -8px; /* sobe um pouco para ficar perto do texto */
+  margin-left: 4px; /* um espacinho à direita */
+  cursor: pointer;
+  text-decoration: underline;
+  color: #000;
+  font-weight: bold;
+}
+
+.cancel-title {
+  text-align: left;
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 20px;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.cancel-text {
+  text-align: left; /* antes era center */
+  font-size: 16px;
+  color: #555;
+  line-height: 1.5;
+  margin-bottom: 0;
+  margin-left: 16px;
+}
+
+.footer-confirmar {
+  margin-left: auto; /* empurra apenas o botão para a direita */
+  margin-right: 50px; /* pequena margem da borda */
+}
+
+.footer-confirmar button {
+  background-color: #000;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s ease;
+  position: relative;
+}
+
+/* Efeito de loading */
+.footer-confirmar button.loading {
+  background-color: #aaa; /* botão acinzentado */
+  pointer-events: none;
+  color: transparent; /* esconde o texto durante o loading */
+}
+
+/* Circulo animado dentro do botão */
+.footer-confirmar button.loading::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 18px;
+  height: 18px;
+  margin: -9px 0 0 -9px;
+  border: 2px solid #fff;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+.footer-confirmar button:hover {
+  background-color: #333;
+}
+
+.form-group.lembrete-box input[type="checkbox"] {
+  width: auto !important;        /* anula width:100% */
+  display: inline-block !important;
+  padding: 0 !important;
+  margin: 0 6px 0 0 !important;  /* espaço à direita do quadrado (ajusta a gosto) */
+  vertical-align: middle !important;
+  transform: scale(1.05);        /* ajusta tamanho visual */
+  accent-color: #c9a646;
+}
+
+/* Label em linha e sem quebra que possa empurrar o texto */
+.form-group.lembrete-box label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0;                 /* usar margin do input para controlar espaço */
+  white-space: nowrap;    /* evita que o texto quebre e pareça deslocado */
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* Garantir que o container do form-group específico não adiciona espaços extra */
+.form-group.lembrete-box {
+  margin-bottom: 0;       /* opcional: remove margem inferior grande */
+  padding: 0;
+  text-align: left;
+}
+
+.horario-indisponivel {
+    background-color: #ddd;
+    color: #999;
+    cursor: not-allowed;
+  }
+
+/* Tablets até 1024px */
+@media (max-width: 1024px) {
+  .servicos-box {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .calendar-container {
+    width: 85%;
+    margin: 20px auto;
+  }
+
+  .form-container {
+    margin: 20px auto;
+    width: 90%;
+  }
+}
+
+/* Smartphones grandes até 768px */
+@media (max-width: 768px) {
+  /* topo e logo */
+  .servicos-topo {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    text-align: center;
+  }
+
+  .logo-circle-servicos {
+    width: 100px;
+    height: 100px;
+  }
+
+  .logo-circle-servicos img {
+    width: 110%;
+    height: 110%;
+  }
+
+  .empresa-name-servicos {
+    font-size: 16px;
+  }
+
+  /* seções */
+  .servicos-section {
+    padding: 16px;
+  }
+
+  .services-subtitle-top {
+    font-size: 16px;
+    text-align: center;
+    margin: 10px auto;
+  }
+
+  /* caixas de serviços */
+  .servicos-box {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 16px;
+    margin: 12px;
+  }
+
+  .servicos-image-container {
+    width: 80px;
+    height: 80px;
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+
+  .servicos-info .servicos-name {
+    font-size: 18px;
+  }
+
+  .servicos-info .servicos-role {
+    font-size: 14px;
+  }
+
+  .servicos-arrow {
+    font-size: 24px;
+    margin-top: 10px;
+  }
+
+  /* calendário */
+  .calendar-container {
+    width: 90%;
+    max-width: none;
+    margin: 20px auto;
+    padding: 15px;
+  }
+
+  .calendar {
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+  }
+
+  .day {
+    padding: 10px;
+    font-size: 13px;
+  }
+
+  .horarios-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* formulário */
+  .form-container {
+    margin: 20px 10px;
+    padding: 15px;
+    width: calc(100% - 20px);
+  }
+
+  .form-group input,
+  .form-group textarea {
+    font-size: 14px;
+  }
+
+  .telefone-inputs {
+    flex-direction: column;
+  }
+
+  .telefone-inputs .prefixo {
+    width: 100%;
+  }
+
+  /* footer */
+  .pacote-footer {
+    padding: 10px 20px;
+    font-size: 16px;
+    align-items: center;
+  }
+
+  .footer-top {
+    justify-content: center;
+  }
+
+  .footer-expanded {
+    padding: 0 10px;
+  }
+
+  .footer-confirmar {
+    margin-right: 0;
+    margin-left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .footer-confirmar button {
+    width: 90%;
+  }
+}
+
+/* Smartphones pequenos até 480px */
+@media (max-width: 480px) {
+  .servicos-topo {
+    padding: 10px;
+  }
+
+  .logo-circle-servicos {
+    width: 80px;
+    height: 80px;
+  }
+
+  .empresa-name-servicos {
+    font-size: 14px;
+  }
+
+  .servicos-info .servicos-name {
+    font-size: 16px;
+  }
+
+  .servicos-info .servicos-role {
+    font-size: 13px;
+  }
+
+  .services-title {
+    font-size: 18px;
+  }
+
+  .day {
+    padding: 8px;
+  }
+
+  .horarios-container {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .form-container {
+    padding: 12px;
+  }
+
+  .policy-box-dados {
+    padding: 15px;
+    font-size: 14px;
+  }
+
+  .footer-confirmar button {
+    font-size: 14px;
+    padding: 10px;
+  }
+}

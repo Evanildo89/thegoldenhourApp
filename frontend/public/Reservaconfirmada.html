@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reserva Confirmada</title>
+  <link rel="stylesheet" href="Reservaconfirmada.css">
+</head>
+<body>
+  <div class="reserva-box-container">
+    <div class="logo-top">
+      <div class="logo-circle-servicos">
+        <img src="./images/3.png" alt="Logo">
+      </div>
+    </div>
+
+    <div class="reserva-box">
+      <div class="mensagem-confirmacao">
+        Reserva Confirmada
+      </div>
+
+      <div id="profissional-section" style="display:none;">
+  <div class="profissional-nome" id="prof-name"></div>
+</div>
+
+      <div id="reserva-datetime" class="reserva-datetime">
+  <div class="datetime-label">Data e hora</div>
+  <div class="datetime-value">
+    <span id="reserva-data">--/--/----</span> . <span id="reserva-hora">--:--</span>
+  </div>
+</div>
+
+      <div class="reserva-servico" id="reserva-servico">
+  <span class="prefixo">Serviço </span>
+  <span class="nome-servico">--</span>
+       <div class="reserva-detalhes">
+    <div class="detalhes-info">
+      <span class="duracao">-- min</span>
+      <span class="profissional-info"> com --</span>
+    </div>
+    <span class="preco-servico">€--</span>
+  </div>
+
+  <div class="reserva-total">
+    <span class="total-texto">Total a pagar</span>
+    <span class="total-valor">€--</span>
+  </div>
+
+  <div class="reserva-confirmacao-email" id="confirmacao-email" style="display:none;">
+  Foi-lhe enviada uma confirmação para o e-mail
+</div>
+
+        <div class="outra-marcacao-container">
+  <button class="btn-outra-marcacao" onclick="fazerOutraMarcacao()">Fazer outra marcação</button>
+</div>
+</div>
+    </div>
+  </div>
+
+  <script>
+  // Ler parâmetros da URL
+  const params = new URLSearchParams(window.location.search);
+
+  // Profissional
+  const profParam = params.get("prof");
+  if (profParam) {
+    try {
+      const prof = JSON.parse(decodeURIComponent(profParam)); // ✅ decodifica corretamente
+      if (prof && prof.name) {
+        document.getElementById("profissional-section").style.display = "block";
+        document.getElementById("prof-name").textContent = `Com ${prof.name}`;
+      }
+    } catch (e) {
+      console.error("Erro ao processar dados do profissional:", e);
+    }
+  }
+
+  // Data e hora
+  const dataParam = params.get("data");  // ex: 2025-10-21
+const horaParam = params.get("hora");  // ex: 09:00
+
+if (dataParam) {
+  const [ano, mes, dia] = dataParam.split("-");
+
+  // Arrays com dias da semana e meses
+  const diasSemana = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
+  const meses = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
+
+  // Criar objeto Date para obter o dia da semana
+  const dateObj = new Date(`${ano}-${mes}-${dia}`);
+  const diaSemana = diasSemana[dateObj.getDay()];
+
+  // Atualizar conteúdo do elemento
+  document.getElementById("reserva-data").textContent = `${diaSemana}. ${dia} ${meses[parseInt(mes)-1]} ${ano}`;
+}
+
+if (horaParam) {
+  document.getElementById("reserva-hora").textContent = horaParam;
+}
+
+  const pacoteParam = params.get("pacote");
+console.log("Pacote recebido:", pacoteParam); // Verificar no console
+
+if (pacoteParam) {
+  const spanServico = document.querySelector("#reserva-servico .nome-servico");
+  if (spanServico) {
+    spanServico.textContent = decodeURIComponent(pacoteParam);
+  } else {
+    console.error("Erro: span '.nome-servico' não encontrado no DOM");
+  }
+}
+
+  console.log("Data recebida:", dataParam);
+  console.log("Hora recebida:", horaParam);
+
+    const duracaoParam = params.get("duracao") || "30 min";
+const spanDuracao = document.querySelector(".reserva-detalhes .duracao");
+if(spanDuracao) {
+  spanDuracao.textContent = duracaoParam;
+}
+
+// Atualizar profissional
+if (profParam) {
+  try {
+    const prof = JSON.parse(decodeURIComponent(profParam));
+    if (prof && prof.name) {
+      const bio = prof.bio ? ` - ${prof.bio}` : "";
+      const spanProf = document.querySelector(".reserva-detalhes .profissional-info");
+      if(spanProf) {
+        spanProf.textContent = ` com ${prof.name}${bio}`;
+      }
+    }
+  } catch (e) {
+    console.error("Erro ao processar dados do profissional:", e);
+  }
+}
+
+    const valorParam = params.get("valor") || "0";
+const spanPreco = document.querySelector(".reserva-detalhes .preco-servico");
+if(spanPreco) {
+  spanPreco.textContent = `€${valorParam}`;
+}
+
+    const totalParam = params.get("valor") || "0"; // mesmo valor do preço
+const spanTotal = document.querySelector(".reserva-total .total-valor");
+if(spanTotal) {
+  spanTotal.textContent = `€${totalParam}`;
+}
+
+    // Mostrar mensagem de confirmação por email se o lembrete estiver ativo
+const lembrete = localStorage.getItem('lembrete') === 'true';
+const confirmacaoEmail = document.getElementById('confirmacao-email');
+
+if (lembrete && confirmacaoEmail) {
+  confirmacaoEmail.style.display = 'block';
+} else if (confirmacaoEmail) {
+  confirmacaoEmail.style.display = 'none';
+}
+
+   function fazerOutraMarcacao() {
+  window.location.href = '/#servicos'; // volta para a app React, secção "Serviços"
+}
+</script>
+</body>
+</html>

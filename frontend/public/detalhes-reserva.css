@@ -1,0 +1,482 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f5f5f5;
+  margin: 0;
+  padding: 0;
+}
+
+.logo-box {
+  width: 100%;
+  background-color: #ffffff;
+  padding: 15px 0;              /* altura menor da faixa */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;           /* mantém o círculo centralizado verticalmente */
+  justify-content: flex-start;   /* alinha à esquerda */
+}
+
+/* Círculo branco com sombra leve */
+.logo-circle {
+  width: 120px;                   /* ligeiramente menor para equilíbrio */
+  height: 120px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 25px;             /* distância da borda esquerda */
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+/* Logo dentro do círculo */
+.logo-circle img {
+  width: 70%;
+  height: auto;
+  object-fit: contain;
+}
+
+
+/* Nome e email abaixo do logo */
+.cliente-info {
+  background-color:  #f5f5f5;
+  width: 100%;
+  text-align: left;
+  padding: 50px 30px;
+  margin-bottom: 20px;
+}
+
+.cliente-nome {
+  font-weight: bold;
+  font-size: 60px;
+  margin: 4px 0;
+  color: #000000;
+}
+
+.cliente-email {
+  font-weight: normal;
+  font-size: 16px;
+  margin: 2px 0;
+  color: #666666;
+}
+
+.detalhes-titulo h2 {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 15px 30px 10px 30px; /* topo, direita, baixo, esquerda */
+  color: #000000;
+  text-align: left;
+}
+
+.reserva-box {
+  background-color: #fff;
+  margin: 60px 10px 20px 10px;
+  padding: 40px 20px 30px 20px; /* aumentei padding-top para empurrar conteúdo para baixo */
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  width: calc(100% - 10px);
+  max-width: 1400px;
+  text-align: center;
+  position: relative;
+  z-index: 1;   /* centraliza horizontalmente e dá espaçamento vertical */
+}
+
+/* Cliente */
+.cliente-info {
+  margin-bottom: 30px;
+}
+
+.cliente-nome {
+  font-weight: bold;
+  font-size: 40px;
+  color: #000;
+}
+
+.cliente-email {
+  font-size: 16px;
+  color: #777;
+}
+
+/* Data e Hora / Morada */
+.reserva-datetime,
+.reserva-morada,
+.reserva-servico {
+  text-align: left;
+  margin-top: 25px;
+  margin-bottom: 20px;
+}
+
+.datetime-label,
+.prefixo {
+  font-size: 14px;
+  color: #777;
+  margin-bottom: 4px;
+  display: block;
+}
+
+.datetime-value,
+.nome-servico,
+.preco-servico {
+  font-size: 16px;
+  color: #000;
+  font-weight: bold;
+}
+
+/* Serviço detalhes */
+.reserva-detalhes {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 6px;
+  font-size: 14px;
+  color: #999;
+}
+
+.detalhes-info {
+  display: flex;
+  gap: 6px;
+}
+
+.reserva-botoes {
+  display: flex;
+  flex-direction: column;  /* botões em coluna */
+  align-items: center;     /* centraliza horizontalmente */
+  gap: 10px;               /* espaço entre os botões */
+  margin-top: 35px;
+}
+
+.botao,
+.botao.cancelar {
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: 25px;        /* botões arredondados */
+  text-decoration: none;
+  font-weight: bold;
+  color: #000;                 /* texto preto */
+  background-color: #fff;      /* fundo branco */
+  border: 1px solid #888;      /* borda cinza */
+  transition: all 0.3s;
+  text-align: center;
+  white-space: nowrap;         /* impede quebra de linha no texto */
+  width: 150px;                /* mesma largura para todos os botões */
+}
+
+.botao:hover,
+.botao.cancelar:hover {
+  background-color: #f0f0f0;  /* leve alteração no hover */
+  border-color: #888;          /* mantém borda cinza */
+}
+
+.overlay {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.6);
+  display: none;
+  justify-content: center;
+  align-items: flex-end;
+  z-index: 1000;
+}
+
+/* Modal principal */
+.modal {
+  background-color: #fff;
+  width: 100%;
+  height: 33%; /* ocupa cerca de 1/3 da tela */
+  border-radius: 15px 15px 0 0;
+  padding: 25px;
+  box-shadow: 0 -4px 12px rgba(0,0,0,0.2);
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Quando ativo */
+.overlay.active .modal {
+  transform: translateY(0);
+}
+
+/* Cabeçalho do modal */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-header h3 {
+  font-size: 20px;
+  color: #000;
+  margin: 0;
+}
+
+.close-btn {
+  font-size: 28px;
+  color: #888;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.close-btn:hover {
+  color: #000;
+}
+
+/* Conteúdo */
+.modal-content {
+  margin-top: 20px;
+  font-size: 16px;
+  color: #444;
+  line-height: 1.5;
+}
+
+/* Ações (botões) */
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 25px;
+}
+
+.modal-actions .botao {
+  border-radius: 25px;
+  background-color: #fff;
+  color: #000;
+  border: 1px solid #888;
+  padding: 10px 20px;
+  font-weight: bold;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.modal-actions .botao:hover {
+  background-color: #f2f2f2;
+}
+
+.modal-actions .botao.cancelar {
+  border-color: #dc3545;
+  color: #dc3545;
+}
+
+.modal-actions .botao.cancelar:hover {
+  background-color: #ffe6e6;
+}
+
+@media only screen and (max-width: 480px) {
+  .reserva-box {
+    padding: 15px 20px;
+    border-radius: 8px;
+  }
+}
+
+/* Tablets até 1024px */
+@media (max-width: 1024px) {
+  .logo-circle {
+    width: 100px;
+    height: 100px;
+    margin-left: 20px;
+  }
+
+  .cliente-info {
+    padding: 40px 25px;
+  }
+
+  .cliente-nome {
+    font-size: 32px;
+  }
+
+  .cliente-email {
+    font-size: 15px;
+  }
+
+  .detalhes-titulo h2 {
+    font-size: 17px;
+    margin: 15px 25px;
+  }
+
+  .reserva-box {
+    padding: 30px;
+    max-width: 95%;
+  }
+
+  .reserva-datetime,
+  .reserva-morada,
+  .reserva-servico {
+    font-size: 15px;
+  }
+
+  .reserva-total {
+    font-size: 18px;
+  }
+
+  .botao {
+    width: 140px;
+    font-size: 15px;
+  }
+}
+
+/* Smartphones até 768px */
+@media (max-width: 768px) {
+  .logo-box {
+    justify-content: center; /* centraliza o círculo */
+    padding: 10px 0;
+  }
+
+  .logo-circle {
+    width: 90px;
+    height: 90px;
+    margin-left: 0;
+  }
+
+  .cliente-info {
+    text-align: center;
+    padding: 30px 20px;
+  }
+
+  .cliente-nome {
+    font-size: 26px;
+  }
+
+  .cliente-email {
+    font-size: 14px;
+  }
+
+  .detalhes-titulo h2 {
+    text-align: center;
+    font-size: 16px;
+    margin: 10px 0;
+  }
+
+  .reserva-box {
+    margin: 30px 10px;
+    padding: 25px 15px;
+    border-radius: 10px;
+  }
+
+  .reserva-datetime,
+  .reserva-morada,
+  .reserva-servico {
+    margin-top: 20px;
+    margin-bottom: 15px;
+    font-size: 14px;
+  }
+
+  .datetime-value,
+  .nome-servico,
+  .preco-servico {
+    font-size: 15px;
+  }
+
+  .reserva-detalhes {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+    font-size: 13px;
+  }
+
+  .reserva-botoes {
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 25px;
+  }
+
+  .botao {
+    width: 100%;
+    max-width: 250px;
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .modal {
+    height: 45%;
+    padding: 20px;
+  }
+
+  .modal-header h3 {
+    font-size: 18px;
+  }
+
+  .modal-content {
+    font-size: 15px;
+  }
+
+  .modal-actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .modal-actions .botao {
+    width: 100%;
+  }
+}
+
+/* Smartphones pequenos até 480px */
+@media (max-width: 480px) {
+  .logo-circle {
+    width: 70px;
+    height: 70px;
+  }
+
+  .cliente-info {
+    padding: 20px 10px;
+  }
+
+  .cliente-nome {
+    font-size: 22px;
+  }
+
+  .cliente-email {
+    font-size: 13px;
+  }
+
+  .detalhes-titulo h2 {
+    font-size: 15px;
+  }
+
+  .reserva-box {
+    margin: 20px 5px;
+    padding: 20px 10px;
+  }
+
+  .reserva-datetime,
+  .reserva-morada,
+  .reserva-servico {
+    font-size: 13px;
+  }
+
+  .datetime-value,
+  .nome-servico,
+  .preco-servico {
+    font-size: 14px;
+  }
+
+  .reserva-detalhes {
+    font-size: 12px;
+  }
+
+  .botao {
+    font-size: 13px;
+    padding: 8px;
+  }
+
+  .modal {
+    height: 55%;
+    padding: 15px;
+  }
+
+  .modal-header h3 {
+    font-size: 17px;
+  }
+
+  .modal-content {
+    font-size: 14px;
+  }
+
+  .modal-actions .botao {
+    font-size: 13px;
+    padding: 8px;
+  }
+}
+

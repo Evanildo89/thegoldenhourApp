@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detalhes da Reserva</title>
+  <link rel="stylesheet" href="detalhes-reserva.css">
+</head>
+<body>
+
+  <!-- LOGO -->
+  <div class="logo-box">
+  <div class="logo-circle">
+    <img src="./images/3.png" alt="Logo">
+  </div>
+</div>
+
+  <!-- NOME E EMAIL DO CLIENTE -->
+  <div class="cliente-info">
+  <p class="cliente-nome" id="nomeCliente"></p>
+  <p class="cliente-email" id="emailCliente"></p>
+</div>
+
+  <div class="detalhes-titulo">
+  <h2>Detalhes da sua marcação</h2>
+</div>
+
+   <div class="reserva-box">
+
+    <!-- Cliente -->
+
+    <!-- Data e Hora -->
+    <div class="reserva-datetime">
+      <div class="datetime-label">Data e hora</div>
+      <div class="datetime-value">
+        <span id="reserva-data">--/--/----</span> . <span id="reserva-hora">--:--</span>
+      </div>
+    </div>
+
+    <!-- Morada -->
+    <div class="reserva-morada" id="reserva-morada-container">
+      <div class="datetime-label">Morada</div>
+      <div class="datetime-value" id="reserva-morada">--</div>
+    </div>
+
+    <!-- Serviço -->
+    <div class="reserva-servico">
+      <span class="prefixo">Serviço</span>
+      <span class="nome-servico" id="reserva-servico">--</span>
+      <div class="reserva-detalhes">
+  <div class="detalhes-info">
+    <span class="duracao" id="reserva-duracao">-- min</span>
+    <span class="profissional-info"> com <span id="profNome">--</span></span>
+  </div>
+  <span class="preco-servico" id="reserva-valor">€--</span>
+</div>
+    </div>
+
+    <!-- Botões -->
+    <div class="reserva-botoes">
+      <a href="#" class="botao">Reagendar marcação</a>
+      <a href="#" class="botao cancelar">Cancelar marcação</a>
+    </div>
+
+       <div id="overlay" class="overlay">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Cancelar a sua marcação</h3>
+      <span class="close-btn" id="closeBtn">&times;</span>
+    </div>
+
+    <div class="modal-content" id="modalContent">
+      <p>Se surgiu algum imprevisto, nós compreendemos.<br>
+      Por favor, note que o cancelamento não pode ser revertido.</p>
+    </div>
+
+    <div class="modal-actions" id="modalActions">
+      <button id="noBtn" class="botao">Não, mantenho</button>
+      <button id="yesBtn" class="botao cancelar">Sim, cancelo</button>
+    </div>
+  </div>
+</div>
+
+       <div id="overlay-reagendar" class="overlay">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Reagendar a sua marcação</h3>
+      <span class="close-btn" id="closeBtnReagendar">&times;</span>
+    </div>
+
+    <div class="modal-content">
+  <p>Se precisa alterar o horário da sua marcação, escolha uma nova data e hora.</p>
+  <div class="input-group">
+        <label for="novaData">Nova data:</label>
+        <input type="date" id="novaData">
+      </div>
+      <div class="input-group">
+        <label for="novaHora">Nova hora:</label>
+        <select id="novaHora">
+          <!-- Horários preenchidos pelo JS -->
+        </select>
+      </div>
+    </div>
+
+    <div class="modal-actions">
+      <button id="cancelarReagendar" class="botao">Não, manter</button>
+      <button id="confirmarReagendar" class="botao cancelar">Sim, reagendar</button>
+    </div>
+  </div>
+</div>
+
+
+  </div>
+
+<script>
+const overlay = document.getElementById("overlay");
+const cancelarBtn = document.querySelector(".reserva-botoes .botao.cancelar");
+const closeBtn = document.getElementById("closeBtn");
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+
+const overlayReagendar = document.getElementById("overlay-reagendar");
+const reagendarBtn = document.querySelector(".reserva-botoes .botao:not(.cancelar)");
+const closeBtnReagendar = document.getElementById("closeBtnReagendar");
+const cancelarReagendar = document.getElementById("cancelarReagendar");
+const confirmarReagendar = document.getElementById("confirmarReagendar");
+const selectHora = document.getElementById("novaHora");
+const inputData = document.getElementById("novaData");
+
+// --- Função para carregar reserva atual do backend ---
+async function carregarReservaAtual() {
+    const params = new URLSearchParams(window.location.search);
+    const nome = params.get("nome");
+    const email = params.get("email");
+
+    console.log("📥 Parâmetros da URL recebidos:", { nome, email });
+
+    if (!nome || !email) {
+        console.warn("⚠️ Nome ou email não encontrados nos parâmetros da URL");
+        return;
+    }
+
+    try {
+        const resp = await fetch(`http://localhost:8000/api/booking_detail/?nome=${nome}&email=${email}`);
+        console.log("🌐 Resposta da API:", resp);
+
+        if (!resp.ok) throw new Error(`Reserva não encontrada, status ${resp.status}`);
+
+        const reserva = await resp.json();
+        console.log("📄 Dados da reserva recebidos:", reserva);
+
+        document.getElementById("nomeCliente").textContent = nome;
+        document.getElementById("emailCliente").textContent = email;
+        document.getElementById("reserva-morada").textContent = reserva.morada || "--";
+        document.getElementById("reserva-servico").textContent = reserva.service || "--";
+        document.getElementById("reserva-data").textContent = reserva.date || "--/--/----";
+        document.getElementById("reserva-hora").textContent = reserva.time || "--:--";
+        document.getElementById("reserva-valor").textContent = `€${reserva.valor || "--"}`;
+        document.getElementById("profNome").textContent = reserva.prof || "--";
+        document.getElementById("reserva-duracao").textContent = reserva.duracao || "-- min";
+
+        const url = new URL(window.location);
+        url.searchParams.set("data", reserva.date);
+        url.searchParams.set("hora", reserva.time);
+        window.history.replaceState({}, '', url);
+
+    } catch (err) {
+        console.error("❌ Erro ao carregar reserva atual:", err);
+    }
+}
+
+// Carrega a reserva assim que a página abre
+carregarReservaAtual();
+
+// --- Verifica se a reserva já foi cancelada (ao carregar a página) ---
+window.addEventListener("DOMContentLoaded", () => {
+    const cancelada = localStorage.getItem("reservaCancelada");
+    if (cancelada === "true") {
+        const fadeElements = [
+            document.querySelector(".reserva-datetime"),
+            document.getElementById("reserva-morada-container"),
+            document.querySelector(".reserva-servico"),
+            document.querySelector(".reserva-botoes")
+        ];
+        fadeElements.forEach(el => {
+            if (el) el.style.display = "none";
+        });
+
+        const reservaBox = document.querySelector(".reserva-box");
+        if (reservaBox) {
+            const sucessoMsg = document.createElement("div");
+            sucessoMsg.innerHTML = `
+                <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:220px;text-align:center;">
+                    <span style="font-size:48px;color:#28a745;">&#10003;</span>
+                    <p style="margin-top:20px;font-size:20px;font-weight:500;color:#000;">A sua reserva foi cancelada com sucesso</p>
+                    <a href="pagina-marcacao.html"
+                       onclick="localStorage.removeItem('reservaCancelada')"
+                       style="
+                           margin-top:20px;
+                           background:#fff;
+                           color:#000;
+                           border:1px solid #ccc;
+                           border-radius:8px;
+                           padding:10px 20px;
+                           text-decoration:none;
+                           font-weight:500;
+                           transition:background 0.3s ease;
+                       "
+                       onmouseover="this.style.background='#f2f2f2';"
+                       onmouseout="this.style.background='#fff';"
+                    >
+                       Fazer outra marcação
+                    </a>
+                </div>
+            `;
+            reservaBox.appendChild(sucessoMsg);
+        }
+    }
+});
+
+// --- Modal de cancelamento ---
+cancelarBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    overlay.style.display = "flex";
+    setTimeout(() => overlay.classList.add("active"), 10);
+});
+
+function closeModal() {
+    overlay.classList.remove("active");
+    setTimeout(() => overlay.style.display = "none", 300);
+}
+
+closeBtn.addEventListener("click", closeModal);
+noBtn.addEventListener("click", closeModal);
+
+yesBtn.addEventListener("click", async () => {
+    const modalContent = document.getElementById("modalContent");
+    const modalActions = document.getElementById("modalActions");
+
+    modalContent.innerHTML = `
+        <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;margin-top:40px;">
+          <span style="font-size:48px;color:#28a745;">&#10003;</span>
+          <p style="margin-top:20px;font-size:18px;color:#000;font-weight:500;">A sua marcação foi cancelada</p>
+        </div>
+    `;
+    modalActions.style.display = "none";
+
+    const nome = document.getElementById("nomeCliente").textContent;
+    const email = document.getElementById("emailCliente").textContent;
+    const servico = document.getElementById("reserva-servico").textContent;
+    const data = document.getElementById("reserva-data").textContent;
+    const hora = document.getElementById("reserva-hora").textContent;
+    const prof = document.getElementById("profNome").textContent;
+    const valor = document.getElementById("reserva-valor").textContent.replace("€","");
+
+    try {
+        await fetch("http://localhost:8000/api/enviar_cancelamento_email/", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ nome, email, servico, data, hora, profissional: prof, total: valor }),
+        });
+    } catch (err) {
+        console.error("Erro ao enviar e-mail de cancelamento:", err);
+    }
+
+    // 👉 Guarda no localStorage que a reserva foi cancelada
+    localStorage.setItem("reservaCancelada", "true");
+
+    // Aguarda 2 segundos
+    setTimeout(() => {
+        closeModal();
+
+        const fadeElements = [
+            document.querySelector(".reserva-datetime"),
+            document.getElementById("reserva-morada-container"),
+            document.querySelector(".reserva-servico"),
+            document.querySelector(".reserva-botoes")
+        ];
+
+        fadeElements.forEach(el => {
+            if (el) {
+                el.style.transition = "opacity 0.5s ease";
+                el.style.opacity = "0";
+            }
+        });
+
+        setTimeout(() => {
+            fadeElements.forEach(el => {
+                if (el) el.style.display = "none";
+            });
+
+            const reservaBox = document.querySelector(".reserva-box");
+            const sucessoMsg = document.createElement("div");
+            sucessoMsg.innerHTML = `
+                <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:220px;text-align:center;opacity:0;transition:opacity 0.6s ease;">
+                    <span style="font-size:48px;color:#28a745;">&#10003;</span>
+                    <p style="margin-top:20px;font-size:20px;font-weight:500;color:#000;">A sua reserva foi cancelada com sucesso</p>
+                    <a href="pagina-marcacao.html"
+                       onclick="localStorage.removeItem('reservaCancelada')"
+                       style="
+                           margin-top:20px;
+                           background:#fff;
+                           color:#000;
+                           border:1px solid #ccc;
+                           border-radius:8px;
+                           padding:10px 20px;
+                           text-decoration:none;
+                           font-weight:500;
+                           transition:background 0.3s ease;
+                       "
+                       onmouseover="this.style.background='#f2f2f2';"
+                       onmouseout="this.style.background='#fff';"
+                    >
+                       Fazer outra marcação
+                    </a>
+                </div>
+            `;
+            reservaBox.appendChild(sucessoMsg);
+            setTimeout(() => {
+                sucessoMsg.firstElementChild.style.opacity = "1";
+            }, 100);
+
+        }, 600);
+    }, 2000);
+});
+
+// --- Modal de reagendamento ---
+reagendarBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    overlayReagendar.style.display = "flex";
+    setTimeout(() => overlayReagendar.classList.add("active"), 10);
+});
+
+function closeModalReagendar() {
+    overlayReagendar.classList.remove("active");
+    setTimeout(() => overlayReagendar.style.display = "none", 300);
+}
+
+closeBtnReagendar.addEventListener("click", closeModalReagendar);
+cancelarReagendar.addEventListener("click", closeModalReagendar);
+
+inputData.addEventListener("change", async () => {
+    const dataSelecionada = inputData.value;
+    const profNome = document.getElementById("profNome").textContent;
+    if (!dataSelecionada) return;
+
+    let profId = null;
+    try {
+        const respProf = await fetch("http://localhost:8000/api/professionals/");
+        const profissionais = await respProf.json();
+        const profObj = profissionais.find(p => p.name === profNome);
+        if (profObj) profId = profObj.id;
+    } catch (err) {
+        console.error("Erro ao obter profissional:", err);
+    }
+    if (!profId) return alert("Não foi possível identificar o profissional.");
+
+    try {
+        const resp = await fetch(`http://localhost:8000/api/disponibilidade/1?prof_id=${profId}&data=${dataSelecionada}`);
+        const data = await resp.json();
+        selectHora.innerHTML = "";
+        const ocupados = data.ocupados[dataSelecionada] || [];
+        const disponiveis = data.horarios_disponiveis.filter(h => !ocupados.includes(h));
+        if (disponiveis.length > 0) {
+            disponiveis.forEach(h => {
+                const opt = document.createElement("option");
+                opt.value = h;
+                opt.textContent = h;
+                selectHora.appendChild(opt);
+            });
+        } else {
+            const opt = document.createElement("option");
+            opt.value = "";
+            opt.textContent = "Sem horários disponíveis";
+            selectHora.appendChild(opt);
+        }
+    } catch (err) {
+        console.error("Erro ao buscar horários disponíveis:", err);
+    }
+});
+
+confirmarReagendar.addEventListener("click", async () => {
+    const novaData = inputData.value;
+    const novaHora = selectHora.value;
+
+    if (!novaData || !novaHora) return alert("Por favor, selecione uma nova data e hora.");
+
+    const nome = document.getElementById("nomeCliente").textContent;
+    const email = document.getElementById("emailCliente").textContent;
+    const servico = document.getElementById("reserva-servico").textContent;
+    const morada = document.getElementById("reserva-morada").textContent;
+    const valor = document.getElementById("reserva-valor").textContent.replace("€", "");
+    const prof = document.getElementById("profNome").textContent;
+    const duracao = document.getElementById("reserva-duracao").textContent;
+
+    try {
+        const response = await fetch("http://localhost:8000/api/enviar_reagendamento_email/", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ nome, email, servico, morada, data: novaData, hora: novaHora, profissional: { name: prof, bio: '' }, total: valor, duracao }),
+        });
+
+        const result = await response.json();
+        if (result.success && result.updated_booking) {
+            document.getElementById("reserva-data").textContent = result.updated_booking.date;
+            document.getElementById("reserva-hora").textContent = result.updated_booking.time;
+
+            const url = new URL(window.location);
+            url.searchParams.set("data", result.updated_booking.date);
+            url.searchParams.set("hora", result.updated_booking.time);
+            window.history.replaceState({}, '', url);
+
+            overlayReagendar.querySelector(".modal-content").innerHTML = `
+                <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;margin-top:40px;">
+                    <span style="font-size:48px;color:#28a745;">&#10003;</span>
+                    <p style="margin-top:20px;font-size:18px;color:#000;font-weight:500;"> Reagendamento concluído com sucesso! </p>
+                </div>`;
+            overlayReagendar.querySelector(".modal-actions").style.display = "none";
+        } else {
+            alert("Erro ao reagendar: " + result.message);
+        }
+    } catch (err) {
+        console.error("Erro ao enviar e-mail de reagendamento:", err);
+    }
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,226 @@
+body {
+  margin: 0;          /* remove margens padrão do navegador */
+  padding: 0;
+  overflow-x: auto;   /* barra horizontal aparece só se o conteúdo exceder a largura */
+  overflow-y: auto;   /* barra vertical aparece quando necessário */
+}
+
+/* Previne que elementos largos forcem scroll horizontal */
+.pacote-page,
+.team-section,
+.team-box,
+.logo-circle img,
+.team-image-container img {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.pacote-page {
+  background-color: #eee;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding-bottom: 100px; /* adiciona espaço para o footer */
+}
+
+/* Topo da página */
+.pacote-topo {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  background-color: #eee;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  gap: 15px;
+}
+
+/* Botão de voltar */
+.back-button {
+  font-size: 24px;
+  text-decoration: none;
+  color: #333;
+}
+
+.logo-circle {
+  width: 140px;               /* aumenta o tamanho do círculo */
+  height: 140px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* sombra mais visível */
+}
+
+.logo-circle img {
+  width: 120%;                /* ligeiramente maior para preencher melhor */
+  height: 120%;
+  object-fit: cover;
+}
+
+/* Nome da empresa */
+.empresa-name {
+  font-weight: bold;
+  font-size: 18px;
+  color: #333;
+}
+
+/* Seção da equipe */
+.team-section {
+  padding: 30px; /* mais espaço ao redor */
+}
+
+.team-box {
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  justify-content: space-between;
+  padding: 25px; /* aumenta o padding interno */
+  margin-bottom: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* leve sombra para destaque */
+}
+
+.team-info {
+  flex: 1; /* 🔹 empurra a seta para o canto direito */
+}
+
+.team-image-container {
+  width: 100px;  /* aumenta o tamanho da foto */
+  height: 100px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 20px;
+}
+
+.team-image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.team-info .team-name {
+  margin: 0;
+  font-weight: bold;
+  font-size: 20px; /* aumenta o tamanho do nome */
+  color: #333;
+}
+
+.team-info .team-role {
+  margin: 5px 0 0;
+  font-size: 16px; /* aumenta o tamanho da função */
+  color: #666;
+}
+
+.pacote-footer {
+  background-color: #fff;
+  padding: 15px 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-weight: bold;
+  font-size: 18px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+  z-index: 9999;
+  transition: height 0.3s ease; /* animação suave */
+}
+
+.footer-top {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.footer-seta {
+  font-size: 24px;
+  color: #333;
+  text-decoration: none;
+  margin-left: 8px;
+  transition: transform 0.3s ease;
+}
+
+.footer-bottom-grey {
+  font-size: 14px;
+  color: #888;
+  margin-top: 5px;
+  font-weight: normal;
+}
+
+.footer-expanded {
+  width: 100%;
+  display: none; /* escondida inicialmente */
+  margin-top: 10px;
+  box-sizing: border-box;
+  padding: 0         /* aumenta o padding horizontal, move conteúdo para dentro */
+}
+
+.footer-expanded .footer-item {
+  width: 100%;
+  margin: 20px 0; /* 15px acima e abaixo de cada item */
+  box-sizing: border-box;
+}
+
+.footer-expanded .item-top {
+  display: flex;
+  justify-content: flex-start; /* alinha conteúdo à esquerda */
+  gap: 10px;                   /* espaço entre descrição e preço */
+  flex-wrap: wrap;              /* quebra linha se necessário */
+  width: 100%;
+  margin-top: 25px;
+}
+
+.footer-expanded .item-top span:first-child,
+.footer-expanded .item-top span:last-child {
+  flex: none;        /* cada span ocupa apenas o necessário */
+  text-align: left;  /* alinhamento à esquerda */
+  font-size: 14px;           /* pode manter o mesmo tamanho */
+  color: #333;               /* cinzento para combinar */
+  font-weight: normal;
+}
+
+.footer-expanded .item-bottom {
+  font-size: 14px;
+  color: #333;
+  margin-top: 2px;
+}
+
+.footer-expanded .total {
+  font-weight: bold;
+}
+
+.footer-separator {
+  border: 0;
+  border-top: 1px solid #ccc;
+  margin: 8px 0;
+  width: 95%; /* reduz um pouco a largura para criar margem nas laterais */
+}
+
+.servicos-arrow {
+  font-size: 28px;
+  color: #666;
+  cursor: pointer;
+  margin-left: 10px;
+  transition: transform 0.3s, color 0.3s;
+}
+
+.servicos-arrow:hover {
+  transform: translateX(5px);
+  color: #000;
+}
+
+.small-grey {
+  color: #888;       /* Cinza */
+  font-size: 18px; /* Um pouco menor que o normal */
+  margin: 0.2rem 0;  /* Pequeno espaçamento */
+  margin: 20px 20px 10px 20px;
+}
+
+.no-bold {
+  font-weight: normal; /* Remove o bold */
+}

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Página Pacote Essência Criança</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="pacote-page" style="background-color: #eee; min-height: 100vh;">
+    <!-- Topo com botão voltar, logo e nome da empresa -->
+    <div class="pacote-topo">
+      <a href="/" class="back-button">&lt;</a>
+      <div class="logo-circle">
+        <img src="./images/3.png" alt="Logo" />
+      </div>
+      <div class="empresa-name">The Golden Light Photography</div>
+    </div>
+
+    <div class="team-section" id="team-section">
+      <h2 class="team-title small-grey no-bold">Equipa</h2>
+      <!-- Profissionais serão inseridos aqui dinamicamente -->
+    </div>
+
+    <!-- Footer com valor do pacote -->
+    <div class="pacote-footer">
+      <!-- Topo com valor e seta -->
+      <div class="footer-top">
+        <span id="footer-valor">Valor: 0€</span>
+        <a href="javascript:void(0)" class="footer-seta" id="toggle-footer">↓</a>
+      </div>
+
+      <!-- Texto cinzento inicial -->
+      <div class="footer-bottom-grey" id="footer-titulo">
+        Pacote
+      </div>
+
+      <!-- Box expansível (inicialmente escondida) -->
+      <div class="footer-expanded" id="footer-expanded">
+        <hr class="footer-separator">
+
+        <div class="footer-item">
+          <div class="item-top">
+            <span id="footer-item-titulo">Pacote</span>
+            <span id="footer-item-preco">€0</span>
+          </div>
+          <div class="item-bottom">
+            <span id="footer-item-duracao">0 min</span>
+          </div>
+        </div>
+
+        <hr class="footer-separator">
+
+        <div class="footer-item total">
+          <span>Total a pagar</span>
+          <span id="footer-total">€0</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  // Footer
+  const toggleFooter = document.getElementById('toggle-footer');
+  const footerExpanded = document.getElementById('footer-expanded');
+  const footerTitulo = document.getElementById('footer-titulo');
+  const footerItemTitulo = document.getElementById('footer-item-titulo');
+  const footerItemPreco = document.getElementById('footer-item-preco');
+  const footerItemDuracao = document.getElementById('footer-item-duracao');
+  const footerTotal = document.getElementById('footer-total');
+  const footerValor = document.getElementById('footer-valor');
+
+  let footerData = {}; // guardamos os dados da URL
+
+  // ✅ Função para pegar os parâmetros da URL, incluindo service_id
+  function getQueryParams() {
+    const params = new URLSearchParams(window.location.search);
+    return {
+      id: params.get('service_id'), // ✅ agora pegamos o service_id
+      title: params.get('title'),
+      price: params.get('price'),
+      duration: params.get('duration')
+    };
+  }
+
+  toggleFooter.addEventListener('click', () => {
+    if (footerExpanded.style.display === 'block') {
+      footerExpanded.style.display = 'none';
+      toggleFooter.style.transform = 'rotate(0deg)';
+      if (footerData.title && footerData.duration) {
+        footerTitulo.textContent = `${footerData.title} · ${footerData.duration} min`;
+      }
+    } else {
+      footerExpanded.style.display = 'block';
+      toggleFooter.style.transform = 'rotate(180deg)';
+      footerTitulo.textContent = footerData.title;
+    }
+  });
+
+  document.addEventListener('DOMContentLoaded', () => {
+    footerData = getQueryParams(); // ✅ agora footerData.id existe
+    if (footerData.title) {
+      footerTitulo.textContent = `${footerData.title} · ${footerData.duration} min`;
+      footerItemTitulo.textContent = footerData.title;
+      footerItemPreco.textContent = `€${footerData.price}`;
+      footerItemDuracao.textContent = `${footerData.duration} min`;
+      footerTotal.textContent = `€${footerData.price}`;
+      footerValor.textContent = `Valor: ${footerData.price}€`;
+    }
+
+    // Buscar profissionais
+    const teamSection = document.getElementById("team-section");
+
+    fetch("http://localhost:8000/api/professionals/")
+      .then(res => {
+        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+        return res.json();
+      })
+      .then(professionals => {
+        professionals.forEach(prof => {
+          const box = document.createElement("div");
+          box.classList.add("team-box");
+
+          const imgContainer = document.createElement("div");
+          imgContainer.classList.add("team-image-container");
+          const img = document.createElement("img");
+          img.src = prof.photo || './images/default.png';
+          img.alt = prof.name;
+          imgContainer.appendChild(img);
+
+          const info = document.createElement("div");
+          info.classList.add("team-info");
+          const name = document.createElement("h3");
+          name.classList.add("team-name");
+          name.textContent = prof.name;
+          const bio = document.createElement("p");
+          bio.classList.add("team-role");
+          bio.textContent = prof.bio;
+          info.appendChild(name);
+          info.appendChild(bio);
+
+          const arrow = document.createElement("div");
+          arrow.classList.add("servicos-arrow");
+          arrow.textContent = ">";
+          arrow.addEventListener("click", () => {
+            const profData = {
+              id: prof.id,
+              name: prof.name,
+              bio: prof.bio,
+              photo: prof.photo
+            };
+            // ✅ Passa o service_id corretamente
+            const queryParams = new URLSearchParams({
+              service_id: footerData.id,
+              prof_id: prof.id,
+              title: footerData.title,
+              price: footerData.price,
+              duration: footerData.duration,
+              prof: JSON.stringify(profData),
+            }).toString();
+            window.location.href = `calendario.html?${queryParams}`;
+          });
+
+          box.appendChild(imgContainer);
+          box.appendChild(info);
+          box.appendChild(arrow);
+
+          teamSection.appendChild(box);
+        });
+      })
+      .catch(err => console.error("Erro ao buscar profissionais:", err));
+  });
+</script>
+</body>
+</html>

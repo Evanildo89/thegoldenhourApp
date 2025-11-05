@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Página Pacote Eterno Família</title>
+  <link rel="stylesheet" href="./servicos.css">
+</head>
+<body>
+  <div class="servicos-page" style="background-color: #eee; min-height: 100vh;">
+    <!-- Topo com botão voltar, logo e nome da empresa -->
+    <div class="servicos-topo">
+      <a href="javascript:history.back()" class="back-button">&lt;</a>
+      <div class="logo-circle-servicos">
+        <img src="./images/3.png" alt="Logo" />
+      </div>
+      <div class="empresa-name-servicos">The Golden Light Photography</div>
+    </div>
+
+    <div class="calendar-container">
+      <div class="calendar-title">Escolha uma data para sua sessão</div>
+
+      <div class="calendar-header">
+        <button class="nav-button" id="prev-month">&lt;</button>
+        <div id="calendar-month" class="calendar-month"></div>
+        <button class="nav-button" id="next-month">&gt;</button>
+      </div>
+
+      <div id="calendar" class="calendar"></div>
+      <div id="selected-date-text" class="selected-date"></div>
+
+      <!-- Horários disponíveis -->
+      <div id="horarios" class="horarios-container"></div>
+    </div>
+  <div class="pacote-footer">
+  <div class="footer-top">
+    <span id="footer-valor">Valor: 0€</span>
+    <a href="javascript:void(0)" class="footer-seta" id="toggle-footer">↓</a>
+  </div>
+
+  <div id="footer-titulo" class="footer-bottom-grey"></div>
+
+  <div class="footer-expanded" id="footer-expanded">
+    <hr class="footer-separator">
+
+    <div class="footer-item">
+      <div class="item-top">
+        <span id="footer-item-nome"></span>
+        <span id="footer-item-preco"></span>
+      </div>
+      <div class="item-bottom">
+        <span id="footer-item-duracao"></span>
+      </div>
+    </div>
+
+    <hr class="footer-separator">
+
+    <div class="footer-item total">
+      <span>Total a pagar</span>
+      <span id="footer-total"></span>
+    </div>
+  </div>
+</div>
+
+  <script>
+// --- Ler parâmetros da URL ---
+const params = new URLSearchParams(window.location.search);
+const titulo = params.get("title") || "Pacote Desconhecido";
+const valor = params.get("price") || "0";
+const duracao = params.get("duration") || "30 min";
+const pacote = params.get("pacote") || "";
+const service_id = params.get("service_id");
+
+// --- Decodifica dados do profissional ---
+const profParam = params.get("prof");
+let professional = {};
+if (profParam) {
+  try {
+    professional = JSON.parse(profParam);
+  } catch (e) {
+    console.error("Erro ao decodificar dados do profissional:", e);
+  }
+}
+
+// --- Atualiza footer ---
+document.getElementById("footer-valor").textContent = `Valor: ${valor}€`;
+document.getElementById("footer-titulo").textContent = titulo;
+document.getElementById("footer-item-nome").textContent = titulo;
+document.getElementById("footer-item-preco").textContent = `€${valor}`;
+document.getElementById("footer-total").textContent = `€${valor}`;
+document.getElementById("footer-item-duracao").textContent = duracao;
+
+// --- Elementos do calendário ---
+const calendar = document.getElementById("calendar");
+const calendarMonth = document.getElementById("calendar-month");
+const prevBtn = document.getElementById("prev-month");
+const nextBtn = document.getElementById("next-month");
+const selectedDateText = document.getElementById("selected-date-text");
+const horariosContainer = document.getElementById("horarios");
+
+const diasDaSemana = ["Dom","Seg","Ter","Qua","Qui","Sex","Sáb"];
+const meses = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho",
+               "Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
+
+let horariosDisponiveis = ["07:00","09:00","11:00","14:00","16:00","18:00"];
+let ocupados = {};
+let dataAtual = new Date();
+let selectedDate = new Date();
+let selectedHour = null;
+
+// --- Buscar horários ocupados do backend ---
+async function fetchDisponibilidade() {
+  if (!service_id) return;
+  const urlParams = new URLSearchParams(window.location.search);
+  const prof_id = urlParams.get("prof_id");
+
+  try {
+    const res = await fetch(`http://localhost:8000/api/disponibilidade/${service_id}/?prof_id=${prof_id}`);
+    if (!res.ok) {
+      console.error("Erro na requisição:", res.status, res.statusText);
+      return;
+    }
+    const data = await res.json();
+    horariosDisponiveis = data.horarios_disponiveis;
+    ocupados = data.ocupados;
+  } catch (err) {
+    console.error("Erro ao buscar disponibilidade:", err);
+  }
+}
+
+// --- Renderizar calendário ---
+function renderCalendar() {
+  calendar.innerHTML = "";
+  const mes = dataAtual.getMonth();
+  const ano = dataAtual.getFullYear();
+  calendarMonth.textContent = `${meses[mes]} ${ano}`;
+
+  diasDaSemana.forEach(dia => {
+    const div = document.createElement("div");
+    div.classList.add("day-name");
+    div.textContent = dia;
+    calendar.appendChild(div);
+  });
+
+  const primeiroDia = new Date(ano, mes, 1).getDay();
+  const ultimoDia = new Date(ano, mes + 1, 0).getDate();
+  for (let i = 0; i < primeiroDia; i++) calendar.appendChild(document.createElement("div"));
+
+  for (let dia = 1; dia <= ultimoDia; dia++) {
+    const div = document.createElement("div");
+    div.classList.add("day");
+    div.textContent = dia;
+    const currentDate = new Date(ano, mes, dia, 0, 0, 0, 0);
+
+    if (currentDate.toDateString() === selectedDate.toDateString()) div.classList.add("selected");
+
+    div.addEventListener("click", () => {
+      document.querySelectorAll(".day").forEach(d => d.classList.remove("selected"));
+      div.classList.add("selected");
+      selectedDate = currentDate;
+      selectedHour = null;
+      atualizarTextoData();
+      renderHorarios();
+      setTimeout(() => {
+        horariosContainer.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 200);
+    });
+
+    calendar.appendChild(div);
+  }
+
+  atualizarTextoData();
+  renderHorarios();
+}
+
+function atualizarTextoData() {
+  const dia = selectedDate.getDate();
+  const mes = meses[selectedDate.getMonth()];
+  const ano = selectedDate.getFullYear();
+  selectedDateText.textContent = `📅 Data selecionada: ${dia} de ${mes} de ${ano}`;
+}
+
+// --- Renderizar horários disponíveis ---
+function renderHorarios() {
+  horariosContainer.innerHTML = "";
+
+  const dia = selectedDate.getDate();
+  const mes = selectedDate.getMonth() + 1;
+  const ano = selectedDate.getFullYear();
+  const dataFormatada = `${ano}-${mes.toString().padStart(2,'0')}-${dia.toString().padStart(2,'0')}`;
+
+  // 🟡 Comparar data selecionada com hoje
+  const hoje = new Date();
+  hoje.setHours(0,0,0,0);
+  const dataSelecionada = new Date(ano, selectedDate.getMonth(), dia);
+  dataSelecionada.setHours(0,0,0,0);
+
+  if (dataSelecionada < hoje) {
+  const erro = document.createElement("div");
+  erro.textContent = "⚠️ Não é possível agendar para a data de hoje ou anterior.";
+  erro.style.color = "red";
+  erro.style.fontWeight = "bold";
+  erro.style.textAlign = "left"; // 👈 texto alinhado à esquerda
+  erro.style.margin = "15px auto"; // mantém centralizado no container
+  erro.style.padding = "15px 20px";
+  erro.style.background = "#ffeaea";
+  erro.style.borderRadius = "10px";
+  erro.style.whiteSpace = "nowrap";
+  erro.style.display = "inline-block";
+  erro.style.maxWidth = "90%"; // garante que não estoure
+  erro.style.position = "relative";
+  erro.style.transform = "translateX(-20px)"; // 👈 move o bloco inteiro levemente à esquerda
+  horariosContainer.style.textAlign = "center"; // mantém o container centralizado
+  horariosContainer.appendChild(erro);
+
+  setTimeout(() => {
+    horariosContainer.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, 200);
+  return;
+}
+
+  // ✅ Mostrar horários se data for válida
+  horariosDisponiveis.forEach(hora => {
+    if (ocupados[dataFormatada] && ocupados[dataFormatada].includes(hora)) return;
+
+    const box = document.createElement("div");
+    box.classList.add("horario-box");
+    box.textContent = hora;
+
+    if (selectedHour === hora) box.classList.add("horario-selecionado");
+
+    box.addEventListener("click", () => {
+      document.querySelectorAll(".horario-box").forEach(h => h.classList.remove("horario-selecionado"));
+      box.classList.add("horario-selecionado");
+      selectedHour = hora;
+
+      const profData = encodeURIComponent(JSON.stringify(professional));
+      window.location.href = `dados-pessoais.html?pacote=${encodeURIComponent(titulo)}&valor=${valor}&duracao=${encodeURIComponent(duracao)}&data=${dataFormatada}&hora=${selectedHour}&prof=${profData}`;
+    });
+
+    horariosContainer.appendChild(box);
+  });
+}
+
+// --- Navegação do calendário ---
+prevBtn.addEventListener("click", () => {
+  dataAtual.setMonth(dataAtual.getMonth() - 1);
+  selectedDate = new Date(dataAtual.getFullYear(), dataAtual.getMonth(), 1);
+  renderCalendar();
+});
+
+nextBtn.addEventListener("click", () => {
+  dataAtual.setMonth(dataAtual.getMonth() + 1);
+  selectedDate = new Date(dataAtual.getFullYear(), dataAtual.getMonth(), 1);
+  renderCalendar();
+});
+
+// --- Rodapé ---
+const toggleFooter = document.getElementById('toggle-footer');
+const footerExpanded = document.getElementById('footer-expanded');
+toggleFooter.addEventListener('click', () => {
+  if (footerExpanded.style.display === 'block') {
+    footerExpanded.style.display = 'none';
+    toggleFooter.style.transform = 'rotate(0deg)';
+  } else {
+    footerExpanded.style.display = 'block';
+    toggleFooter.style.transform = 'rotate(180deg)';
+  }
+});
+
+// --- Inicialização ---
+(async function init() {
+  await fetchDisponibilidade();
+  renderCalendar();
+})();
+</script>
+  </div>
+</body>
+</html>
