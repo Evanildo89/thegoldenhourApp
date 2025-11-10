@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.sqlite3
+*.env
+venv/
+
+# PyCharm
+.idea/
+
+# Node / React
+node_modules/
+build/
+npm-debug.log
+yarn-error.log
+
+# Sistema
+.DS_Store
+Thumbs.db
