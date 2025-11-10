@@ -60,7 +60,7 @@
   </div>
 
   <script>
-const API_BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:8000";
+const API_BASE_URL = "http://localhost:8000";
 
 // --- Elementos do footer ---
 const toggleFooter = document.getElementById('toggle-footer');
@@ -161,7 +161,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         title: footerData.title,
                         price: footerData.price,
                         duration: footerData.duration,
-                        prof: encodeURIComponent(JSON.stringify(profData))
+                        prof: JSON.stringify(profData)
                     }).toString();
                     window.location.href = `calendario.html?${queryParams}`;
                 });

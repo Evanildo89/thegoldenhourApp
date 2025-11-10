@@ -63,7 +63,7 @@
 </div>
 
   <script>
-    const API_BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:8000";
+    const API_BASE_URL = "http://localhost:8000";
 // --- Ler parâmetros da URL ---
 const params = new URLSearchParams(window.location.search);
 const titulo = params.get("title") || "Pacote Desconhecido";
@@ -77,7 +77,8 @@ const profParam = params.get("prof");
 let professional = {};
 if (profParam) {
   try {
-    professional = JSON.parse(profParam);
+    const decoded = decodeURIComponent(profParam); // ✅ decodifica o texto
+    professional = JSON.parse(decoded);            // ✅ agora o JSON é válido
   } catch (e) {
     console.error("Erro ao decodificar dados do profissional:", e);
   }
