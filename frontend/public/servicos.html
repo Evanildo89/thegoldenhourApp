@@ -22,17 +22,26 @@
     <div id="services-container"></div>
 
     <script>
-      const API_BASE_URL = "http://localhost:8000";
-  // Função para pegar parâmetros da URL
-function getQueryParams(param) {
+       const API_BASE_URL = "http://localhost:8000"; // 🔥 usa apenas isso!
+
+  function getQueryParams(param) {
     const params = new URLSearchParams(window.location.search);
     const value = params.get(param);
-    return value ? JSON.parse(decodeURIComponent(value)) : null;
-}
+    if (!value) return null;
+    try {
+      return JSON.parse(decodeURIComponent(value));
+    } catch (e) {
+      console.warn(`Parâmetro ${param} não é JSON válido:`, e);
+      return null;
+    }
+  }
 
-// Obter serviços e profissional
-const services = getQueryParams('data') || [];
-const professional = getQueryParams('prof') || {};
+  // Obter serviços e profissional
+  const services = getQueryParams('data') || [];
+  const professional = getQueryParams('prof') || {};
+
+  console.log("Services:", services);
+  console.log("Professional:", professional);
 
 const container = document.getElementById('services-container');
 

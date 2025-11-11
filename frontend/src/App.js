@@ -290,10 +290,12 @@ const [errors, setErrors] = useState({})
   onClick={() => {
     if (professionals.length === 0) return;
 
-    const lastProf = professionals[professionals.length - 1];
-    console.log("Profissional enviado:", lastProf);
+    if (!services || services.length === 0) {
+      alert("Os serviços ainda estão carregando. Aguarde um momento.");
+      return;
+    }
 
-    // Criar objeto com os dados do profissional
+    const lastProf = professionals[professionals.length - 1];
     const profData = {
       id: lastProf.id,
       name: lastProf.name,
@@ -301,11 +303,9 @@ const [errors, setErrors] = useState({})
       photo: lastProf.photo,
     };
 
-    // Encodar os dados para enviar pela URL
     const servicesData = encodeURIComponent(JSON.stringify(services));
     const profQuery = encodeURIComponent(JSON.stringify(profData));
 
-    // ✅ Redirecionar para a página de serviços, passando 'data' e 'prof'
     window.location.href = `/servicos.html?data=${servicesData}&prof=${profQuery}`;
   }}
 >
