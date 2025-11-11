@@ -252,7 +252,6 @@ yesBtn.addEventListener("click", async () => {
     const data = document.getElementById("reserva-data").textContent;
     const hora = document.getElementById("reserva-hora").textContent;
     const prof = document.getElementById("profNome").textContent;
-    const profBio = professional.bio || "";
     const valor = document.getElementById("reserva-valor").textContent.replace("€","");
     const duracao = document.getElementById("reserva-duracao").textContent.replace(" min", "") || "--";
 
@@ -260,7 +259,7 @@ yesBtn.addEventListener("click", async () => {
         await fetch(`${API_BASE_URL}/api/enviar_cancelamento_email/`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ nome, email, servico, data, hora, profissional: prof, prof_bio: profBio,  total: valor, duracao  }),
+            body: JSON.stringify({ nome, email, servico, data, hora, profissional: prof, total: valor, duracao  }),
         });
     } catch (err) {
         console.error("Erro ao enviar e-mail de cancelamento:", err);
