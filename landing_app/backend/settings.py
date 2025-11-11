@@ -177,7 +177,7 @@ if DEBUG:
     BASE_URL = "http://localhost:3000"  # ou porta que usas para servir o HTML/React
 else:
     # Ambiente de produção
-    BASE_URL = "https://www.thegoldenlight.com"  # substitui pelo teu domínio real
+    BASE_URL = "https://thegoldenhour-frontend.onrender.com"
 
 LOGGING = {
     'version': 1,
