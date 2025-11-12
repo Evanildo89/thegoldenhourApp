@@ -172,6 +172,9 @@ CORS_ALLOWED_ORIGINS = [
     "https://thegoldenhour-frontend.onrender.com",  # produção
 ]
 
+print("DEBUG =", DEBUG)
+print("DATABASE_URL =", os.getenv('DATABASE_URL'))
+
 if DEBUG:
     # Ambiente de desenvolvimento (localhost)
     BASE_URL = "http://localhost:3000"  # ou porta que usas para servir o HTML/React
