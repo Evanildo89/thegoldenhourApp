@@ -128,11 +128,7 @@
 </div>
 
 <script>
-  const API_BASE_URL = window.location.hostname === "localhost"
-  ? "http://localhost:8000"
-  : "https://thegoldenhourapp.onrender.com";
-
-console.log("📡 API Base URL:", API_BASE_URL);
+  const API_BASE_URL = "http://localhost:8000";
 const paramsCheck = new URLSearchParams(window.location.search);
 
 const profParamCheck = paramsCheck.get("prof");
