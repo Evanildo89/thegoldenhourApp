@@ -262,7 +262,7 @@ def enviar_cancelamento_email(request):
         email = data.get('email')
         servico = data.get('servico')
         data_reserva = data.get('data')
-        duracao = data.get('duracao', '-- min')
+        duracao = data.get('duracao', '--')
         hora_reserva = data.get('hora')
         prof = data.get('profissional')
         total = data.get('total', '--')

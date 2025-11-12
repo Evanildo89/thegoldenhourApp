@@ -172,12 +172,7 @@ CORS_ALLOWED_ORIGINS = [
     "https://thegoldenhour-frontend.onrender.com",  # produção
 ]
 
-if DEBUG:
-    # Ambiente de desenvolvimento (localhost)
-    BASE_URL = "http://localhost:3000"  # ou porta que usas para servir o HTML/React
-else:
-    # Ambiente de produção
-    BASE_URL = "https://thegoldenhour-frontend.onrender.com"
+BASE_URL = os.getenv('BASE_URL', "http://localhost:3000")
 
 LOGGING = {
     'version': 1,
@@ -187,3 +182,6 @@ LOGGING = {
     },
     'root': {'handlers': ['console'], 'level': 'DEBUG'},
 }
+
+print("🌐 BASE_URL:", BASE_URL)
+print("🔧 DEBUG:", DEBUG)
