@@ -57,6 +57,7 @@ class ProfessionalListAPIView(generics.ListAPIView):
 @csrf_exempt
 def enviar_confirmacao_email(request):
     BASE_URL = settings.BASE_URL
+    print("BASE_URL usada no e-mail:", BASE_URL)
     if request.method == 'POST':
         data = json.loads(request.body)
         nome = data.get('nome')
