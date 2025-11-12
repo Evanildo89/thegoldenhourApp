@@ -24,8 +24,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-ozdc^d(&tt0bk+^dawvy%#&4y$v)uhxstzn&4kg*@=*w#c)0e%'
 
-# # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = True
 
 
 ALLOWED_HOSTS = [
@@ -171,9 +171,6 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",  # desenvolvimento
     "https://thegoldenhour-frontend.onrender.com",  # produção
 ]
-
-print("DEBUG =", DEBUG)
-print("DATABASE_URL =", os.getenv('DATABASE_URL'))
 
 if DEBUG:
     # Ambiente de desenvolvimento (localhost)
