@@ -85,7 +85,9 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-if DEBUG:
+USE_SQLITE_LOCAL = os.environ.get("USE_SQLITE_LOCAL", "False") == "True"
+
+if DEBUG or USE_SQLITE_LOCAL:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
@@ -93,11 +95,16 @@ if DEBUG:
         }
     }
 else:
+    # Usando PostgreSQL (produção ou teste local)
     DATABASES = {
-        'default': dj_database_url.config(
-            default=os.getenv('DATABASE_URL'),
-            conn_max_age=600,
-        )
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.getenv('PG_DB', 'thegoldenhour_local'),  # seu banco local
+            'USER': os.getenv('PG_USER', 'myuserr'),           # seu usuário local
+            'PASSWORD': os.getenv('PG_PASSWORD', 'Rodrigues89&'),  # senha
+            'HOST': os.getenv('PG_HOST', 'localhost'),        # localhost para teste
+            'PORT': os.getenv('PG_PORT', '5432'),             # porta padrão
+        }
     }
 
 MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
