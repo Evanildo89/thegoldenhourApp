@@ -9,10 +9,6 @@ import os
 SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-temporaria')
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
-EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-ADMIN_EMAIL = os.getenv('ADMIN_EMAIL', EMAIL_HOST_USER)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,19 +17,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-ozdc^d(&tt0bk+^dawvy%#&4y$v)uhxstzn&4kg*@=*w#c)0e%'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-
 ALLOWED_HOSTS = [
     "127.0.0.1",
     "localhost",
     "thegoldenlight.com",
     "www.thegoldenlight.com",
     "thegoldenhourapp.onrender.com",
+    "thegoldenhour-frontend.onrender.com",
 ]
 
 
@@ -110,6 +100,10 @@ else:
 MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
 
 # Emails
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
@@ -163,15 +157,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'evanildovrodrigues@gmail.com'
-EMAIL_HOST_PASSWORD = 'qrqy ulov hvcq dnhk'
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-ADMIN_EMAIL = 'evanildovrodrigues@gmail.com'
 
 
 CORS_ALLOWED_ORIGINS = [
