@@ -4,15 +4,23 @@ import os
 from decouple import config
 from dotenv import load_dotenv
 
-load_dotenv()
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+# garante que o .env seja carregado
+dotenv_path = BASE_DIR / 'landing_app' / '.env'
+if dotenv_path.exists():
+    load_dotenv(dotenv_path)
+else:
+    print("⚠️ .env não encontrado em:", dotenv_path)
+
+EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='')
+print("DEBUG EMAIL_HOST_USER:", EMAIL_HOST_USER)  # debug
 
 # Segredos e config do ambiente
 SECRET_KEY = config('SECRET_KEY', default='django-insecure-temporaria')
 DEBUG = config('DEBUG', default=False, cast=bool)
 DATABASE_URL = config('DATABASE_URL')
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Allowed hosts
 ALLOWED_HOSTS = [
@@ -122,7 +130,7 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 # Base URL
-BASE_URL = "http://localhost:3000" if DEBUG else "https://thegoldenhour-frontend.onrender.com"
+BASE_URL = config('BASE_URL', default='http://localhost:3000')
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
