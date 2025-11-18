@@ -7,11 +7,15 @@ from dotenv import load_dotenv
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # garante que o .env seja carregado
-dotenv_path = BASE_DIR / 'landing_app' / '.env'
-if dotenv_path.exists():
+dotenv_path = BASE_DIR / '.env'
+dotenv_local_path = BASE_DIR / '.env.local'
+
+if dotenv_local_path.exists():
+    load_dotenv(dotenv_local_path)
+elif dotenv_path.exists():
     load_dotenv(dotenv_path)
 else:
-    print("⚠️ .env não encontrado em:", dotenv_path)
+    print("⚠️ .env não encontrado")
 
 EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='')
 print("DEBUG EMAIL_HOST_USER:", EMAIL_HOST_USER)  # debug
