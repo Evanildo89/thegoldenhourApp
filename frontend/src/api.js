@@ -1,4 +1,7 @@
-const API_BASE_URL = "https://thegoldenhourapp.onrender.com";
+const API_BASE_URL =
+  window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
+    ? "http://127.0.0.1:8000"
+    : "https://thegoldenhourapp.onrender.com";
 
 export const getServices = async () => {
   const res = await fetch(`${API_BASE_URL}/api/services/`);

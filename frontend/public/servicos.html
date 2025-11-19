@@ -22,7 +22,10 @@
     <div id="services-container"></div>
 
     <script>
-       const API_BASE_URL = "http://localhost:8000"; // 🔥 usa apenas isso!
+       const API_BASE_URL =
+  window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
+    ? "http://127.0.0.1:8000"
+    : "https://thegoldenhourapp.onrender.com";
 
   function getQueryParams(param) {
     const params = new URLSearchParams(window.location.search);
