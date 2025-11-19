@@ -10,12 +10,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 dotenv_path = BASE_DIR / '.env'
 dotenv_local_path = BASE_DIR / '.env.local'
 
-if dotenv_local_path.exists():
-    load_dotenv(dotenv_local_path)
-elif dotenv_path.exists():
-    load_dotenv(dotenv_path)
+if config("DEBUG", default=False, cast=bool):
+    # Em desenvolvimento carrega .env.local
+    if dotenv_local_path.exists():
+        load_dotenv(dotenv_local_path)
 else:
-    print("⚠️ .env não encontrado")
+    # Em produção, ignora .env.local e usa apenas .env
+    if dotenv_path.exists():
+        load_dotenv(dotenv_path)
 
 EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='')
 print("DEBUG EMAIL_HOST_USER:", EMAIL_HOST_USER)  # debug
@@ -135,6 +137,7 @@ CORS_ALLOWED_ORIGINS = [
 
 # Base URL
 BASE_URL = config('BASE_URL', default='http://localhost:3000')
+print("BASE_URL final:", BASE_URL)
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
