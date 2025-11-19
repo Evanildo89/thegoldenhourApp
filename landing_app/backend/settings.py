@@ -136,9 +136,19 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 # Permite credenciais (cookies, autenticação)
-CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_ALL_ORIGINS = True
 
-# Cabeçalhos que podem ser enviados pelo frontend
+# Permite todos os métodos HTTP
+CORS_ALLOW_METHODS = [
+    "DELETE",
+    "GET",
+    "OPTIONS",
+    "PATCH",
+    "POST",
+    "PUT",
+]
+
+# Permite todos os cabeçalhos necessários
 CORS_ALLOW_HEADERS = [
     "accept",
     "accept-encoding",
