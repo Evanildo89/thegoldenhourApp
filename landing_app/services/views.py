@@ -9,6 +9,7 @@ from django.core.mail import send_mail
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
+import os
 from django.core.mail import EmailMultiAlternatives
 from django.shortcuts import render
 from urllib.parse import quote
@@ -56,7 +57,7 @@ class ProfessionalListAPIView(generics.ListAPIView):
 
 @csrf_exempt
 def enviar_confirmacao_email(request):
-    BASE_URL = settings.BASE_URL
+    BASE_URL = os.environ.get('BASE_URL', 'http://localhost:3000')
     print("BASE_URL usada no e-mail:", BASE_URL)
     if request.method == 'POST':
         data = json.loads(request.body)
