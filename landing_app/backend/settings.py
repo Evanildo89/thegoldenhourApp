@@ -135,6 +135,22 @@ CORS_ALLOWED_ORIGINS = [
     "https://thegoldenhour-frontend.onrender.com",
 ]
 
+# Permite credenciais (cookies, autenticação)
+CORS_ALLOW_CREDENTIALS = True
+
+# Cabeçalhos que podem ser enviados pelo frontend
+CORS_ALLOW_HEADERS = [
+    "accept",
+    "accept-encoding",
+    "authorization",
+    "content-type",
+    "dnt",
+    "origin",
+    "user-agent",
+    "x-csrftoken",
+    "x-requested-with",
+]
+
 # Base URL
 BASE_URL = config('BASE_URL', default='http://localhost:3000')
 print("BASE_URL final:", BASE_URL)
