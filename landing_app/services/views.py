@@ -10,6 +10,7 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
 import os
+import threading
 from django.core.mail import EmailMultiAlternatives
 from django.shortcuts import render
 from urllib.parse import quote
@@ -55,6 +56,8 @@ class ProfessionalListAPIView(generics.ListAPIView):
     queryset = Professional.objects.all()
     serializer_class = ProfessionalSerializer
 
+def send_email_async(email_msg):
+    email_msg.send(fail_silently=False)
 @csrf_exempt
 def enviar_confirmacao_email(request):
     BASE_URL = os.environ.get('BASE_URL', 'http://localhost:3000')
@@ -222,24 +225,11 @@ def enviar_confirmacao_email(request):
                 to=[email]
             )
             email_msg.attach_alternative(html_mensagem, "text/html")
-            email_msg.send(fail_silently=False)
+            threading.Thread(target=send_email_async, args=(email_msg,)).start()
 
         try:
-            email_responsavel = settings.EMAIL_HOST_USER  # trocar pelo e-mail real
-            html_mensagem_responsavel = f"""
-                    <html>
-                    <body>
-                        <p>Olá,</p>
-                        <p>O cliente <strong>{nome}</strong> agendou uma nova marcação.</p>
-                        <p><strong>Serviço:</strong> {servico}</p>
-                        <p><strong>Data e hora:</strong> {data_formatada} às {hora_reserva}</p>
-                        <p><strong>Profissional:</strong> {prof_nome}- {prof_bio}</p>
-                        <p><strong>Valor:</strong> €{total}</p>
-                        <p><strong>Duração:</strong> {duracao} min</p>
-                        <p>Por favor, atualize a agenda interna conforme necessário.</p>
-                    </body>
-                    </html>
-                    """
+            email_responsavel = settings.EMAIL_HOST_USER
+            html_mensagem_responsavel = f""" ... SEU HTML INTERNO AQUI ... """
             email_msg_responsavel = EmailMultiAlternatives(
                 subject=f"Nova reserva: {nome} - {servico}",
                 body=f"O cliente {nome} agendou uma marcação para {data_formatada} às {hora_reserva}.",
@@ -248,13 +238,13 @@ def enviar_confirmacao_email(request):
                 reply_to=[email],
             )
             email_msg_responsavel.attach_alternative(html_mensagem_responsavel, "text/html")
-            email_msg_responsavel.send(fail_silently=False)
+            threading.Thread(target=send_email_async, args=(email_msg_responsavel,)).start()
         except Exception as e:
             logger.exception(f"Erro ao enviar e-mail interno para responsável: {e}")
 
         return JsonResponse({'success': True, 'message': 'E-mail enviado com sucesso!'})
 
-    return JsonResponse({'success': False, 'message': 'Método inválido.'})
+        return JsonResponse({'success': False, 'message': 'Método inválido.'})
 
 @csrf_exempt
 def enviar_cancelamento_email(request):
