@@ -214,15 +214,18 @@ def enviar_confirmacao_email(request):
         </html>
         """
 
-        if lembrete and email:
-            email_msg = EmailMultiAlternatives(
-                subject=assunto,
-                body="Confirmação da sua reserva",
-                from_email=settings.EMAIL_HOST_USER,
-                to=[email]
-            )
-            email_msg.attach_alternative(html_mensagem, "text/html")
-            email_msg.send(fail_silently=False)
+        try:
+            if lembrete and email:
+                email_msg = EmailMultiAlternatives(
+                    subject=assunto,
+                    body="Confirmação da sua reserva",
+                    from_email=settings.EMAIL_HOST_USER,
+                    to=[email]
+                )
+                email_msg.attach_alternative(html_mensagem, "text/html")
+                email_msg.send(fail_silently=False)
+        except Exception as e:
+            logger.exception(f"Erro ao enviar e-mail para o cliente {email}: {e}")
 
         try:
             email_responsavel = settings.EMAIL_HOST_USER  # trocar pelo e-mail real
