@@ -101,13 +101,13 @@ else:
 
 # Emails
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.resend.com'
-EMAIL_PORT = config('EMAIL_PORT', default=587, cast=int)
-EMAIL_USE_TLS = config('EMAIL_USE_TLS', default=True, cast=bool)
-EMAIL_HOST_USER = 'apikey'  # obrigatório usar "apikey" com Resend
-EMAIL_HOST_PASSWORD = config('RESEND_API_KEY', default='')  # pega da variável de ambiente
-DEFAULT_FROM_EMAIL = config('ADMIN_EMAIL', default='evanildovrodrigues@gmail.com')
-ADMIN_EMAIL = config('ADMIN_EMAIL', default=DEFAULT_FROM_EMAIL)
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+ADMIN_EMAIL = config('ADMIN_EMAIL', default=EMAIL_HOST_USER)
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
