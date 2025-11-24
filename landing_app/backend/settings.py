@@ -106,7 +106,7 @@ EMAIL_PORT = config('EMAIL_PORT', default=587, cast=int)
 EMAIL_USE_TLS = config('EMAIL_USE_TLS', default=True, cast=bool)
 EMAIL_HOST_USER = 'apikey'  # obrigatório usar "apikey" com Resend
 EMAIL_HOST_PASSWORD = config('RESEND_API_KEY', default='')  # pega da variável de ambiente
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+DEFAULT_FROM_EMAIL = config('ADMIN_EMAIL', default='evanildovrodrigues@gmail.com')
 ADMIN_EMAIL = config('ADMIN_EMAIL', default=DEFAULT_FROM_EMAIL)
 
 # Password validation
