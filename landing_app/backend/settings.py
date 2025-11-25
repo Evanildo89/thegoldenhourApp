@@ -100,7 +100,7 @@ else:
     }
 
 # Emails
-EMAIL_BACKEND = "sgbackend.SendgridBackend"
+EMAIL_BACKEND = "sgbackend.SendGridBackend"
 SENDGRID_API_KEY = config("SENDGRID_API_KEY")
 DEFAULT_FROM_EMAIL = "evanildovrodrigues@gmail.com"
 ADMIN_EMAIL = "evanildovrodrigues@gmail.com"

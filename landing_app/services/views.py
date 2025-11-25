@@ -214,21 +214,21 @@ def enviar_confirmacao_email(request):
         </html>
         """
 
-        try:
-            if lembrete and email:
+        if lembrete and email:
+            try:
                 email_msg = EmailMultiAlternatives(
                     subject=assunto,
                     body="Confirmação da sua reserva",
-                    from_email=settings.EMAIL_HOST_USER,
+                    from_email=settings.DEFAULT_FROM_EMAIL,  # Use DEFAULT_FROM_EMAIL
                     to=[email]
                 )
                 email_msg.attach_alternative(html_mensagem, "text/html")
                 email_msg.send(fail_silently=False)
-        except Exception as e:
-            logger.exception(f"Erro ao enviar e-mail para o cliente {email}: {e}")
+            except Exception as e:
+                logger.exception(f"Erro ao enviar e-mail para o cliente {email}: {e}")
 
         try:
-            email_responsavel = settings.EMAIL_HOST_USER  # trocar pelo e-mail real
+            email_responsavel = settings.DEFAULT_FROM_EMAIL   # trocar pelo e-mail real
             html_mensagem_responsavel = f"""
                     <html>
                     <body>
@@ -246,7 +246,7 @@ def enviar_confirmacao_email(request):
             email_msg_responsavel = EmailMultiAlternatives(
                 subject=f"Nova reserva: {nome} - {servico}",
                 body=f"O cliente {nome} agendou uma marcação para {data_formatada} às {hora_reserva}.",
-                from_email=f"The Golden Light Photography <{settings.EMAIL_HOST_USER}>",
+                from_email=f"The Golden Light Photography <{settings.DEFAULT_FROM_EMAIL}>",
                 to=[email_responsavel],
                 reply_to=[email],
             )
