@@ -3,7 +3,7 @@ from django.db import models
 class Professional(models.Model):
     name = models.CharField(max_length=200)
     bio = models.TextField(blank=True)
-    photo = models.ImageField(upload_to="professionals/", blank=True, null=True)
+    photo = models.CharField(max_length=300, blank=True, null=True)
 
     def __str__(self):
         return self.name
