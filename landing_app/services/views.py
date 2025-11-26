@@ -6,7 +6,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 import datetime, logging
 from django.core.mail import send_mail
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
 import os
@@ -791,3 +791,7 @@ def submit_review(request):
 
 def index(request):
     return render(request, 'index.html')
+
+def atualizar_photos(request):
+    Professional.objects.all().update(photo='/images/vansophie.jpg')
+    return HttpResponse("Photos atualizadas!")

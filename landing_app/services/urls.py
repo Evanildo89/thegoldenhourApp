@@ -11,6 +11,7 @@ from .views import (
     enviar_cancelamento_email,
     enviar_reagendamento_email,
     submit_review,
+    atualizar_photos
 )
 
 router = DefaultRouter()
@@ -27,4 +28,5 @@ urlpatterns = [
     path('enviar_cancelamento_email/', enviar_cancelamento_email, name='enviar_cancelamento_email'),
     path('enviar_reagendamento_email/', enviar_reagendamento_email, name='enviar_reagendamento_email'),
     path('reviews/', submit_review, name='submit_review'),
+    path('atualizar-photos/', atualizar_photos, name='atualizar_photos')
 ]
