@@ -160,6 +160,8 @@ const [errors, setErrors] = useState({})
   };
 }, []);
 
+  console.log('Professionals:', professionals);
+
 
   return (
     <div className="app-container">
@@ -259,6 +261,8 @@ const [errors, setErrors] = useState({})
 </div>
   </>
 )}
+
+
 
  <hr className="team-separator" />
 
