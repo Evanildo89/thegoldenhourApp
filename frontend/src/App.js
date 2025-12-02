@@ -8,7 +8,7 @@ import { X } from "lucide-react"; // npm install lucide-react
 import { getServices, getProfessionals, postReview } from './api';
 
 
-const PHONE_NUMBER = '+351 912 345 678'; // seu número
+const PHONE_NUMBER = '+351 961 292 916'; // seu número
 
 const pacotePages = {
   1: 'pacote-essencia-gravida.html',
