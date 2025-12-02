@@ -11,7 +11,7 @@ from .views import (
     enviar_cancelamento_email,
     enviar_reagendamento_email,
     submit_review,
-    atualizar_photos
+    # atualizar_photos
 )
 
 router = DefaultRouter()
