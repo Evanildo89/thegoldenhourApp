@@ -792,6 +792,6 @@ def submit_review(request):
 def index(request):
     return render(request, 'index.html')
 
-def atualizar_photos(request):
-    Professional.objects.all().update(photo='/images/vansophie.jpg')
-    return HttpResponse("Photos atualizadas!")
+# def atualizar_photos(request):
+#     Professional.objects.all().update(photo='/images/vansophie.jpg')
+#     return HttpResponse("Photos atualizadas!")
