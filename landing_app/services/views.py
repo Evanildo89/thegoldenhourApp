@@ -343,9 +343,9 @@ def enviar_cancelamento_email(request):
         email_cliente = EmailMultiAlternatives(
             subject=assunto,
             body="A sua marcação foi cancelada.",
-            from_email = f"The Golden Light Photography <{settings.DEFAULT_FROM_EMAIL}>",
-            to=[email],
-            reply_to=[email]  # ✅ respostas vão para o cliente
+            from_email=f"The Golden Light Photography <{settings.DEFAULT_FROM_EMAIL}>",  # endereço verificado
+            to=[email],  # vai para o cliente
+            reply_to=[settings.DEFAULT_FROM_EMAIL]  # respostas vão para a empresa
         )
         email_cliente.attach_alternative(html_mensagem, "text/html")
         email_cliente.send(fail_silently=False)
@@ -375,12 +375,13 @@ def enviar_cancelamento_email(request):
             </html>
             """
 
+            email_responsavel = ["reservas@thedgoldenlight.pt", "evanildovrodrigues@gmail.com"]
             email_msg_responsavel = EmailMultiAlternatives(
                 subject=f"Cancelamento de reserva: {nome} - {servico}",
                 body=f"O cliente {nome} cancelou a reserva de {servico} marcada para {data_reserva} às {hora_reserva}.",
                 from_email=settings.DEFAULT_FROM_EMAIL,
                 to=email_responsavel,
-                reply_to=[email]
+                reply_to=[email]  # ✅ respostas vão para o cliente, como você queria
             )
             email_msg_responsavel.attach_alternative(html_mensagem_responsavel, "text/html")
             email_msg_responsavel.send(fail_silently=False)
