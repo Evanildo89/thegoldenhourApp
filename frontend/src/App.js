@@ -482,7 +482,7 @@ const [errors, setErrors] = useState({})
               </>
             ) : (
               <div className="loading">
-                <div className="spinner"></div> Pensando...
+                <div className="spinner"></div> Aguarde...
               </div>
             )}
           </>
