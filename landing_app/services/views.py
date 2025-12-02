@@ -623,9 +623,9 @@ def enviar_reagendamento_email(request):
             email_cliente = EmailMultiAlternatives(
                 subject=assunto,
                 body="Reagendamento da sua reserva",
-                from_email=f"{nome} <{email}>",  # mostra o e-mail do cliente no "De:"
-                to=[email],  # vai para o cliente
-                reply_to=[settings.EMAIL_HOST_USER]  # respostas voltam para o e-mail da empresa
+                from_email=f"{nome} via The Golden Light Photography <{settings.DEFAULT_FROM_EMAIL}>",
+                to=[email],  # e-mail do cliente
+                reply_to=[email]  # resposta volta para o cliente
             )
             email_cliente.attach_alternative(html_mensagem, "text/html")
             email_cliente.send(fail_silently=False)
@@ -650,8 +650,8 @@ def enviar_reagendamento_email(request):
             email_interno = EmailMultiAlternatives(
                 subject=assunto_interno,
                 body=mensagem_interna,
-                from_email=settings.EMAIL_HOST_USER,  # e-mail da empresa
-                to=[settings.EMAIL_HOST_USER]  # notificação interna
+                from_email=settings.DEFAULT_FROM_EMAIL,  # e-mail da empresa
+                to=[settings.DEFAULT_FROM_EMAIL]  # notificação interna
             )
             email_interno.send(fail_silently=False)
 
