@@ -56,6 +56,7 @@ const [comment, setComment] = useState("");
 const [errors, setErrors] = useState({})
  const [professionals, setProfessionals] = useState([]);
  const [loading, setLoading] = useState(false);
+ const [success, setSuccess] = useState(false);
 
   const handleNavClick = (id) => {
     setActiveNav(id);
@@ -84,25 +85,25 @@ const [errors, setErrors] = useState({})
   setErrors(newErrors);
 
   if (Object.keys(newErrors).length === 0) {
-    setLoading(true); // ativa o spinner
+    setLoading(true); // ativa spinner
+    setSuccess(false);
 
-    // Simula o "pensar" de 2 segundos
     setTimeout(async () => {
       try {
-        // usamos o postReview() em vez de fetch()
-        const data = await postReview({ name, email, rating, comment });
+        await postReview({ name, email, rating, comment });
 
-        alert(data.message || "Avaliação enviada com sucesso!");
+        // limpa campos
         setRating(0);
         setName("");
         setEmail("");
         setComment("");
-        setShowBox(false);
+
+        setSuccess(true); // mostra mensagem de sucesso
       } catch (err) {
         console.error(err);
         alert(err.message || "Erro ao enviar avaliação. Tente novamente.");
       } finally {
-        setLoading(false); // desativa o spinner
+        setLoading(false); // desativa spinner
       }
     }, 2000);
   }
@@ -403,77 +404,93 @@ const [errors, setErrors] = useState({})
       <div className="avaliacao-header">
         <h3>Escrever uma avaliação</h3>
         <button className="fechar-btn" onClick={() => setShowBox(false)}>
-  <X size={22} />
-</button>
-
+          <X size={22} />
+        </button>
       </div>
 
       <div className="avaliacao-conteudo">
-  {/* Avaliação em estrelas */}
-  <div className="avaliacao-rating">
-    <label className="avaliacao-label">
-      A sua classificação <span className="obrigatorio">*</span>
-    </label>
-    <div className="stars">
-      {[1,2,3,4,5].map(star => (
-        <span
-          key={star}
-          className={`star ${star <= rating ? "filled" : ""}`}
-          onClick={() => setRating(star)}
-        >
-          ★
-        </span>
-      ))}
-    </div>
-    {errors.rating && <span className="avaliacao-error">{errors.rating}</span>}
-  </div>
+        {!success ? (
+          <>
+            {!loading ? (
+              <>
+                {/* Avaliação em estrelas */}
+                <div className="avaliacao-rating">
+                  <label className="avaliacao-label">
+                    A sua classificação <span className="obrigatorio">*</span>
+                  </label>
+                  <div className="stars">
+                    {[1,2,3,4,5].map(star => (
+                      <span
+                        key={star}
+                        className={`star ${star <= rating ? "filled" : ""}`}
+                        onClick={() => setRating(star)}
+                      >
+                        ★
+                      </span>
+                    ))}
+                  </div>
+                  {errors.rating && <span className="avaliacao-error">{errors.rating}</span>}
+                </div>
 
-  {/* Nome completo */}
-  <div className="avaliacao-field">
-    <label className="avaliacao-label">
-      Nome completo <span className="obrigatorio">*</span>
-    </label>
-    <input
-      type="text"
-      className="avaliacao-input"
-      placeholder="Seu nome"
-      value={name}
-      onChange={(e) => setName(e.target.value)}
-    />
-    {errors.name && <span className="avaliacao-error">{errors.name}</span>}
-  </div>
+                {/* Nome */}
+                <div className="avaliacao-field">
+                  <label className="avaliacao-label">
+                    Nome completo <span className="obrigatorio">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    className="avaliacao-input"
+                    placeholder="Seu nome"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                  {errors.name && <span className="avaliacao-error">{errors.name}</span>}
+                </div>
 
-  {/* Email */}
-  <div className="avaliacao-field">
-    <label className="avaliacao-label">
-      Email <span className="obrigatorio">*</span>
-    </label>
-    <input
-      type="email"
-      className="avaliacao-input"
-      placeholder="seuemail@exemplo.com"
-      value={email}
-      onChange={(e) => setEmail(e.target.value)}
-    />
-    {errors.email && <span className="avaliacao-error">{errors.email}</span>}
-  </div>
+                {/* Email */}
+                <div className="avaliacao-field">
+                  <label className="avaliacao-label">
+                    Email <span className="obrigatorio">*</span>
+                  </label>
+                  <input
+                    type="email"
+                    className="avaliacao-input"
+                    placeholder="seuemail@exemplo.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                  {errors.email && <span className="avaliacao-error">{errors.email}</span>}
+                </div>
 
-  {/* Avaliação */}
-  <div className="avaliacao-field">
-    <label className="avaliacao-label">
-      Avaliação <span className="obrigatorio">*</span>
-    </label>
-    <textarea
-      className="avaliacao-textarea"
-      placeholder="Compartilhe sua experiência..."
-      value={comment}
-      onChange={(e) => setComment(e.target.value)}
-    ></textarea>
-    {errors.comment && <span className="avaliacao-error">{errors.comment}</span>}
-  </div>
+                {/* Comentário */}
+                <div className="avaliacao-field">
+                  <label className="avaliacao-label">
+                    Avaliação <span className="obrigatorio">*</span>
+                  </label>
+                  <textarea
+                    className="avaliacao-textarea"
+                    placeholder="Compartilhe sua experiência..."
+                    value={comment}
+                    onChange={(e) => setComment(e.target.value)}
+                  ></textarea>
+                  {errors.comment && <span className="avaliacao-error">{errors.comment}</span>}
+                </div>
 
-  <button className="avaliacao-enviar" onClick={handleSubmit}>Enviar Avaliação</button>
-
+                <button className="avaliacao-enviar" onClick={handleSubmit}>
+                  Enviar Avaliação
+                </button>
+              </>
+            ) : (
+              <div className="loading">
+                <div className="spinner"></div> Pensando...
+              </div>
+            )}
+          </>
+        ) : (
+          <div className="success-message">
+            Comentário enviado com sucesso!
+          </div>
+        )}
       </div>
     </div>
   </>

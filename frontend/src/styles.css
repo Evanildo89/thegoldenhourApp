@@ -997,6 +997,101 @@ font-weight: 700;
   }
 }
 
+/* Overlay do modal */
+.avaliacao-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  z-index: 1000;
+}
+
+/* Header do modal */
+.avaliacao-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+/* Botão fechar */
+.fechar-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+/* Campos de erro */
+.avaliacao-error {
+  color: red;
+  font-size: 0.85rem;
+  margin-top: 0.3rem;
+}
+
+/* Estrelas */
+.stars {
+  cursor: pointer;
+  font-size: 1.3rem;
+  color: #ccc;
+}
+
+.star.filled {
+  color: gold;
+}
+
+/* Botão enviar */
+.avaliacao-enviar {
+  padding: 0.5rem 1rem;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.avaliacao-enviar:hover {
+  background-color: #0056b3;
+}
+
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;
+  margin-top: 20px;
+}
+
+/* Spinner animado */
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(0,0,0,0.2);
+  border-top-color: #007BFF; /* cor azul */
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+/* Animação do spinner */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Mensagem de sucesso */
+.success-message {
+  text-align: center;
+  font-size: 16px;
+  font-weight: 500;
+  color: #28a745; /* verde */
+  padding: 20px 0;
+}
+
 
 
 
