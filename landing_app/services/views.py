@@ -345,7 +345,7 @@ def enviar_cancelamento_email(request):
             body="A sua marcação foi cancelada.",
             from_email=f"{nome} <{email}>",
             to=[email],
-            reply_to=[settings.EMAIL_HOST_USER]
+            reply_to=[settings.DEFAULT_FROM_EMAIL]
         )
         email_cliente.attach_alternative(html_mensagem, "text/html")
         email_cliente.send(fail_silently=False)
@@ -378,7 +378,7 @@ def enviar_cancelamento_email(request):
             email_msg_responsavel = EmailMultiAlternatives(
                 subject=f"Cancelamento de reserva: {nome} - {servico}",
                 body=f"O cliente {nome} cancelou a reserva de {servico} marcada para {data_reserva} às {hora_reserva}.",
-                from_email=settings.EMAIL_HOST_USER,
+                from_email=settings.DEFAULT_FROM_EMAIL,
                 to=email_responsavel,
                 reply_to=[email]
             )
