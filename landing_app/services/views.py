@@ -345,7 +345,7 @@ def enviar_cancelamento_email(request):
             body="A sua marcação foi cancelada.",
             from_email=f"The Golden Light Photography <{settings.DEFAULT_FROM_EMAIL}>",  # endereço verificado
             to=[email],  # vai para o cliente
-            reply_to=[settings.DEFAULT_FROM_EMAIL]  # respostas vão para a empresa
+            reply_to=[email]  # respostas vão para a empresa
         )
         email_cliente.attach_alternative(html_mensagem, "text/html")
         email_cliente.send(fail_silently=False)
