@@ -124,9 +124,23 @@ font-weight: 700;
 
 .logo-text-container {
   display: flex;
-  align-items: center;
+  flex-direction: row; /* força lado a lado */
+  align-items: center; /* verticalmente alinhado */
   gap: 20px;
-  margin: 40px 16px 0 16px; /* espaço superior para scroll */
+  margin: 40px 16px 0 16px; /* topo + laterais */
+  flex-wrap: wrap; /* evita overflow em telas pequenas */
+}
+
+/* Ajuste do texto do logo para mobile */
+@media (max-width: 768px) {
+  .logo-container {
+    width: 120px;
+    height: 120px;
+  }
+
+  .logo-text {
+    font-size: 18px;
+  }
 }
 
 /* Círculo do logo */
@@ -428,20 +442,43 @@ font-weight: 700;
 }
 
 /* Responsivo: fotos acima do texto em telas pequenas */
+@media (max-width: 1024px) {
+  .logo-container {
+    width: 160px;
+    height: 160px;
+  }
+
+  .logo-text {
+    font-size: 22px;
+  }
+}
+
+/* Smartphones médios (até 768px) */
 @media (max-width: 768px) {
-  .team-box {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
+  .logo-container {
+    width: 140px;
+    height: 140px;
   }
 
-  .team-image-container {
-    margin-right: 0;
-    margin-bottom: 16px;
+  .logo-text {
+    font-size: 20px;
+  }
+}
+
+/* Smartphones pequenos (até 480px) */
+@media (max-width: 480px) {
+  .logo-container {
+    width: 120px;
+    height: 120px;
   }
 
-  .team-info {
-    justify-content: center;
+  .logo-text {
+    font-size: 18px;
+  }
+
+  .logo-text-container {
+    margin-top: 20px; /* reduz espaço no topo */
+    gap: 12px;        /* menos espaço entre logo e texto */
   }
 }
 

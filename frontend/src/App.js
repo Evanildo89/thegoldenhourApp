@@ -136,19 +136,20 @@ const [errors, setErrors] = useState({})
 
 
   const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          setActiveNav(entry.target.id);
-        }
-      });
-    },
-    {
-      root: null,
-      rootMargin: '-50px 0px -50px 0px', // pequena margem para detectar logo que aparece
-      threshold: 0
-    }
-  );
+  (entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        setActiveNav(entry.target.id);
+      }
+    });
+  },
+  {
+    root: null,
+    threshold: 0.5,
+rootMargin: '-20% 0px -20% 0px'
+
+  }
+);
 
   sections.forEach(section => {
     if (section.ref.current) observer.observe(section.ref.current);
