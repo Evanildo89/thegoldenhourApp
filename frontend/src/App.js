@@ -326,7 +326,7 @@ const [errors, setErrors] = useState({})
     <div className="contact-phone">
       <FaPhoneAlt className="phone-icon" />
       <a href="tel:+351912345678" className="phone-number">
-        +351 912 345 678
+        {PHONE_NUMBER}
       </a>
     </div>
 
