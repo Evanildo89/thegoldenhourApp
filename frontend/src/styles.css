@@ -482,6 +482,29 @@ font-weight: 700;
   }
 }
 
+/* Tablets (até 768px) */
+@media (max-width: 768px) {
+  .hours-container,
+  .service-section,
+  .policy-box {
+    width: calc(100% - 64px); /* mesma largura para todos */
+    margin: 12px auto;         /* mesma margem */
+    padding: 12px;             /* padding consistente */
+  }
+}
+
+/* Smartphones pequenos (até 480px) */
+@media (max-width: 480px) {
+  .hours-container,
+  .service-section,
+  .policy-box {
+    width: calc(100% - 32px); /* mesma largura para todos */
+    margin: 12px auto;         /* mesma margem */
+    padding: 12px;             /* padding consistente */
+  }
+}
+
+
 .team-separator {
   width: 95%;                 /* ocupa 90% da largura da página */
   height: 1px;                /* altura fina */
