@@ -10,6 +10,7 @@ from django.http import JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
 import os
+import psycopg2
 from django.core.mail import EmailMultiAlternatives
 from django.shortcuts import render
 from urllib.parse import quote
@@ -795,3 +796,4 @@ def index(request):
 # def atualizar_photos(request):
 #     Professional.objects.all().update(photo='/images/vansophie.jpg')
 #     return HttpResponse("Photos atualizadas!")
+
