@@ -131,17 +131,7 @@ font-weight: 700;
   flex-wrap: wrap; /* evita overflow em telas pequenas */
 }
 
-/* Ajuste do texto do logo para mobile */
-@media (max-width: 768px) {
-  .logo-container {
-    width: 120px;
-    height: 120px;
-  }
 
-  .logo-text {
-    font-size: 18px;
-  }
-}
 
 /* Círculo do logo */
 .logo-container {
@@ -229,6 +219,73 @@ font-weight: 700;
   font-weight: 400;
   color: #555;
 }
+
+@media (max-width: 768px) { /* tablets */
+  .logo-text-container {
+    flex-direction: column; /* logo em cima, texto embaixo */
+    align-items: center;
+    gap: 16px;
+    margin: 20px 16px;
+  }
+
+  .hours-container {
+    width: 90%; /* ocupa quase toda a tela */
+    margin: 20px auto;
+  }
+}
+
+@media (max-width: 420px) { /* celulares */
+  .logo-text {
+    font-size: 20px; /* menor fonte */
+    text-align: center;
+  }
+
+  .hours-container {
+    width: 95%; /* quase toda a tela */
+    padding: 12px;
+  }
+
+  .today-hours {
+    font-size: 14px;
+    padding: 12px;
+  }
+
+  .full-hours li {
+    font-size: 14px;
+  }
+}
+
+@media(max-width:420px){
+  .nav-bar {
+    top: 56px; /* menor que no desktop */
+    padding: 16px;
+  }
+
+  .nav-bar ul {
+    flex-direction: column;
+    gap: 16px;
+  }
+}
+
+@media(max-width:420px){
+  .logo-container {
+    width: 150px;
+    height: 150px;
+  }
+}
+
+@media(max-width:420px){
+  .main-content {
+    padding: 140px 16px 16px 16px;
+  }
+}
+
+@media(max-width:420px){
+  body {
+    font-size: 0.9rem;
+  }
+}
+
 
 .policy-box {
   width: calc(100% - 70px); /* ocupa toda a largura menos 40px (20px de cada lado) */
@@ -412,6 +469,153 @@ font-weight: 700;
   margin: 0;
 }
 
+@media (max-width: 768px) {
+
+  .policy-box {
+    width: 90%;
+    padding: 16px;
+    margin: 20px auto;
+  }
+
+  .policy-box h2 {
+    font-size: 18px;
+  }
+
+  .policy-box p,
+  .policy-warning {
+    font-size: 14px;
+    line-height: 1.4;
+  }
+
+  .policy-button button {
+    font-size: 13px;
+    padding: 8px 16px;
+  }
+
+  .services-title {
+    font-size: 20px;
+    margin-left: 24px;
+  }
+
+  .services-subtitle {
+    font-size: 14px;
+    margin-left: 24px;
+  }
+
+  .service-section {
+    margin: 20px 24px;
+    padding: 12px;
+  }
+
+  .service-title {
+    font-size: 16px;
+  }
+
+  .service-description {
+    font-size: 13px;
+    padding-left: 16px;
+  }
+
+  .team-title {
+    font-size: 20px;
+  }
+
+  .team-subtitle {
+    font-size: 14px;
+  }
+
+  .team-box {
+    flex-direction: column;
+    align-items: center;
+    padding: 16px;
+    gap: 16px;
+  }
+
+  .team-image-container {
+    width: 150px;
+    height: 150px;
+  }
+
+  .team-info {
+    align-items: center;
+    text-align: center;
+  }
+
+  .team-name {
+    font-size: 16px;
+  }
+
+  .team-role {
+    font-size: 13px;
+  }
+}
+
+/* Celulares */
+@media (max-width: 420px) {
+
+  .policy-box {
+    width: 95%;
+    padding: 12px;
+    margin: 16px auto;
+  }
+
+  .policy-box h2 {
+    font-size: 16px;
+  }
+
+  .policy-box p,
+  .policy-warning {
+    font-size: 13px;
+  }
+
+  .policy-button button {
+    font-size: 12px;
+    padding: 6px 12px;
+  }
+
+  .services-title {
+    font-size: 18px;
+    margin-left: 16px;
+  }
+
+  .services-subtitle {
+    font-size: 13px;
+    margin-left: 16px;
+  }
+
+  .service-section {
+    margin: 16px;
+    padding: 10px;
+  }
+
+  .service-title {
+    font-size: 15px;
+  }
+
+  .service-description {
+    font-size: 12px;
+    padding-left: 12px;
+  }
+
+  .team-box {
+    padding: 12px;
+    gap: 12px;
+  }
+
+  .team-image-container {
+    width: 120px;
+    height: 120px;
+  }
+
+  .team-name {
+    font-size: 15px;
+  }
+
+  .team-role {
+    font-size: 12px;
+  }
+}
+
 /* Seta para serviços */
 .service-arrow {
   position: absolute;      /* dentro do container */
@@ -441,69 +645,6 @@ font-weight: 700;
 
 .service-arrow:hover {
   color: #000;
-}
-
-/* Responsivo: fotos acima do texto em telas pequenas */
-@media (max-width: 1024px) {
-  .logo-container {
-    width: 160px;
-    height: 160px;
-  }
-
-  .logo-text {
-    font-size: 22px;
-  }
-}
-
-/* Smartphones médios (até 768px) */
-@media (max-width: 768px) {
-  .logo-container {
-    width: 140px;
-    height: 140px;
-  }
-
-  .logo-text {
-    font-size: 20px;
-  }
-}
-
-/* Smartphones pequenos (até 480px) */
-@media (max-width: 480px) {
-  .logo-container {
-    width: 120px;
-    height: 120px;
-  }
-
-  .logo-text {
-    font-size: 18px;
-  }
-
-  .logo-text-container {
-    margin-top: 20px; /* reduz espaço no topo */
-    gap: 12px;        /* menos espaço entre logo e texto */
-  }
-}
-
-/* Tablets (até 768px) */
-@media (max-width: 768px) {
-  .hours-container,
-  .service-section,
-  .policy-box {
-    width: calc(100% - 64px); /* mesma largura para todos */
-    margin: 12px auto;         /* mesma margem */
-    padding: 12px;             /* padding consistente */
-  }
-}
-
-/* Smartphones pequenos (até 480px) */
-@media (max-width: 480px) {
-  .hours-container,
-  .service-section,
-  .policy-box {
-    width: calc(100% - 32px); /* mesma largura para todos */
-    margin: 12px auto;         /* mesma margem */
-    padding: 12px;             /* padding consistente */
-  }
 }
 
 
@@ -847,217 +988,7 @@ font-weight: 700;
   background-color: #555; /* cinzento mais claro ao passar o rato */
 }
 
-/* Responsivo (mobile) */
-@media (max-width: 600px) {
-  .reservar-button {
-    padding: 10px 35px;
-    font-size: 15px;
-  }
-}
 
-/* Tablets (até 1024px) */
-@media (max-width: 1024px) {
-  .logo-container {
-    width: 160px;
-    height: 160px;
-  }
-
-  .logo-text {
-    font-size: 22px;
-  }
-
-  .hours-container {
-    width: 100%;
-    max-width: 500px;
-  }
-
-  .policy-box {
-    max-width: 90%;
-  }
-
-  .team-box {
-    padding: 16px 20px;
-  }
-
-  .service-section {
-    margin: 16px;
-  }
-}
-
-/* Smartphones grandes (até 768px) */
-@media (max-width: 768px) {
-  /* Navegação */
-  .nav-bar ul {
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-  }
-
-  .nav-bar li a {
-    font-size: 14px;
-  }
-
-  /* Logo + Texto */
-  .logo-text-container {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 10px;
-    margin-top: 100px;
-  }
-
-  .logo-container {
-    width: 140px;
-    height: 140px;
-  }
-
-  .logo-text {
-    font-size: 20px;
-  }
-
-  /* Horários */
-  .hours-container {
-    width: 100%;
-    margin: 20px auto;
-  }
-
-  /* Equipa */
-  .team-section {
-    padding: 0 10px;
-  }
-
-  .team-box {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    padding: 16px;
-  }
-
-  .team-image-container {
-    width: 160px;
-    height: 160px;
-  }
-
-  .team-info {
-    align-items: center;
-  }
-
-  .team-name {
-    font-size: 16px;
-  }
-
-  .team-role {
-    font-size: 13px;
-  }
-
-  .service-arrow-equipe {
-    right: 15px;
-    top: auto;
-    bottom: 10px;
-    transform: none;
-  }
-
-  /* Serviços */
-  .services-title {
-    font-size: 20px;
-    margin-left: 20px;
-  }
-
-  .services-subtitle {
-    font-size: 14px;
-    margin-left: 20px;
-  }
-
-  .service-section {
-    padding: 12px;
-    margin: 12px;
-  }
-
-  /* Botão Reservar */
-  .reservar-button {
-    width: 90%;
-    padding: 12px;
-    font-size: 15px;
-  }
-
-  /* Contato */
-  .contact-container {
-    padding: 20px;
-    align-items: center;
-  }
-
-  .contact-text,
-  .bom-saber-title,
-  .Avalicao-title {
-    font-size: 18px;
-    text-align: center;
-    margin: 0;
-  }
-
-  .contact-phone,
-  .instagram-link,
-  .bom-saber-link {
-    justify-content: center;
-  }
-
-  .avaliacao-text,
-  .policy-box p {
-    text-align: center;
-  }
-}
-
-/* Smartphones pequenos (até 480px) */
-@media (max-width: 480px) {
-  .top-strip {
-    padding: 14px;
-    justify-content: center;
-  }
-
-  .nav-bar {
-    top: 55px;
-    padding: 10px;
-  }
-
-  .nav-bar ul {
-    gap: 10px;
-  }
-
-  .team-title {
-    font-size: 20px;
-  }
-
-  .team-subtitle {
-    font-size: 14px;
-  }
-
-  .team-box {
-    border-radius: 12px;
-  }
-
-  .team-image-container {
-    width: 130px;
-    height: 130px;
-  }
-
-  .service-section {
-    border-radius: 10px;
-  }
-
-  .policy-box {
-    padding: 16px;
-    width: 95%;
-  }
-
-  .avaliacao-box {
-    width: 100%;
-    border-radius: 16px 16px 0 0;
-    padding: 20px;
-  }
-
-  .avaliacao-textarea {
-    height: 120px;
-  }
-}
 
 /* Overlay do modal */
 .avaliacao-overlay {
@@ -1152,6 +1083,100 @@ font-weight: 700;
   font-weight: 500;
   color: #28a745; /* verde */
   padding: 20px 0;
+}
+
+/* Tablets */
+@media (max-width: 768px) {
+  .service-arrow,
+  .service-arrow-equipe {
+    font-size: 24px;
+    right: 10px;
+  }
+
+  .contact-container,
+  .bom-saber-container {
+    padding: 20px 16px;
+  }
+
+  .contact-text,
+  .bom-saber-title {
+    font-size: 18px;
+  }
+
+  .phone-number,
+  .instagram-link,
+  .bom-saber-link {
+    font-size: 14px;
+  }
+
+  .policy-box,
+  .avaliacao-box {
+    width: 90%;
+    padding: 20px;
+  }
+
+  .Avalicao-title,
+  .avaliacao-label {
+    font-size: 18px;
+  }
+
+  .avaliacao-text,
+  .avaliacao-input,
+  .avaliacao-textarea {
+    font-size: 14px;
+  }
+
+  .reservar-button {
+    padding: 10px 35px;
+    font-size: 14px;
+  }
+}
+
+/* Celulares */
+@media (max-width: 420px) {
+  .service-arrow,
+  .service-arrow-equipe {
+    font-size: 20px;
+    right: 5px;
+  }
+
+  .contact-container,
+  .bom-saber-container {
+    padding: 16px 12px;
+  }
+
+  .contact-text,
+  .bom-saber-title {
+    font-size: 16px;
+  }
+
+  .phone-number,
+  .instagram-link,
+  .bom-saber-link {
+    font-size: 13px;
+  }
+
+  .policy-box,
+  .avaliacao-box {
+    width: 95%;
+    padding: 15px;
+  }
+
+  .Avalicao-title,
+  .avaliacao-label {
+    font-size: 16px;
+  }
+
+  .avaliacao-text,
+  .avaliacao-input,
+  .avaliacao-textarea {
+    font-size: 13px;
+  }
+
+  .reservar-button {
+    padding: 8px 25px;
+    font-size: 13px;
+  }
 }
 
 
