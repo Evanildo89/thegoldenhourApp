@@ -15,9 +15,9 @@ body {
 
 @media (max-width: 768px) {
   .servicos-box {
-    flex-direction: row;             /* conteúdo à esquerda, seta à direita */
-    justify-content: space-between;  /* seta fica no canto direito */
-    align-items: center;             /* verticalmente centralizada */
+    flex-direction: row;           /* conteúdo à esquerda, seta à direita */
+    justify-content: space-between; /* seta vai para o canto direito */
+    align-items: center;           /* centraliza verticalmente */
     text-align: left;
     padding: 16px;
     margin: 12px;
@@ -28,7 +28,7 @@ body {
   }
 
   .servicos-arrow {
-    margin-top: 0; /* remove margem superior */
+    margin-top: 0;  /* remove a margem que empurra para baixo */
     font-size: 24px;
   }
 }
