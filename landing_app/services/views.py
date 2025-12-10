@@ -221,7 +221,8 @@ def enviar_confirmacao_email(request):
                     subject=assunto,
                     body="Confirmação da sua reserva",
                     from_email=settings.DEFAULT_FROM_EMAIL,  # Use DEFAULT_FROM_EMAIL
-                    to=[email]
+                    to=[email],
+                    reply_to=[settings.DEFAULT_FROM_EMAIL]
                 )
                 email_msg.attach_alternative(html_mensagem, "text/html")
                 email_msg.send(fail_silently=False)

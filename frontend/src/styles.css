@@ -340,6 +340,7 @@ font-weight: 700;
   color: #111;
   margin-bottom: 4px;   /* diminui o espaço abaixo do título */
   text-align: left;
+  margin-left: 16px;
 }
 
 .team-subtitle {
@@ -347,6 +348,7 @@ font-weight: 700;
   color: #555;
   margin-bottom: 12px;  /* diminui o espaço abaixo do subtítulo */
   text-align: left;
+  margin-left: 16px;
 }
 
 /* Container das boxes */

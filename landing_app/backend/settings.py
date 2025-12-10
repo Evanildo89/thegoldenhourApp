@@ -1,31 +1,29 @@
 from pathlib import Path
-import dj_database_url
 import os
 from decouple import config
 from dotenv import load_dotenv
+import dj_database_url
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# garante que o .env seja carregado
+# Carrega .env primeiro, antes de usar config()
 dotenv_path = BASE_DIR / '.env'
 dotenv_local_path = BASE_DIR / '.env.local'
 
-if config("DEBUG", default=False, cast=bool):
-    # Em desenvolvimento carrega .env.local
-    if dotenv_local_path.exists():
-        load_dotenv(dotenv_local_path)
-else:
-    # Em produção, ignora .env.local e usa apenas .env
-    if dotenv_path.exists():
-        load_dotenv(dotenv_path)
+if dotenv_path.exists():
+    load_dotenv(dotenv_path)
 
-EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='')
-print("DEBUG EMAIL_HOST_USER:", EMAIL_HOST_USER)  # debug
+if dotenv_local_path.exists():
+    load_dotenv(dotenv_local_path)
 
-# Segredos e config do ambiente
+# Agora sim podemos usar config()
 SECRET_KEY = config('SECRET_KEY', default='django-insecure-temporaria')
 DEBUG = config('DEBUG', default=False, cast=bool)
 DATABASE_URL = config('DATABASE_URL')
+
+EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='')
+print("DEBUG EMAIL_HOST_USER:", EMAIL_HOST_USER)
+print("DATABASE_URL:", DATABASE_URL)
 
 
 # Allowed hosts
