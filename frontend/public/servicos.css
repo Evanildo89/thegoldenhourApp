@@ -13,6 +13,26 @@ body {
   }
 }
 
+@media (max-width: 768px) {
+  .servicos-box {
+    flex-direction: row;             /* conteúdo à esquerda, seta à direita */
+    justify-content: space-between;  /* seta fica no canto direito */
+    align-items: center;             /* verticalmente centralizada */
+    text-align: left;
+    padding: 16px;
+    margin: 12px;
+  }
+
+  .servicos-content {
+    flex: 1; /* ocupa todo o espaço disponível à esquerda */
+  }
+
+  .servicos-arrow {
+    margin-top: 0; /* remove margem superior */
+    font-size: 24px;
+  }
+}
+
 /* Previne que elementos largos forcem scroll horizontal */
 .servicos-page,
 .servicos-section,
@@ -601,17 +621,16 @@ body {
 
 /* Smartphones grandes até 768px */
 @media (max-width: 768px) {
-  /* topo e logo */
   .servicos-topo {
-    flex-direction: column;
+    flex-direction: row;       /* mantém botão à esquerda */
     align-items: center;
+    justify-content: flex-start; /* botão à esquerda, logo depois o nome */
     gap: 10px;
-    text-align: center;
   }
 
   .logo-circle-servicos {
-    width: 100px;
-    height: 100px;
+    width: 80px;
+    height: 80px;
   }
 
   .logo-circle-servicos img {
@@ -622,6 +641,7 @@ body {
   .empresa-name-servicos {
     font-size: 16px;
   }
+
 
   /* seções */
   .servicos-section {
