@@ -224,3 +224,31 @@ body {
 .no-bold {
   font-weight: normal; /* Remove o bold */
 }
+
+@media (max-width: 420px) {
+  .servicos-topo {
+    display: flex; /* garante que continue flex */
+    justify-content: flex-start; /* seta sempre à esquerda */
+    gap: 10px;
+  }
+
+  .logo-circle-servicos,
+  .empresa-name-servicos {
+    margin-left: 10px; /* dá um pequeno recuo sem centralizar */
+  }
+}
+
+@media (max-width: 420px) {
+  .servicos-box {
+    flex-direction: column; /* empilha conteúdo */
+    align-items: flex-start; /* conteúdo à esquerda */
+    position: relative;      /* necessário para o absolute */
+  }
+
+  .servicos-arrow {
+    position: absolute; /* seta fixa dentro da box */
+    right: 15px;        /* distância da borda direita */
+    top: 50%;           /* centraliza verticalmente */
+    transform: translateY(-50%);
+  }
+}
