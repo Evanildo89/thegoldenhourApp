@@ -834,6 +834,63 @@ body {
   }
 }
 
+@media (max-width: 420px) {
+  .servicos-topo {
+    padding: 10px;
+  }
+
+  .logo-circle-servicos {
+    width: 80px;
+    height: 80px;
+  }
+
+  .empresa-name-servicos {
+    font-size: 14px;
+  }
+
+  .servicos-info .servicos-name {
+    font-size: 16px;
+  }
+
+  .servicos-info .servicos-role {
+    font-size: 13px;
+  }
+
+  .services-title {
+    font-size: 18px;
+  }
+
+  .day {
+    padding: 8px;
+  }
+
+  .horarios-container {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .form-container {
+    padding: 12px;
+  }
+
+  .policy-box-dados {
+    padding: 15px;
+    font-size: 14px;
+  }
+
+
+  .footer-top {
+    justify-content: space-between; /* mantém esquerda/direita */
+  }
+
+  .footer-info {
+    flex-wrap: nowrap;
+  }
+
+  .footer-confirmar button {
+    width: auto; /* mantém botão pequeno à direita */
+  }
+}
+
 .day.indisponivel {
   background-color: #ddd !important;
   color: #888 !important;

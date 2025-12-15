@@ -234,6 +234,20 @@ font-weight: 700;
   }
 }
 
+@media (max-width: 420px) { /* tablets */
+  .logo-text-container {
+    flex-direction: column; /* logo em cima, texto embaixo */
+    align-items: center;
+    gap: 16px;
+    margin: 20px 16px;
+  }
+
+  .hours-container {
+    width: 90%; /* ocupa quase toda a tela */
+    margin: 20px auto;
+  }
+}
+
 @media (max-width: 420px) { /* celulares */
   .logo-text {
     font-size: 20px; /* menor fonte */
@@ -262,7 +276,7 @@ font-weight: 700;
   }
 
   .nav-bar ul {
-    flex-direction: column;
+    flex-direction: row;
     gap: 16px;
   }
 }
