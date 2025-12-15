@@ -57,6 +57,9 @@ const [errors, setErrors] = useState({})
  const [professionals, setProfessionals] = useState([]);
  const [loading, setLoading] = useState(false);
  const [success, setSuccess] = useState(false);
+ const [buttonOffset, setButtonOffset] = useState(30);
+const lastScrollY = useRef(window.scrollY);
+
 
   const handleNavClick = (id) => {
     setActiveNav(id);
@@ -108,6 +111,34 @@ const [errors, setErrors] = useState({})
     }, 2000);
   }
 };
+
+ useEffect(() => {
+  const handleScroll = () => {
+    const scrollY = window.scrollY;
+    const windowHeight = window.innerHeight;
+    const documentHeight = document.documentElement.scrollHeight;
+
+    const atBottom =
+      scrollY + windowHeight >= documentHeight - 10;
+
+    if (atBottom) {
+      if (scrollY < lastScrollY.current) {
+        // a subir
+        setButtonOffset(prev => Math.min(prev + 4, 200));
+      } else {
+        // a descer
+        setButtonOffset(prev => Math.max(prev - 4, 30));
+      }
+    } else {
+      setButtonOffset(30);
+    }
+
+    lastScrollY.current = scrollY;
+  };
+
+  window.addEventListener("scroll", handleScroll);
+  return () => window.removeEventListener("scroll", handleScroll);
+}, []);
 
 
   useEffect(() => {
@@ -385,19 +416,6 @@ rootMargin: '-20% 0px -20% 0px'
 
 <hr className="avaliacao-separator" />
 
- <div className="reservar-button-container">
-  <button
-    className="reservar-button"
-    onClick={() => {
-      if (equipaRef.current) {
-        equipaRef.current.scrollIntoView({ behavior: "smooth" });
-      }
-    }}
-  >
-    Reservar Agora
-  </button>
-</div>
-
  {showBox && (
   <>
     <div className="avaliacao-overlay" onClick={() => setShowBox(false)}></div>
@@ -495,6 +513,46 @@ rootMargin: '-20% 0px -20% 0px'
       </div>
     </div>
   </>
+)}
+   {!showBox && (
+  <div
+    style={{
+      position: "absolute",
+      bottom: `${buttonOffset}px`,
+      left: "50%",
+      transform: "translateX(-50%)",
+      zIndex: 9999,
+      transition: "bottom 0.15s ease-out",
+    }}
+  >
+    <button
+      className="reservar-button"
+      onClick={() => {
+        if (professionals.length === 0) return;
+
+        if (!services || services.length === 0) {
+          alert("Os serviços ainda estão carregando. Aguarde um momento.");
+          return;
+        }
+
+        const lastProf = professionals[professionals.length - 1];
+
+        const profData = {
+          id: lastProf.id,
+          name: lastProf.name,
+          bio: lastProf.bio,
+          photo: lastProf.photo,
+        };
+
+        const servicesData = encodeURIComponent(JSON.stringify(services));
+        const profQuery = encodeURIComponent(JSON.stringify(profData));
+
+        window.location.href = `/servicos.html?data=${servicesData}&prof=${profQuery}`;
+      }}
+    >
+      Reservar Agora
+    </button>
+  </div>
 )}
     </div>
   );
