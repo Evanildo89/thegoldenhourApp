@@ -262,7 +262,7 @@ font-weight: 700;
   }
 
   .nav-bar ul {
-    flex-direction: column;
+    flex-direction: row;
     gap: 16px;
   }
 }
