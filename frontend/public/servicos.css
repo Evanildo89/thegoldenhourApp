@@ -604,7 +604,7 @@ body {
 /* Tablets até 1024px */
 @media (max-width: 1024px) {
   .servicos-box {
-    flex-direction: column;
+    flex-direction: row;
     align-items: flex-start;
   }
 
@@ -656,7 +656,7 @@ body {
 
   /* caixas de serviços */
   .servicos-box {
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     text-align: center;
     padding: 16px;
@@ -727,25 +727,48 @@ body {
 
   /* footer */
   .pacote-footer {
-    padding: 10px 20px;
-    font-size: 16px;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  background: #f5f5f5;
+  padding: 15px 20px;
+  border-top: 2px solid #ccc;
+  font-size: 16px;
   }
 
   .footer-top {
-    justify-content: center;
+  display: flex;
+  justify-content: space-between; /* mantém esquerda/direita SEMPRE */
+  align-items: center;
+  width: 100%;
+  gap: 20px;
+  }
+
+  #footer-valor,
+  #footer-titulo {
+  white-space: nowrap;      /* evita quebra de linha no mobile */
+  }
+
+  .footer-seta {
+  font-size: 20px;
+  cursor: pointer;
+  text-decoration: none;
+  color: #333;
   }
 
   .footer-expanded {
     padding: 0 10px;
   }
 
-  .footer-confirmar {
-    margin-right: 0;
-    margin-left: 0;
-    width: 100%;
-    display: flex;
-    justify-content: center;
+  .footer-confirmar button {
+  background-color: #000;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s ease;
+  white-space: nowrap; /* impede quebra */
   }
 
   .footer-confirmar button {
@@ -797,8 +820,36 @@ body {
     font-size: 14px;
   }
 
-  .footer-confirmar button {
-    font-size: 14px;
-    padding: 10px;
+
+  .footer-top {
+    justify-content: space-between; /* mantém esquerda/direita */
   }
+
+  .footer-info {
+    flex-wrap: nowrap;
+  }
+
+  .footer-confirmar button {
+    width: auto; /* mantém botão pequeno à direita */
+  }
+}
+
+.day.indisponivel {
+  background-color: #ddd !important;
+  color: #888 !important;
+  cursor: not-allowed !important;
+  position: relative;
+  pointer-events: none;
+}
+
+.day.indisponivel::after {
+  content: "";
+  position: absolute;
+  top: 50%;              /* desce o risco */
+  left: -10%;            /* ajusta horizontalmente */
+  width: 160%;           /* comprimento maior */
+  height: 2px;
+  background: #888;
+  transform: rotate(-45deg) translateY(-50%);
+  opacity: 0.6;
 }

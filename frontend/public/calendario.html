@@ -155,24 +155,54 @@ function renderCalendar() {
     const div = document.createElement("div");
     div.classList.add("day");
     div.textContent = dia;
-    const currentDate = new Date(ano, mes, dia, 0, 0, 0, 0);
 
-    if (currentDate.toDateString() === selectedDate.toDateString()) div.classList.add("selected");
+    const dataFormatada = `${ano}-${(mes + 1).toString().padStart(2, '0')}-${dia
+      .toString()
+      .padStart(2, '0')}`;
+
+    // 🟣 Verificar horários ocupados do dia
+    const ocupadosDoDia = ocupados[dataFormatada] || [];
+
+    // 🟡 Verificar se TODOS os horários estão ocupados
+    const todosOcupados =
+      ocupadosDoDia.length >= horariosDisponiveis.length;
+
+    // 🔥 SE O DIA ESTÁ COMPLETAMENTE INDISPONÍVEL → fica cinza + riscado + sem clique
+    if (todosOcupados) {
+        div.classList.add("indisponivel");
+        calendar.appendChild(div);
+        continue;
+    }
+
+    const currentDate = new Date(ano, mes, dia, 0, 0, 0, 0);
+    const hoje = new Date();
+    hoje.setHours(0, 0, 0, 0);
+
+    if (currentDate <= hoje) {
+        div.classList.add("indisponivel");
+        calendar.appendChild(div);
+        continue;
+    }
+
+    if (currentDate.toDateString() === selectedDate.toDateString()) {
+        div.classList.add("selected");
+    }
 
     div.addEventListener("click", () => {
-      document.querySelectorAll(".day").forEach(d => d.classList.remove("selected"));
-      div.classList.add("selected");
-      selectedDate = currentDate;
-      selectedHour = null;
-      atualizarTextoData();
-      renderHorarios();
-      setTimeout(() => {
-        horariosContainer.scrollIntoView({ behavior: "smooth", block: "start" });
-      }, 200);
+        document.querySelectorAll(".day").forEach(d => d.classList.remove("selected"));
+        div.classList.add("selected");
+        selectedDate = currentDate;
+        selectedHour = null;
+        atualizarTextoData();
+        renderHorarios();
+
+        setTimeout(() => {
+            horariosContainer.scrollIntoView({ behavior: "smooth", block: "start" });
+        }, 200);
     });
 
     calendar.appendChild(div);
-  }
+}
 
   atualizarTextoData();
   renderHorarios();
@@ -200,22 +230,27 @@ function renderHorarios() {
   const dataSelecionada = new Date(ano, selectedDate.getMonth(), dia);
   dataSelecionada.setHours(0,0,0,0);
 
-  if (dataSelecionada < hoje) {
+  if (dataSelecionada <= hoje) {
   const erro = document.createElement("div");
   erro.textContent = "⚠️ Não é possível agendar para a data de hoje ou anterior.";
+
+  // Estilos
   erro.style.color = "red";
   erro.style.fontWeight = "bold";
-  erro.style.textAlign = "left"; // 👈 texto alinhado à esquerda
-  erro.style.margin = "15px auto"; // mantém centralizado no container
-  erro.style.padding = "15px 20px";
+  erro.style.textAlign = "center";            // centraliza o texto
+  erro.style.margin = "15px auto";
+  erro.style.padding = "10px 15px";
   erro.style.background = "#ffeaea";
   erro.style.borderRadius = "10px";
-  erro.style.whiteSpace = "nowrap";
+  erro.style.whiteSpace = "nowrap";           // mantém tudo em uma linha
   erro.style.display = "inline-block";
-  erro.style.maxWidth = "90%"; // garante que não estoure
-  erro.style.position = "relative";
-  erro.style.transform = "translateX(-20px)"; // 👈 move o bloco inteiro levemente à esquerda
-  horariosContainer.style.textAlign = "center"; // mantém o container centralizado
+  erro.style.maxWidth = "100%";               // não ultrapassa o container
+  erro.style.boxSizing = "border-box";        // padding não quebra layout
+
+  // 👇 Fonte responsiva: mínimo 12px, ideal 16px, máximo 18px
+  erro.style.fontSize = "clamp(10px, 4vw, 15px)";
+
+  horariosContainer.style.textAlign = "center";
   horariosContainer.appendChild(erro);
 
   setTimeout(() => {

@@ -1130,6 +1130,30 @@ font-weight: 700;
     padding: 10px 35px;
     font-size: 14px;
   }
+
+  .team-container {
+    gap: 20px; /* menos espaçamento entre boxes */
+  }
+
+  .team-box {
+    width: 95%; /* ocupa quase toda a tela */
+    max-width: 600px; /* limite para não ficar enorme */
+    padding: 16px; /* reduz o padding interno */
+    margin: 0 auto; /* centraliza horizontalmente */
+  }
+
+  .team-image-container {
+    width: 120px;
+    height: 120px;
+  }
+
+  .team-name {
+    font-size: 16px;
+  }
+
+  .team-role {
+    font-size: 14px;
+  }
 }
 
 /* Celulares */
@@ -1175,6 +1199,25 @@ font-weight: 700;
 
   .reservar-button {
     padding: 8px 25px;
+    font-size: 13px;
+  }
+
+  .team-box {
+    width: 100%;       /* ocupa toda a largura disponível */
+    padding: 12px;     /* padding menor */
+    gap: 12px;         /* menos espaço entre elementos */
+  }
+
+  .team-image-container {
+    width: 100px;
+    height: 100px;
+  }
+
+  .team-name {
+    font-size: 15px;
+  }
+
+  .team-role {
     font-size: 13px;
   }
 }
