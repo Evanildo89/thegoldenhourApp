@@ -237,18 +237,21 @@ function renderHorarios() {
   // Estilos
   erro.style.color = "red";
   erro.style.fontWeight = "bold";
-  erro.style.textAlign = "center";            // centraliza o texto
+  erro.style.textAlign = "center";
   erro.style.margin = "15px auto";
   erro.style.padding = "10px 15px";
   erro.style.background = "#ffeaea";
   erro.style.borderRadius = "10px";
-  erro.style.whiteSpace = "nowrap";           // mantém tudo em uma linha
+  erro.style.whiteSpace = "nowrap";
   erro.style.display = "inline-block";
-  erro.style.maxWidth = "100%";               // não ultrapassa o container
-  erro.style.boxSizing = "border-box";        // padding não quebra layout
+  erro.style.maxWidth = "100%";
+  erro.style.boxSizing = "border-box";
 
-  // 👇 Fonte responsiva: mínimo 12px, ideal 16px, máximo 18px
-  erro.style.fontSize = "clamp(10px, 4vw, 15px)";
+  // Fonte responsiva
+  erro.style.fontSize = "clamp(8px, 4vw, 12px)";
+
+  // Empurra levemente para a direita
+  erro.style.transform = "translateX(40px)";
 
   horariosContainer.style.textAlign = "center";
   horariosContainer.appendChild(erro);
