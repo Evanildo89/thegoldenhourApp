@@ -1174,78 +1174,7 @@ font-weight: 700;
   }
 }
 
-/* Celulares */
-@media (max-width: 420px) {
-  .service-arrow,
-  .service-arrow-equipe {
-    font-size: 20px;
-    right: 5px;
-  }
-
-  .policy-box {
-    width: 100%;
-    max-width: 85%;
-    margin: 20px auto;
-    padding: 16px;
-  }
-
-  .contact-container,
-  .bom-saber-container {
-    padding: 16px 12px;
-  }
-
-  .contact-text,
-  .bom-saber-title {
-    font-size: 16px;
-  }
-
-  .phone-number,
-  .instagram-link,
-  .bom-saber-link {
-    font-size: 13px;
-  }
-
-  .avaliacao-box {
-    width: 95%;
-    padding: 15px;
-  }
-
-  .Avalicao-title,
-  .avaliacao-label {
-    font-size: 16px;
-  }
-
-  .avaliacao-text,
-  .avaliacao-input,
-  .avaliacao-textarea {
-    font-size: 13px;
-  }
-
-  .reservar-button {
-    padding: 8px 25px;
-    font-size: 13px;
-  }
-
-  .team-box {
-    width: 100%;       /* ocupa toda a largura disponível */
-    padding: 12px;     /* padding menor */
-    gap: 12px;         /* menos espaço entre elementos */
-    margin-left: 5px;
-  }
-
-  .team-image-container {
-    width: 100px;
-    height: 100px;
-  }
-
-  .team-name {
-    font-size: 15px;
-  }
-
-  .team-role {
-    font-size: 13px;
-  }
-}
+git add .
 
 .floating-reservar {
   position: fixed;
