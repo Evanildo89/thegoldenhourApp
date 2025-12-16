@@ -615,9 +615,11 @@ font-weight: 700;
   }
 
   .team-box {
+    width: 90%;          /* deixa um espaço lateral de 5% de cada lado */
+    max-width: 350px;    /* opcional: limita o tamanho da box */
     padding: 12px;
     gap: 12px;
-    margin-left: 0px;
+    margin: 0 auto;      /* centraliza horizontalmente, criando margens iguais */
   }
 
   .team-image-container {
@@ -1227,10 +1229,11 @@ font-weight: 700;
   }
 
   .team-box {
-    width: 100%;       /* ocupa toda a largura disponível */
-    padding: 12px;     /* padding menor */
-    gap: 12px;         /* menos espaço entre elementos */
-    margin-left: 5px;
+    width: 90%;          /* deixa um espaço lateral de 5% de cada lado */
+    max-width: 350px;    /* opcional: limita o tamanho da box */
+    padding: 12px;
+    gap: 12px;
+    margin: 0 auto;      /* centraliza horizontalmente, criando margens iguais */
   }
 
   .team-image-container {
