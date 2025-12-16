@@ -500,21 +500,23 @@ body {
 @media (max-width: 420px) {
   /* Modal do reagendamento */
   #overlay-reagendar .modal {
-    margin: 0 20px;       /* margem lateral maior */
+    margin: 0 30px;
     padding: 15px;
     border-radius: 12px;
   }
 
-  /* Centralizar os botões no celular */
+  /* Subir os botões */
   #overlay-reagendar .modal-actions {
-    justify-content: center;  /* centraliza horizontalmente */
-    gap: 10px;                /* espaço entre os botões */
-    flex-direction: row;      /* mantém na mesma linha */
+    margin-top: -10px;        /* 🔼 sobe os botões */
+    padding-bottom: 10px;
+    display: flex;
+    justify-content: center; /* centraliza */
+    gap: 12px;
   }
 
   #overlay-reagendar .modal-actions .botao {
-    width: auto;            /* remove largura fixa */
-    padding: 8px 16px;      /* tamanho confortável */
+    padding: 8px 16px;
     font-size: 13px;
+    white-space: nowrap;     /* evita quebra de texto */
   }
 }
