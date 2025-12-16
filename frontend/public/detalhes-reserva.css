@@ -492,7 +492,29 @@ body {
   .modal {
     height: 55%;
     padding: 15px;
-    margin: 0 20px;       /* mais margem lateral */
+    margin: 0 30px;       /* mais margem lateral */
     border-radius: 12px;  /* cantos arredondados */
+  }
+}
+
+@media (max-width: 420px) {
+  /* Modal do reagendamento */
+  #overlay-reagendar .modal {
+    margin: 0 20px;       /* margem lateral maior */
+    padding: 15px;
+    border-radius: 12px;
+  }
+
+  /* Centralizar os botões no celular */
+  #overlay-reagendar .modal-actions {
+    justify-content: center;  /* centraliza horizontalmente */
+    gap: 10px;                /* espaço entre os botões */
+    flex-direction: row;      /* mantém na mesma linha */
+  }
+
+  #overlay-reagendar .modal-actions .botao {
+    width: auto;            /* remove largura fixa */
+    padding: 8px 16px;      /* tamanho confortável */
+    font-size: 13px;
   }
 }
