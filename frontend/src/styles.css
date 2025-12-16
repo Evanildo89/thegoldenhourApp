@@ -234,6 +234,20 @@ font-weight: 700;
   }
 }
 
+@media (max-width: 768px) { /* tablets */
+  .logo-text-container {
+    flex-direction: column; /* logo em cima, texto embaixo */
+    align-items: center;
+    gap: 16px;
+    margin: 20px 16px;
+  }
+
+  .hours-container {
+    width: 90%; /* ocupa quase toda a tela */
+    margin: 20px auto;
+  }
+}
+
 @media (max-width: 420px) { /* celulares */
   .logo-text {
     font-size: 20px; /* menor fonte */
@@ -241,7 +255,9 @@ font-weight: 700;
   }
 
   .hours-container {
-    width: 95%; /* quase toda a tela */
+    width: 100%;
+    max-width: 90%;
+    margin: 20px auto;   /* margem nas laterais + centra */
     padding: 12px;
   }
 
@@ -554,9 +570,10 @@ font-weight: 700;
 @media (max-width: 420px) {
 
   .policy-box {
-    width: 95%;
-    padding: 12px;
-    margin: 16px auto;
+    width: 100%;
+    max-width: 90%;
+    margin: 20px auto;   /* margem nas laterais + centra */
+    padding: 16px;
   }
 
   .policy-box h2 {
