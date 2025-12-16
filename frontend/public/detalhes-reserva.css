@@ -488,3 +488,11 @@ body {
   }
 }
 
+@media (max-width: 420px) {
+  .modal {
+    height: 55%;
+    padding: 15px 15px 15px 15px; /* mantém o padding interno */
+    margin: 0 10px;               /* margem lateral para não encostar na borda */
+    border-radius: 12px;          /* cantos arredondados */
+  }
+}
