@@ -1265,7 +1265,7 @@ font-weight: 700;
 
 @media (max-width: 420px) {
   .team-section {
-    width: 100%;          /* ocupa toda a largura */
+    width: 95%;          /* ocupa toda a largura */
     padding-left: 12px;   /* recuo à esquerda */
     padding-right: 12px;  /* pequena margem à direita */
     margin: 0;             /* remove margin automática */
