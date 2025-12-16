@@ -438,7 +438,7 @@ font-weight: 700;
   align-items: flex-start;
   width: 100%;
   max-width: 1350px;  /* limite de largura */
-  margin: 0 auto; /* centraliza horizontalmente */
+  margin-left: 35px; /* centraliza horizontalmente */
   background-color: #fff;   /* fundo branco */
   border: 1px solid #000;   /* borda preta */
   border-radius: 16px;
@@ -617,6 +617,7 @@ font-weight: 700;
   .team-box {
     padding: 12px;
     gap: 12px;
+    margin-left: 5px;
   }
 
   .team-image-container {
@@ -1229,6 +1230,7 @@ font-weight: 700;
     width: 100%;       /* ocupa toda a largura disponível */
     padding: 12px;     /* padding menor */
     gap: 12px;         /* menos espaço entre elementos */
+    margin-left: 5px;
   }
 
   .team-image-container {
