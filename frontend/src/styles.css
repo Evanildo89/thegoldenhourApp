@@ -436,7 +436,7 @@ font-weight: 700;
 .team-box {
   display: flex;
   align-items: flex-start;
-  width: 100%;
+  width: 95%;
   max-width: 1350px;  /* limite de largura */
   margin-left: 35px; /* centraliza horizontalmente */
   background-color: #fff;   /* fundo branco */

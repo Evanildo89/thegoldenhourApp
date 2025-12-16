@@ -55,9 +55,9 @@ body {
 }
 
 .logo-circle img {
-  width: 120%;                /* ligeiramente maior para preencher melhor */
-  height: 120%;
-  object-fit: cover;
+  width: 100%;       /* ocupa 100% do círculo */
+  height: 100%;      /* altura também 100% */
+  object-fit: contain; /* mantém proporção, sem esticar */
 }
 
 /* Nome da empresa */
@@ -82,6 +82,11 @@ body {
   border-radius: 10px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* leve sombra para destaque */
 }
+
+.team-box {
+  position: relative;  /* garante que a seta fique dentro */
+}
+
 
 .team-info {
   flex: 1; /* 🔹 empurra a seta para o canto direito */
@@ -245,10 +250,21 @@ body {
     position: relative;      /* necessário para o absolute */
   }
 
-  .servicos-arrow {
-    position: absolute; /* seta fixa dentro da box */
-    right: 15px;        /* distância da borda direita */
-    top: 50%;           /* centraliza verticalmente */
-    transform: translateY(-50%);
-  }
+  .logo-circle img {
+  width: 100%;       /* ocupa 100% do círculo */
+  height: 100%;      /* altura também 100% */
+  object-fit: contain; /* mantém proporção, sem esticar */
+}
+
+/* Seta dentro da box */
+.team-box {
+  position: relative;  /* garante que a seta fique dentro */
+}
+
+.servicos-arrow {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+}
 }
