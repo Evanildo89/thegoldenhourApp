@@ -301,7 +301,8 @@ function confirmarDados() {
 const params = new URLSearchParams(window.location.search);
 const pacote = params.get("pacote") || "Pacote Desconhecido";
 const valor = params.get("valor") || "0";
-const duracao = params.get("duracao") || "30 min";
+let duracao = params.get("duracao") || "30";
+duracao = duracao + " min";
 
 document.getElementById("footer-valor").textContent = `Valor: ${valor}€`;
 document.getElementById("footer-titulo").textContent = pacote;
