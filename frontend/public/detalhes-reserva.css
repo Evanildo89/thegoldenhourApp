@@ -500,14 +500,14 @@ body {
 @media (max-width: 420px) {
   /* Modal do reagendamento */
   #overlay-reagendar .modal {
-    margin: 0 30px;
+    margin: 0 10px;
     padding: 15px;
     border-radius: 12px;
   }
 
   /* Subir os botões */
   #overlay-reagendar .modal-actions {
-    margin-top: -10px;        /* 🔼 sobe os botões */
+    margin-top: -20px;        /* 🔼 sobe os botões */
     padding-bottom: 10px;
     display: flex;
     justify-content: center; /* centraliza */
