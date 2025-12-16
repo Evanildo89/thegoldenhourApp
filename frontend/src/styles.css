@@ -571,7 +571,7 @@ font-weight: 700;
 
   .policy-box {
     width: 100%;
-    max-width: 90%;
+    max-width: 85%;
     margin: 20px auto;   /* margem nas laterais + centra */
     padding: 16px;
   }
@@ -1183,7 +1183,7 @@ font-weight: 700;
 
   .policy-box {
     width: 100%;
-    max-width: 90%;
+    max-width: 85%;
     margin: 20px auto;
     padding: 16px;
   }
