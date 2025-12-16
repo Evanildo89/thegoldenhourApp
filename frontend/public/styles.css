@@ -250,11 +250,6 @@ body {
     position: relative;      /* necessário para o absolute */
   }
 
-  .logo-circle img {
-  width: 100%;       /* ocupa 100% do círculo */
-  height: 100%;      /* altura também 100% */
-  object-fit: contain; /* mantém proporção, sem esticar */
-}
 
 /* Seta dentro da box */
 .team-box {
@@ -267,4 +262,26 @@ body {
   top: 50%;
   transform: translateY(-50%);
 }
+}
+
+@media (max-width: 420px) {
+  .logo-circle {
+    width: 80px;      /* menor tamanho no celular */
+    height: 80px;
+  }
+
+  .logo-circle img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* mantém proporção */
+  }
+
+  .pacote-topo {
+    padding: 10px;   /* menos padding no topo */
+    gap: 10px;       /* menos espaço entre elementos */
+  }
+
+  .empresa-name {
+    font-size: 16px;  /* texto menor */
+  }
 }
