@@ -480,3 +480,11 @@ body {
   }
 }
 
+@media (max-width: 420px) {
+  .reserva-box {
+    margin: 20px 15px;  /* aumenta a margem lateral */
+    padding: 20px 15px; /* mantém o conteúdo confortável */
+    width: auto;        /* evita ocupar 100% */
+  }
+}
+
