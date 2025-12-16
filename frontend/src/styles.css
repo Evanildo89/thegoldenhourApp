@@ -775,8 +775,9 @@ font-weight: 700;
   background: #f5f5f5;
   border-radius: 12px;
   padding: 25px;
-  width: 100%;        /* aumenta para quase toda a largura da tela */
-  max-width: 1400px; /* opcional: limita em telas muito grandes */
+  width: auto;          /* ✅ deixa o media query mandar */
+  max-width: 1400px;
+  margin: 24px auto;
   box-shadow: 0 3px 20px rgba(0,0,0,0.25);
   animation: slideUpPolicy 0.3s ease forwards;
 }
@@ -1126,7 +1127,6 @@ font-weight: 700;
     font-size: 14px;
   }
 
-  .policy-box,
   .avaliacao-box {
     width: 90%;
     padding: 20px;
@@ -1179,6 +1179,13 @@ font-weight: 700;
   .service-arrow-equipe {
     font-size: 20px;
     right: 5px;
+  }
+
+  .policy-box {
+    width: 100%;
+    max-width: 90%;
+    margin: 20px auto;
+    padding: 16px;
   }
 
   .contact-container,
